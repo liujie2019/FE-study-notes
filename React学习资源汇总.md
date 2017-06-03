@@ -139,6 +139,7 @@ React是一款非常优秀的前端框架，你要发挥它完全的性能，你
 
 **相关资源汇总：**
 [study-notes](https://github.com/tsrot/study-notes/blob/master/React%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90%E6%B1%87%E6%80%BB.md)
+[react-tutorial](https://github.com/cllgeek/react-tutorial)
 
 
 
