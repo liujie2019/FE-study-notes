@@ -38,6 +38,7 @@ React是一款非常优秀的前端框架，你要发挥它完全的性能，你
  5. [React Router 官方 demo](https://github.com/reactjs/react-router-tutorial/tree/master/lessons)
  6. [前端路由实现与 react-router 源码分析](http://www.alloyteam.com/2016/05/router/)
 ### webapck
+ 4. [webpack中文](https://github.com/webpack-china)
  5. [webpack官方文档](https://webpack.js.org/configuration/)
  6. [webpack文档(中文)](https://doc.webpack-china.org/configuration/)
  6. [Webpack 2.2中文文档](http://www.css88.com/doc/webpack2/)
