@@ -1,4 +1,5 @@
-###定义mysql别名
+### 定义mysql别名
+
 ```
 #输入alias命令
 alias mysql=/usr/local/mysql/bin/mysql
@@ -6,7 +7,8 @@ alias mysql=/usr/local/mysql/bin/mysql
 alias mysqladmin=/usr/local/mysql/bin/mysqladmin
 ```
 
-###设置mysql root帐号的密码
+### 设置mysql root帐号的密码
+
 ```
 #设置初始密码
 mysqladmin -u root password 当前密码
@@ -15,12 +17,14 @@ mysqladmin -u root -p  password
 ```
 执行修改密码命令后，输入一次旧密码，再输入两次新密码。
 
-###连接数据库
+### 连接数据库
+
 ```
 mysql -u root -p
 然后输入root账户密码即可登录
 ```
-###增加新用户
+### 增加新用户
+
 格式如下：
 
 ```
@@ -110,7 +114,7 @@ show databases;
 
 （10）显示表中的记录：select * from 表名;
 
-###退出mysql
+### 退出mysql
 
 ```
 1.exit
@@ -118,7 +122,7 @@ show databases;
 3.\q
 ```
 
-###启动和停止MySQL
+### 启动和停止MySQL
 ```
 #启动
 /usr/local/mysql/share/mysql.server start
