@@ -20,19 +20,24 @@
 React是一款非常优秀的前端框架，你要发挥它完全的性能，你就要结合其他一些技术，例如webpack、redux、react-router等。
 
 ### React
+
  1. [React 技术栈系列教程](http://www.ruanyifeng.com/blog/2016/09/react-technology-stack.html)
  2. [React开发社区](https://react.ctolib.com/)
  3. [React同构直出优化总结](http://www.alloyteam.com/2016/06/react-isomorphic/)
+
 ### Redux
- 2. [Redux 中文文档](http://www.redux.org.cn/)
- 3. [Redux官网](http://redux.js.org/)
- 4. [Redux 官方 demo](https://github.com/reactjs/redux/tree/master/examples)
- 5. [Redux 莞式教程](https://github.com/kenberkeley/redux-simple-tutorial)
- 6. [Redux 视频教程](https://egghead.io/courses/getting-started-with-redux)
- 7. [redux 大法好](http://qiutc.me/post/redux-%E5%A4%A7%E6%B3%95%E5%A5%BD-%E2%80%94%E2%80%94-%E5%85%A5%E9%97%A8%E5%AE%9E%E4%BE%8B-TodoList.html)
- 8. [react+redux渲染性能优化原理](http://foio.github.io/react-redux-performance-boost/)
- 9. [数据流管理架构之 Redux 介绍](http://www.alloyteam.com/2015/09/react-redux/)
+
+1. [Redux 中文文档](http://www.redux.org.cn/)
+2. [Redux官网](http://redux.js.org/)
+3. [Redux 官方 demo](https://github.com/reactjs/redux/tree/master/examples)
+4. [Redux 莞式教程](https://github.com/kenberkeley/redux-simple-tutorial)
+5. [Redux 视频教程](https://egghead.io/courses/getting-started-with-redux)
+6. [redux 大法好](http://qiutc.me/post/redux-%E5%A4%A7%E6%B3%95%E5%A5%BD-%E2%80%94%E2%80%94-%E5%85%A5%E9%97%A8%E5%AE%9E%E4%BE%8B-TodoList.html)
+7. [react+redux渲染性能优化原理](http://foio.github.io/react-redux-performance-boost/)
+8. [数据流管理架构之 Redux 介绍](http://www.alloyteam.com/2015/09/react-redux/)
+
 ### React Router
+
  3. [React Router 中文文档](https://react-guide.github.io/react-router-cn/)
  4. Github地址：[react-router](https://github.com/ReactTraining/react-router)
  5. [React Router 官方 demo](https://github.com/reactjs/react-router-tutorial/tree/master/lessons)
@@ -49,6 +54,7 @@ React是一款非常优秀的前端框架，你要发挥它完全的性能，你
  10. [如何开发一个 Webpack Loader ( 一 )](http://www.alloyteam.com/2016/01/webpack-loader-1/)
 
 ### 其他
+
 2. [百度母婴技术团队—基于Reactjs实现webapp](https://github.com/my-fe/wiki/issues/1)
 3. [Building a React Universal Blog App](https://www.sitepoint.com/building-a-react-universal-blog-app-a-step-by-step-guide/)
 4. [React为啥非得使用immutable.js](http://react-china.org/t/react-immutable-js/3770)
@@ -115,16 +121,17 @@ React是一款非常优秀的前端框架，你要发挥它完全的性能，你
 介绍一些国内外比较好的 React 开源项目。
 
 国内：
-- [阿里的 React 组件库](https://github.com/react-component)
-- [Ant Design](https://github.com/ant-design/ant-design)
-- [简易留言板](https://github.com/tsrot/react-demo)
-- [react-zhihu](https://github.com/tsrot/react-zhihu)
-- [React的扫雷游戏](https://github.com/cjohansen/react-sweeper)
-- [在线聊天室](https://github.com/redsx/CR)
-- [使用React技术栈开发SPA](https://github.com/JasonBai007/reactSPA)
-- [阔论留言评论](https://github.com/NumerHero/kuolun)
-- [React版cnode社区](https://github.com/lzxb/react-cnode)
-- [适合新手学习的Demo， React + react-router + webpack + babel + Node + express + mongodb](https://github.com/rongchanghai/justForYou)
+
+1. [阿里的 React 组件库](https://github.com/react-component)
+2. [Ant Design](https://github.com/ant-design/ant-design)
+3. [简易留言板](https://github.com/tsrot/react-demo)
+4. [react-zhihu](https://github.com/tsrot/react-zhihu)
+5. [React的扫雷游戏](https://github.com/cjohansen/react-sweeper)
+6. [在线聊天室](https://github.com/redsx/CR)
+7. [使用React技术栈开发SPA](https://github.com/JasonBai007/reactSPA)
+8. [阔论留言评论](https://github.com/NumerHero/kuolun)
+9. [React版cnode社区](https://github.com/lzxb/react-cnode)
+10. [适合新手学习的Demo， React + react-router + webpack + babel + Node + express + mongodb](https://github.com/rongchanghai/justForYou)
 
 国外：
 
