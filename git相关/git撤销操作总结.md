@@ -1,3 +1,16 @@
+### 在本地创建一个项目
+
+```
+$ mkdir hello-world  //创建项目目录hello-world
+$ cd hello-world  //进入项目目录
+$ git init  //初始化项目 
+$ touch README
+$ git add README  //添加README文件到暂存区
+$ git commit -m 'first commit'   //提交更新，并注释信息“first commit”
+$ git remote add origin git@github.test/hellotest.git    //与远程github仓库建立连接 
+$ git push -u origin master   //将本地仓库的更改更新到github仓库上去
+```
+
 ### git工作流
 ![](../static/git.gif)
 
