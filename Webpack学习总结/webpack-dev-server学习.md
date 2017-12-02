@@ -1,4 +1,5 @@
-### 引入webpack-dev-server的好处
+### 1.引入webpack-dev-server的好处
+
 ```
 const path = require("path");
 module.exports = {
@@ -15,12 +16,14 @@ module.exports = {
 虽然 webpack 提供了` webpack --watch` 的命令来动态监听文件的改变并实时打包，输出新 index.js 文件，这样文件多了之后打包速度会很慢。此外，这样的打包方式不能做到 hot replace ，即每次 webpack 编译之后，你还需要手动刷新浏览器。
 
 对于上述的问题，使用`webpack-dev-server`可以得到很好的处理。 `webpack-dev-server`主要通过启动了一个 express 服务器 。其主要是用来伺服资源文件 ，此外这个服务器 和 client 使之间使用了 websocket 通讯协议，原始文件作出改动后， `webpack-dev-server `会实时的编译，但是最后的编译的文件并没有输出到目标文件夹，而是存放在了内存中。
-### 相关介绍
+### 2.相关介绍
 `webpack-dev-server`是一个小型的`Node.js Express`服务器，它使用`webpack-dev-middleware`来服务于`webpack`的包。
+
 **注意:** webpack-dev-server是一个独立的NPM包,你可以通过`npm install webpack-dev-server --save-dev`命令来安装它。
-### webpack-dev-server配置
+### 3.webpack-dev-server配置
 #### 基本目录配置(ContentBase)
 `webpack-dev-server`默认会以当前目录(一般为webpack.config.js所在的目录)为基本目录，除非指定特定的目录，可以通过指定content base来修改这个默认行为。
+
 ```
 $ webpack-dev-server --content-base dist/
 ```
@@ -29,6 +32,7 @@ $ webpack-dev-server --content-base dist/
 **需要注意的是：**
 在 `webpack.config.js` 文件中，如果配置了 output 的 `publicPath` 这个字段的话，在 index.html 文件里面也应该做出调整。 因为 `webpack-dev-server `伺服的文件是相对 `publicPath` 这个路径的 。
 因此，如果你的 `webpack.config.js` 配置成这样的：
+
 ```
 module.exports = {
         entry: './src/index.js',
@@ -40,6 +44,7 @@ module.exports = {
     }
 ```
 那么，在 index.html 文件当中引入的路径也发生相应的变化:
+
 ```
 <!DOCTYPE html>
     <html lang="en">
@@ -106,20 +111,24 @@ devServer:{
 localhost:8080/webpack-dev-server/index.html
 ```
 这个时候这个页面的 header部分 会出现整个 reload消息 的状态。当时改变源文件的时候，即可以完成自动编译打包，页面自动刷新的功能。
+
 如下图所示：
 ![这里写图片描述](http://img.blog.csdn.net/20170525135324638?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGl1amllMTk5MDEyMTc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 **对于Inline模式 ：**
 需要在命令行`webpack-dev-server`中添加`--inline`参数需要写成：
+
 ```
 webpack-dev-server --inline
 ```
 相应的访问的路径需要改写为:
+
 ```
 localhost:8080/index.html
 ```
 该模式下也能完成自动编译打包，页面自动刷新的功能。但是没有的`header 部分`的 reload 消息的显示，不过在**控制台中会显示 reload 的状态**。
 `webpack-dev-server` 会在你的 `webpack.config.js `的入口配置文件中添加一个入口：
+
 ```
 module.exports = {
         entry: {
@@ -137,26 +146,25 @@ module.exports = {
 不过 `Iframe mode` 和` Inline mode` 最后达到的效果都是一样的，都是监听文件的变化，然后再将编译后的文件推送到前端，完成页面的 reload 的。
 两种模式都支持热模块替换(Hot Module Replacement)。热模块替换的好处是：**只替换更新的部分，而不是页面重载**。
 
-### Hot Module Replacement(模块热替换)
+### 4.Hot Module Replacement(模块热替换)
 开启 `Hot Module Replacement`功能，只需要在命令行中添加 `--hot`参数
+
 ```
 webpack-dev-server --hot --inline --content-base ./dist
 ```
 其他配置选项：
+
 ```
 --quiet 控制台中不输出打包的信息
 --compress 开启gzip压缩
 --progress 显示打包的进度
 --open 打开默认浏览器的url
 ```
-**参考文章**
-[详解webpack-dev-server的使用](https://segmentfault.com/a/1190000006964335)
-[详情介绍webpack-dev-server，iframe与inline的区别](http://blog.csdn.net/chengnuo628/article/details/52441977)
-
-### extract-text-webpack-plugin 的使用及安装
+### 5.extract-text-webpack-plugin 的使用及安装
 `extract-text-webpack-plugin`插件的作用是：将样式抽取出来为独立的文件。
 这样做有好处也有坏处。好处是：减少了HTTP请求数；坏处也很明显：就是当你的样式文件很大时，造成编译的js文件也很大，同时有可能引起页面样式加载错乱的现象。
 该插件的安装方法：
+
 ```
 npm install extract-text-webpack-plugin --save-dev
 ```
@@ -187,4 +195,7 @@ module.exports = {
  - **fallback:** 编译后用什么loader来提取css文件，即`style-loader`
  - **use:** 指需要什么样的loader去编译文件，这里由于源文件是`.css`所以选择`css-loader`
  - **publicfile:** 用来覆盖项目路径，生成该css文件的文件路径
-**参考文章**
+
+### 参考文章
+1. [详解webpack-dev-server的使用](https://segmentfault.com/a/1190000006964335)
+2. [详情介绍webpack-dev-server，iframe与inline的区别](http://blog.csdn.net/chengnuo628/article/details/52441977)

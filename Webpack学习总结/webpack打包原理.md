@@ -2,6 +2,7 @@
 #### 允许代码分割(CommonsChunkPlugin)
 对于多个打包入口的情况：
 相应的配置文件：webpack.config.js
+
 ```
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
@@ -34,17 +35,20 @@ module.exports = {
 };
 ```
 main.js:
+
 ```
 import chunk1 from './chunk1.js';
 console.log("main");
 
 ```
 main1.js:
+
 ```
 import chunk1 from './chunk1.js';
 console.log("main1");
 ```
 chunk1.js：
+
 ```
 let chunk1 = 1;
 export default chunk1;
@@ -52,6 +56,7 @@ export default chunk1;
 引入`CommonsChunkPlugin`插件，打包后生成三个文件：一个是`main.js`, 一个`main1.js`，一个`common.js`。这里要注意，`common.js`需要最先加载，因为其中包含`webpack`生成的在浏览器上使用各个块的加载代码，所以页面上使用的时候`common.js`必须最先加载。
 
 common.js:
+
 ```
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// install a JSONP callback for chunk loading
@@ -223,6 +228,7 @@ webpackJsonp函数的三个参数：
 第三个参数`executeModules`,就是执行环境所在的模块。
 
 打包后的main.js:
+
 ```
 webpackJsonp([1],[
 /* 0 */,
