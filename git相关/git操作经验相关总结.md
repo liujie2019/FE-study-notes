@@ -215,6 +215,20 @@ git branch -d 分支名
 ```
 #### 变基(rebase)
 在Git中整合来自不同分支的修改主要有两种方法： `merge和rebase`。
+步骤：
+
+```
+# 假设当前在dev分支上
+# 将master分支上的更新同步到当前分支
+# 特别注意：这一步是最重要的，git此时会自动merge master分支和当前分支dev。如果自动merge成功，就不需要再管了；如果自动merge失败，此时git status查看哪个文件merge失败，打开该文件，手动修改文件中冲突的地方，执行git add 文件名命令去更新相应内容的索引，然后，不需要执行git commit命令，只要执行git rebase --continue。这样git会继续应用(apply)余下的补丁。
+1. git rebase master
+# 切换回master分支
+2. git checkout master
+# 最后把dev分支的最新代码merge到master分支上
+3. git merge dev
+```
+
+需要注意的是：可以在人和时候，使用`git rebase --abort`命令来终止rebase的行动，并且当前分支会回到rebase开始前的状态。
 
 ### 6. git冲突文件编辑
 冲突标记`<<<<<<< （7个<）与=======`之间的内容是我的修改，`=======与>>>>>>>`之间的内容是别人的修改。
@@ -222,4 +236,4 @@ git branch -d 分支名
 
 ### 参考文章
 1. [这些GIT经验够你用一年了](http://www.techug.com/post/some-git-tips.html)
-2. 
+2. [git rebase简介(基本篇)](http://blog.csdn.net/hudashi/article/details/7664631/)
