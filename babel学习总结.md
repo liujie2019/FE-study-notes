@@ -1,27 +1,28 @@
 ## babel学习总结
 Babel是一个广泛使用的转码器，可以将ES6代码转为ES5代码，从而在现有环境执行。
-###基础安装
-如果在CLI(command-line interface命令行界面)使用babel的话，请安装babel-cli：
+### 1. 基础安装
+如果在CLI(command-line interface命令行界面)使用babel的话，请安装`babel-cli`：
 
 ```
+# 全局安装
 $ npm install -g babel-cli
 ```
 
-如果你想结合node.js来写的话，需要安装babel-core：
+如果想结合`node.js`来使用的话，需要安装`babel-core`：
 
 ```
 $ npm install -g babel-core
 ```
 
-###插件和预设(Plugins and Presets)
+### 2. 插件和预设(Plugins and Presets)
 babel6里并没有默认的转换规则，所以你安装了如上两项，用babel运行你的文件会发现并没有什么变化，因此我们需要安装所需插件，并在`.babelrc`文件做一些设置:
-####例如使用箭头函数
+#### 2.1 例如使用箭头函数
 
 ```
 $ npm install --save-dev babel-plugin-transform-es2015-arrow-functions
 ```
 
-同时在.babelrc文件添加：
+同时在`.babelrc`文件添加：
 
 ```
 {
@@ -32,7 +33,8 @@ $ npm install --save-dev babel-plugin-transform-es2015-arrow-functions
 当然还有很多细节我们不可能一点点全部去安装，我们如果想要转换某些特性的话，可以去安装某个版本的预置，babel可以去向下兼容：
 
 ```
-$ npm install --save-dev babel-preset-es2015//.babelrc文件
+$ npm install --save-dev babel-preset-es2015
+# 在.babelrc文件中添加：
 {
   "presets": ["es2015"]
 }
@@ -40,33 +42,34 @@ $ npm install --save-dev babel-preset-es2015//.babelrc文件
 如果想包含所有javascript版本的话：
 
 ```
-$ npm install --save-dev babel-preset-env//.babelrc文件
+$ npm install --save-dev babel-preset-env
+# 在.babelrc文件中添加
 {
   "presets": ["env"]
 }
 ```
 
-###编译使用
-在安装了babel-cli之后，在命令行使用babel命令去编译文件:
+### 3. 编译使用
+在安装了`babel-cli`之后，在命令行使用`babel`命令去编译文件:
 
 ```
-#编译文件
+# 编译文件
 babel es6.js  
-#输出编译后的文件
+# 输出编译后的文件
 babel es6.js -o compiled.js
-监听编译文件变动
+# 监听编译文件变动
 babel es6.js -o -w compiled.js
 ```
 
-安装完babel-cli和babel-core之后，使用babel-node命令去编译并运行文件(不适于生产环境)
+安装完`babel-cli`和`babel-core`之后，使用`babel-node`命令去编译并运行文件(不适于生产环境)
 
 ```
-#编译并运行文件
+# 编译并运行文件
 $ babel-node es6.js
 ```
 
 
-###配置文件.babelrc
+### 4. 配置文件`.babelrc`
 Babel的配置文件是 `.babelrc` ，存放在项目的根目录下。使用Babel的第一步，就是配置这个文件。
 该文件用来设置转码规则和插件，基本格式如下：
 
@@ -105,45 +108,43 @@ $ npm install --save-dev babel-preset-stage-3
 ```
 **注意：** 所有Babel工具和模块的使用，都必须先写好 `.babelrc` 。
 
-### 命令行转码babel-cli
+### 5. babel-cli(命令行转码)
 Babel提供 `babel-cli` 工具，用于命令行转码。
 安装命令如下:
 
 ```
-$ npm install -g babel-cli
+# 局部安装
+npm install --save-dev babel-cli
+# 全局安装
+npm isntall babel-cli -g
 ```
 基本用法:
 
 ```
-转码结果输出到标准输出(输出到命令行窗口)
+# 将转码结果输出到标准输出(输出到命令行窗口)
 $ babel example.js
-
-转码结果写入一个新的文件
---out-file 或 -o 参数指定输出文件
-$ babel example.js --out-file compiled.js
-或者
-$ babel example.js -o compiled.js
-
-整个目录转码
---out-dir 或 -d 参数指定输出目录
-$ babel src --out-dir lib
+# 局部安装使用
+# 转码结果写入一个新的文件，--out-file 或 -o 参数指定输出文件
+node_module/.bin/babel example.js --out-file compiled.js
+# 全局安装使用
+babel example.js --out-file compiled.js
+# 或者
+babel example.js -o compiled.js
+# 整个目录转码，使用--out-dir 或 -d 参数指定输出目录
+babel src --out-dir lib
 或者
 $ babel src -d lib
-
--s 参数生成source map文件
+# 使用-s参数来生成source map文件
 $ babel src -d lib -s
 ```
 在上面给出的转码命令是在全局环境下利用Babel进行转码。也就是说，如果项目要运行，全局环境必须有Babel，这就导致项目对环境产生了依赖。另一方面，这样做也无法支持不同项目使用不同版本的Babel。
 尽管你可以把 Babel CLI 全局安装在你的机器上，但是在项目中安装会更好。
 有两个主要的原因：
+
 1. 在同一台机器上的不同项目或许会依赖不同版本的 Babel 并允许你有选择的更新。
 2. 这意味着项目对工作环境没有隐式依赖，这可以让项目有很好的可移植性并且易于安装。
 对这一问题，相应的解决办法是将 `babel-cli` 安装在项目中：
 
-```
-安装命令
-$ npm install --save-dev babel-cli
-```
 然后，在 `package.json` 文件中的 `scripts` 字段中加入：
 
 ```
@@ -162,7 +163,7 @@ $ npm run build
 npm uninstall -g babel-cli
 ```
 
-### babel-node(运行代码)
+### 6. babel-node(运行代码，是babel-cli 下的一个 command)
 `babel-cli` 工具自带一个 `babel-node ` 命令，提供一个支持ES6的REPL环境。它支持Node的REPL环境的所有功能，而且可以直接运行ES6代码。
 它不用单独安装，而是随 `babel-cli` 一起安装。然后，执行 `babel-node` 就进入PEPL环境。
 
@@ -180,7 +181,7 @@ $ babel-node demo.js
 `babel-node` 也可以安装在项目中:
 
 ```
-$ npm install --save-dev babel-cli
+$ npm install --save-dev babel-node
 ```
 然后，改写package.json文件中的 `scripts` 字段：
 
@@ -191,7 +192,7 @@ $ npm install --save-dev babel-cli
 ```
 上面代码中，使用 `babel-node` 替代 `node` ，这样script.js本身就不用做任何转码处理。
 
-### babel-register
+### 7. babel-register
 `babel-register` 模块改写 `require` 命令，为它加上一个钩子。此后，每当使用 `require` 加载 `.js` 、 `.jsx` 后缀名的文件，就会先用 `Babel` 进行转码。
 
 ```
@@ -206,7 +207,8 @@ require("./index.js");
 然后，就不需要手动对index.js转码了。
 需要注意的是， `babel-register` 只会对 `require` 命令加载的文件转码，而不会对当前文件转码。另外，由于它是实时转码，所以只适合在 **开发环境** 中使用。
 
-### babel-core
+### 8. babel-core
+`babel-core`可以看做`babel`的编译器。`babel`的核心`api`都在这里面。
 如果某些代码需要调用Babel的API进行转码，就要使用 `babel-core` 模块。
 安装命令如下：
 
@@ -218,3 +220,117 @@ $ npm install babel-core --save
 ```
 var babel = require('babel-core');
 ```
+### 9. 使用`webpack`工具
+
+#### 9.1 安装
+除了安装`babel`自己的包，还需要多装一个`babel-loader`配合`webpack`使用。
+
+```
+npm install --save-dev babel-loader babel-core
+```
+#### 9.2 使用
+在`webpack.config.js`中加入`loader`相应的配置：
+
+```
+module: {
+  rules: [
+    { 
+    	test: /\.js$/, 
+    	exclude: /node_modules/, 
+    	use: ['babel-loader'] 
+    }
+  ]
+}
+```
+### 10. babel 的配置
+目前`babel`官方推荐是写到`.babelrc`文件下，你还可以在`package.json`里面添加`babel`字段。不用配置文件的话，可以把配置当做参数传给`babel-cli`。
+#### 10.1 使用`.babelrc`配置文件
+
+```
+{
+"presets": [
+ "env"
+],
+"plugins": [
+ ["transform-runtime", {
+   "helpers": true,
+   "polyfill": true,
+   "regenerator": true,
+   "moduleName": "babel-runtime"
+ }]
+]
+}
+```
+#### 10.2 在`package.json`文件中配置
+
+```
+"babel": {
+"presets": [
+  "env"
+],
+}
+```
+#### 10.3 在命令行参数中配置
+
+```
+babel example.js --plugins=transform-runtime --presets=env
+```
+### 11. `webpack`和`babel`配置`react`开发环境
+#### 11.1 安装`react`
+
+```
+# 安装以下两个包
+npm install --save react react-dom
+```
+#### 11.2 安装babel以及相应的包
+要让`babel`转换`react`代码，首先要安装好`babel`，再装`babel`转化`react`的包。
+
+```
+npm install --save-dev babel-core babel-preset-react babel-preset-env
+# babel-preset-env这个插件很全，能把所有es6语法都转化
+```
+创建`.babelrc`文件，并进行如下配置：
+
+```
+{
+  "presets": ["env", "react"]
+}
+```
+但是，有时候我们不需要那么全的功能，比如说只需要能转化async函数即可。`babel-plugin-transform-async-to-generator`这个插件就能办到。
+
+```
+npm install --save-dev babel-plugin-transform-async-to-generator
+```
+安装完之后，直接在命令行里转化：
+
+```
+babel index.js --out-file main.js --plugins=transform-async-to-generator
+```
+[更多插件详见](https://babeljs.io/docs/plugins/)
+#### 11.3 在`webpack`中配置`babel-loader`
+需要在`webpack`中使用一个`loader`来转化`react`的代码。
+
+```
+# 安装相应的loader
+npm install --save-dev babel-loader
+```
+
+```
+# 相应的配置文件webpack.config.js
+module.exports = {
+  entry: './src/app.js',
+  ...
+  module: {
+    rules: [
+       { 
+	      	test: /\.(js | jsx)$/, 
+	      	loader: 'babel-loader', 
+	      	exclude: /node_modules/ 
+      	}
+    ]
+  }
+};
+```
+
+### 参考文章
+1. [Babel 入门教程](http://www.ruanyifeng.com/blog/2016/01/babel.html)

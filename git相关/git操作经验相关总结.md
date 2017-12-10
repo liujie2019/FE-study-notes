@@ -5,13 +5,13 @@ Git保存的不是文件的变化或者差异，而是一系列不同时刻的�
 3. 暂存(stage);
 4. 提交(commit)更改。
 
-### 获取Git仓库
+### 1.获取Git仓库
 有两种获取Git项目仓库的方法：
 
 1. 在现有项目或目录下导入所有文件到Git中;
 2. 从一个服务器克隆一个现有的Git仓库。
 
-#### 在现有目录中初始化仓库
+#### 1.1 在现有目录中初始化仓库
 如果打算使用Git来对现有的项目进行管理，需要在项目目录中执行如下命令：
 
 ```
@@ -30,12 +30,12 @@ git clone https://github.com/libgit2/libgit2 mylibgit
 #自定义本地仓库名称为mylibgit
 ```
 
-#### 跟踪新文件和暂存已修改文件(git add)
+#### 1.2 跟踪新文件和暂存已修改文件(git add)
 ![](../static/staged.png)
 如上图所示：
 只要在`Changes to be committed`这行下面的，就说明是已暂存状态。
 出现在`Changes not staged for commit`这行下面，说明已跟踪文件的内容发生了变化，但还没有放到暂存区，要暂存这次更新，需要运行`git add`命令。
-### 忽略文件
+### 2. 忽略文件
 一般我们总会有些文件无需纳入Git的管理，也不希望它们总出现在未跟踪文件列表。通常都是些自动生成的文件，比如日志文件，或者编译过程中创建的临时文件等。在这种情况下，我们可以创建一个名为`.gitignore`的文件，列出要忽略的文件模式。
 
 ```
@@ -46,23 +46,23 @@ git clone https://github.com/libgit2/libgit2 mylibgit
 #忽略build/目录下的所有文件
 build/
 ```
-### 查看已暂存和未暂存的修改(可以使用git diff命令)
-### 提交更新
+### 3. 查看已暂存和未暂存的修改(可以使用git diff命令)
+### 4. 提交更新
 
 ```
 git commit -m "说明"
 ```
 ![](../static/gitCommit.png)
 执行`git commit`命令后，可以看到，提交后git会告诉你当前在哪个分支(master)提交的，本次提交的完整SHA-1校验和是多少(463dc4f)，以及在本次提交中，有多少文件修改过，多少行添加和删改过。
-### 跳过使用暂存区域
+### 5. 跳过使用暂存区域
 
 ```
 #给git commit加上-a选项，Git就会自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过git add 步骤。
 git commit -a -m "说明"
 ```
-### 移除文件
+### 6. 移除文件
 
-### 1. git设置关闭自动换行
+### 7. git设置关闭自动换行
 
 ```
 $ git config --global core.autocrlf false 
@@ -73,7 +73,7 @@ $ git config --global core.autocrlf false
 $ git config --global core.safecrlf true
 ```
 
-### 2. git删除文件
+### 8. git删除文件
 要从Git中移除某个文件，就必须要从已跟踪文件清单中移除(确切地说，是从暂存区中移除)，然后提交。可以用`git rm`命令完成此项工作，并连带从工作目录中删除指定的文件，这样以后就不会出现在未跟踪文件清单中了。
 
 * **删除文件跟踪并且删除文件系统中的文件file1**
@@ -101,7 +101,7 @@ git rm --cached file1
 git commit
 ```
 
-### 移动文件(重命名操作)
+### 9. 移动文件(重命名操作)
 
 ```
 git mv README.md READ
@@ -111,7 +111,7 @@ git rm README.md
 git add README
 ```
 
-### 3. 版本回退
+### 10. 版本回退
 版本回退用于线上系统出现问题后恢复旧版本的操作，回退到的版本。
 
 ```
@@ -119,7 +119,7 @@ git reset --hard 版本号
 ```
 这一回退操作针对的是所有文件，如果后悔回退，继续`git pull`操作就可以了。
 
-### 4. 查看提交历史
+### 11. 查看提交历史
 * 查看日志
 ![](../static/gitLog.png)
 
@@ -138,20 +138,20 @@ git show 版本号
 ```
 git diff 版本号1 版本号2
 ```
-### 远程仓库的使用
-#### 查看远程仓库
+### 12. 远程仓库的使用
+#### 12.1 查看远程仓库
 如果想查看你已经配置的远程仓库服务器，可以运行`git remote`命令。该命令会列出你指定的每一个远程服务器的简写。如果你已经克隆了自己的仓库，那么至少应该能看到`origin`-这是Git给你克隆的仓库服务器的默认名称。
 
 ```
 git remote -v
 #该命令会显示需要读写远程仓库使用的Git保存的简写与其对应的URL
 ```
-#### 添加远程仓库
+#### 12.2 添加远程仓库
 
 ```
 git remote add <shortname> <url>
 ```
-#### 从远程仓库中抓取与拉取
+#### 12.3 从远程仓库中抓取与拉取
 
 ```
 #从远程仓库中获取数据，该命令会访问远程仓库，从中拉取所有你还没有的数据。执行完成后，你将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看。
@@ -161,20 +161,20 @@ git fetch [remote-name]
 如果使用`clone`命令克隆了一个仓库，命令会自动将其添加为远程仓库并默认以`origin`为简写。所以，`git fetch origin`会抓取克隆(或上一次抓取)后新推送的所有工作。必须注意`git fetch`命令会将数据拉取到你的本地仓库-它并不会自动合并或修改你当前的工作。当准备好时，必须手动将其合并入你的工作。
 
 如果有一个分支设置为跟踪一个远程分支，可以使用`git pull`命令来自动的抓取，然后合并远程分支到当前分支。运行`git pull`命令通常会从最初克隆的服务器上抓取数据并自动尝试合并到当前所在的的分支。
-#### 推送到远程仓库
+#### 12.4 推送到远程仓库
 
 ```
 #remote-name 远程仓库名称
 #branch-name 远程仓库对应的分支名
 git push [remote-name] [branch-name]
 ```
-#### 查看远程仓库
+#### 12.5 查看远程仓库
 
 ```
 # 查看某一个远程仓库的更多信息
 git remote show [remote-name]
 ```
-#### 远程仓库的移除与重命名
+#### 12.6 远程仓库的移除与重命名
 
 ```
 #重命名
@@ -184,7 +184,7 @@ git remote rm 远程仓库名称
 #重名名或者移除之后，可以使用git remote命令查看操作的结果
 ```
 
-### 5. 分支的意义与管理
+### 13. 分支的意义与管理
 
 创建分支可以避免提交代码后对主分支的影响，同时也使你有了相对独立的开发环境。分支具有很重要的意义。
 
@@ -213,27 +213,36 @@ git merge 分支名
 ```
 git branch -d 分支名
 ```
-#### 变基(rebase)
+#### 13.1 变基(rebase)
 在Git中整合来自不同分支的修改主要有两种方法： `merge和rebase`。
 步骤：
 
 ```
 # 假设当前在dev分支上
 # 将master分支上的更新同步到当前分支
-# 特别注意：这一步是最重要的，git此时会自动merge master分支和当前分支dev。如果自动merge成功，就不需要再管了；如果自动merge失败，此时git status查看哪个文件merge失败，打开该文件，手动修改文件中冲突的地方，执行git add 文件名命令去更新相应内容的索引，然后，不需要执行git commit命令，只要执行git rebase --continue。这样git会继续应用(apply)余下的补丁。
 1. git rebase master
 # 切换回master分支
 2. git checkout master
 # 最后把dev分支的最新代码merge到master分支上
 3. git merge dev
 ```
+特别注意：这一步是最重要的，git此时会自动`merge master分支和当前分支dev`。如果自动merge成功，就不需要再管了；如果自动merge失败，此时`git status`查看哪个文件merge失败，打开该文件，手动修改文件中冲突的地方，执行`git add .`命令去更新相应内容的索引，然后，不需要执行`git commit`命令，只要执行`git rebase --continue`。这样git会继续应用(apply)余下的补丁。
 
 需要注意的是：可以在人和时候，使用`git rebase --abort`命令来终止rebase的行动，并且当前分支会回到rebase开始前的状态。
 
-### 6. git冲突文件编辑
+#### 13.2 git pull和git pull --rebase的区别使用
+两者的区别可以用如下的等式来做解释：
+
+```
+git pull = git fetch + git merge
+git pull --rebase = git fetch + git rebase
+```
+
+### 14. git冲突文件编辑
 冲突标记`<<<<<<< （7个<）与=======`之间的内容是我的修改，`=======与>>>>>>>`之间的内容是别人的修改。
 解决冲突的关键：需要把代码合并好后重新走一遍代码提交流程就好了。
 
 ### 参考文章
 1. [这些GIT经验够你用一年了](http://www.techug.com/post/some-git-tips.html)
 2. [git rebase简介(基本篇)](http://blog.csdn.net/hudashi/article/details/7664631/)
+3. [简单对比git pull和git pull --rebase的使用](https://www.cnblogs.com/kevingrace/p/5896706.html)

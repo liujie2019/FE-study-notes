@@ -24,6 +24,7 @@ React是一款非常优秀的前端框架，你要发挥它完全的性能，你
  1. [React 技术栈系列教程](http://www.ruanyifeng.com/blog/2016/09/react-technology-stack.html)
  2. [React开发社区](https://react.ctolib.com/)
  3. [React同构直出优化总结](http://www.alloyteam.com/2016/06/react-isomorphic/)
+ 4. [react 学习资源分享](https://www.rails365.net/articles/react-xue-xi-zi-yuan-fen-xiang)
 
 ### Redux
 
