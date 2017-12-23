@@ -46,6 +46,13 @@ npm install --save-dev react react-dom
 配置如下所示：
 
 ![](../static/packagejson2.png)
+
+```
+# 编译生成生产模式下的bundle.js
+npm run build
+# 生成开发模式下的bundles以及启动本地server
+npm run dev
+```
 ### 4. 构建本地服务器(webpack-dev-server)
 `webpack-dev-server`一个跑在`8080`端口上的`Express`服务器。这个服务器会在内部调用`webpack`。用`webpack-dev-server`的好处在于：它提供了实时刷新浏览器的"Live Reloading"功能和只替换发生改动的模块的"Hot Module Replacement"（HMR）功能。
 
@@ -69,8 +76,8 @@ webpack-dev-server --hot --inline
 
 //2.通过在webpack.config.js配置文件中配置
 devServer: {
- inline: true,
- hot:true
+ inline: true,//热加载
+ hot:true//热替换
 }
 ```
 `inline`参数为整个页面添加了实时刷新(Live Reloading)功能;
@@ -120,12 +127,12 @@ module.exports = {
 		index: [
 			'webpack-dev-server/client?http://localhost:8080',
 			'webpack/hot/only-dev-server',
-			path.resolve(__dirname, './src/index.jsx')//__dirname是node.js中的一个全局变量，指向当前执行脚本所在的目录
+			path.resolve(__dirname, 'src/index.jsx')//__dirname是node.js中的一个全局变量，指向当前执行脚本所在的目录
 		]
 	},
 	output: {
-		path: path.resolve(__dirname, './dist'),
-		filename: 'bundle.jsx'
+		path: path.resolve(__dirname, 'dist/assets'),
+		filename: 'bundle.[hash].jsx'
 	},
 	module: {
 		rules: [{
@@ -148,10 +155,13 @@ module.exports = {
             template: './index.tmpl.html' 
         }),
         new webpack.optimize.UglifyJsPlugin(),//压缩JS代码
-        new CleanWebpackPlugin('dist/*.*', {
-	      root: __dirname,
-	      verbose: true,
-	      dry: false
+        //清除dist文件夹中重复的文件
+        new CleanWebpackPlugin(
+        	'dist/assets/bundle.*.jsx', //匹配删除的文件
+        	{
+		      root: __dirname,//项目根目录
+		      verbose: true,//开启在控制台输出信息
+		      dry: false//启用删除文件
 		})
 	],
 	devServer: {
@@ -166,10 +176,11 @@ module.exports = {
         //配置简写, 配置过后, 书写该文件路径的时候可以省略文件后缀。  
         extensions: ['.js', '.jsx', '.coffee', '.css', './scss']  
     }  
-};	
+};
 ```
 
 ### 参考文档
 1. [webpack中文文档](https://doc.webpack-china.org/concepts/)
 2. [入门Webpack，看这篇就够了](http://www.jianshu.com/p/42e11515c10f)
 3. [webpack解惑](https://zhuanlan.zhihu.com/p/24744677)
+4. [Webpack——解决疑惑,让你明白](https://www.imooc.com/article/13357)
