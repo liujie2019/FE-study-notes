@@ -22,34 +22,41 @@ npm install jquery@1.12.3
 ```
 ### 更新Node.js和npm
 
-#### 更新Node.js
+#### MAC更新Node.js和Npm到最新版本
 
 * 1. 查看当前本地安装的node版本
 
 ```
 node -v
 ```
-* 2. 清除本地npm缓存
+* 2. 清除本地node.js的缓存
 
 ```
 sudo npm cache clean -f
 ```
-* 3. 安装n
+* 3. 安装n工具(该工具专门用来管理node.js版本)
 
 ```
 sudo npm install -g n
 ```
-你可以选择安装一个指定的版本号`sudo n 5.5.1`或者你只要安装最新的稳定版本`sudo n stable`。
+* 4. 安装最新版本的node.js
 
-* 4. 最后确认一下本地的node.js是否已经更新
+```
+# sudo n 5.5.1
+sudo n stable
+# 也可以选择安装一个指定的版本号
+sudo n 5.5.1
+```
+* 5. 最后确认一下本地的node.js是否已经更新
 
 ```
 node -v
 ```
-#### 更新npm
-
+* 6. 更新npm到最新版
 ```
 npm install npm@latest -g
+# 检查更新后的npm版本
+npm -v
 ```
 ### 1. 检查node和npm的安装位置及版本
 检查node的安装位置及版本：windows中使用where，linux和mac使用which
