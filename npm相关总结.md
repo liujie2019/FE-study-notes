@@ -248,6 +248,8 @@ $ npm cache clean
 # 删除当前目录下的node_modules文件夹
 rm -rf node_modules
 ```
+### 8. npx(npm 5.2.0 内置的包执行器)
+
 
 ### 参考文档
 1. [npm 模块安装机制简介](http://www.ruanyifeng.com/blog/2016/01/npm-install.html)
@@ -256,3 +258,4 @@ rm -rf node_modules
 4. [npm的package.json中文文档](https://github.com/ericdum/mujiang.info/issues/6/)
 5. [npm入门](https://zhuanlan.zhihu.com/p/27539908)
 6. [npm 常用命令详解](http://www.cnblogs.com/PeunZhang/p/5553574.html)
+7. [npx: npm 5.2.0 内置的包执行器](https://zhuanlan.zhihu.com/p/27832595)
