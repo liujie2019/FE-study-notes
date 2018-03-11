@@ -1,4 +1,6 @@
-浏览器将CORS请求分成两类：简单请求和非简单请求。简单请求在之前博客中总结过了，详见[传送门](http://blog.csdn.net/liujie19901217/article/details/50723702)
+浏览器将CORS请求分成两类：简单请求和非简单请求。
+
+简单请求在之前博客中总结过了，详见[传送门](http://blog.csdn.net/liujie19901217/article/details/50723702)。
 这里主要总结一下非简单请求。非简单请求是那种**对服务器有特殊要求的请求**，比如请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json。
 ## 1. **预检请求(preflight request)**
 ### 1.1 为什么要发预检请求

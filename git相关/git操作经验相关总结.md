@@ -268,3 +268,4 @@ git pull --rebase = git fetch + git rebase
 1. [这些GIT经验够你用一年了](http://www.techug.com/post/some-git-tips.html)
 2. [git rebase简介(基本篇)](http://blog.csdn.net/hudashi/article/details/7664631/)
 3. [简单对比git pull和git pull --rebase的使用](https://www.cnblogs.com/kevingrace/p/5896706.html)
+4. [Git，Github和Gitlab简介和基本使用](https://www.jianshu.com/p/8d497989f704)
