@@ -40,3 +40,7 @@ val := conf.String("dev::appname")
 ##### 1.3.1 config模块的初始化
 
 ##### 1.3.2 config模块的API
+
+### 参考文档
+1. [beego入门文档](https://my.oschina.net/astaxie/blog/124040)
+2. [Go语言圣经（中文版）](https://books.studygolang.com/gopl-zh/index.html)

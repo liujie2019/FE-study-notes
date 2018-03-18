@@ -52,6 +52,9 @@ tar -cvf 打包文件名 源文件
 例如：
 tar -cvf img1.tar img1
 
+#打包到指定目录
+tar czvf test.tar *.txt -C /home/work
+
 #解打包
 tar -xvf 打包文件名
 选项：
