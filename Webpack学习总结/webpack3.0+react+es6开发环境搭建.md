@@ -40,7 +40,7 @@ npm install --save-dev babel-loader babel-core babel-preset-env babel-preset-rea
 #### 3.3 安装react相关工具包
 
 ```
-npm install --save-dev react react-dom
+npm install --save react react-dom
 ```
 #### 3.4 在package.json文件的script标签中进行相关配置
 配置如下所示：

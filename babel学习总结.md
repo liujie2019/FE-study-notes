@@ -334,3 +334,4 @@ module.exports = {
 
 ### 参考文章
 1. [Babel 入门教程](http://www.ruanyifeng.com/blog/2016/01/babel.html)
+2. [babel 教程](https://blog.zfanw.com/babel-js/)

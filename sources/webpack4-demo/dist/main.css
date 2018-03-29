@@ -1,0 +1,11 @@
+body {
+  background-color: aquamarine; }
+
+div {
+  width: 600px;
+  height: 600px;
+  background-color: bisque;
+  color: #ff00c8;
+  border-radius: 30px;
+  -webkit-box-shadow: 10px;
+          box-shadow: 10px; }

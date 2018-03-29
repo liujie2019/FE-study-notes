@@ -4,19 +4,26 @@ npm是javascript的包管理工具，是前端模块化下的一个标志性产�
 ```
 # 该命令可以获取install命令的详细信息
 npm help install
+
 # 查看各命令的简单用法
 npm -l
+
 # 初始化package.json
 npm init
+
 # 搜索与查询
 # 使用search命令来搜索npm仓库
 npm search jquery
+
 # 查询jquery
 npm info jquery
+
 # 进行查询过滤操作
 npm info jquery | grep 1.12.3
+
 # 查询版本信息
 npm dist-tag ls jquery
+
 # 安装指定版本的包(使用@加上版本号即可)
 npm install jquery@1.12.3
 ```
@@ -42,8 +49,9 @@ sudo npm install -g n
 * 4. 安装最新版本的node.js
 
 ```
-# sudo n 5.5.1
+#安装稳定版本
 sudo n stable
+
 # 也可以选择安装一个指定的版本号
 sudo n 5.5.1
 ```
@@ -53,6 +61,7 @@ sudo n 5.5.1
 node -v
 ```
 * 6. 更新npm到最新版
+
 ```
 npm install npm@latest -g
 # 检查更新后的npm版本
@@ -95,17 +104,23 @@ npm init -y
 ```
 # 全局安装
 npm install -g 模块名称
+
 # 本地安装
 # 安装好后不写入package.json中,该命令用来安装相应的模块到node_modules目录
 npm install 模块名称
+
 # 安装好后写入package.json的dependencies中（生产环境依赖）
-npm install 模块 --save 
+npm install 模块 --save 或 -S
+
 # 安装好后写入package.json的devDependencies中（开发环境依赖）
-npm install 模块 --save-dev
+npm install 模块 --save-dev 或 -D
+
 # 查看全局安转的包
 npm list --global 或 npm list -g 或者 npm ls -g
+
 # 该命令会显示所有模块：(安装的)模块，子模块以及子模块的子模块等。可以限制输出的模块层级:
 npm list --depth=0
+
 # 全局路径下的包在命令行中可以使用
 uglifyjs example.js -o example.min.js
 ```
@@ -156,7 +171,14 @@ underscore    1.8.2   1.8.3   1.8.3  project
 如果想更新已安装模块，就要用到`npm update`命令。
 
 ```
-npm update <packageName>
+# 更新全局包
+npm update <name> -g
+
+#更新生产环境依赖包
+npm update <name> --save
+
+#更新开发环境依赖包
+npm update <name> --save-dev
 ```
 它会先到远程仓库查询最新版本，然后查询本地版本。如果本地版本不存在，或者远程版本较新，就会安装。
 ### 4. registry
@@ -259,3 +281,4 @@ rm -rf node_modules
 5. [npm入门](https://zhuanlan.zhihu.com/p/27539908)
 6. [npm 常用命令详解](http://www.cnblogs.com/PeunZhang/p/5553574.html)
 7. [npx: npm 5.2.0 内置的包执行器](https://zhuanlan.zhihu.com/p/27832595)
+8. [2018 年了，你还是只会 npm install 吗？](https://juejin.im/post/5ab3f77df265da2392364341)
