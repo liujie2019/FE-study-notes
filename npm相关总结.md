@@ -1,6 +1,5 @@
 npm是javascript的包管理工具，是前端模块化下的一个标志性产物。简单地地说，就是通过npm下载模块，复用已有的代码，提高工作效率。
 ### NPM 命令系统
-
 ```
 # 该命令可以获取install命令的详细信息
 npm help install
@@ -9,7 +8,7 @@ npm help install
 npm -l
 
 # 初始化package.json
-npm init
+npm init -y
 
 # 搜索与查询
 # 使用search命令来搜索npm仓库
@@ -26,6 +25,32 @@ npm dist-tag ls jquery
 
 # 安装指定版本的包(使用@加上版本号即可)
 npm install jquery@1.12.3
+```
+#### 初始化package.json文件
+一般执行`npm init -y`命令可以快速创建一个package.json文件，相应文件如下：
+
+```
+{
+  "name": "npm_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+```
+我们还可以对NPM进行一些默认配置：
+
+```
+npm config set init-author-name "liujie"    # 你的名称
+npm config set init-author-email "abc.example@qq.com" # 你的邮箱
+npm config set init-author-url "https://www/baidu.com"  # 你的个人网页
+npm config set init-license "ISC"   # 开源授权协议名
+npm config set init-version "1.0.0"   # 版本号
 ```
 ### 更新Node.js和npm
 
@@ -132,7 +157,7 @@ uglifyjs example.js -o example.min.js
 npm install <packageName> --force
 ```
 
-#### 正确的区分环境依赖
+#### 2.1 正确的区分环境依赖
 对于一个Web应用来说你的自动构建任务所依赖的包，它属于开发环境依赖，如果你的Web应用依赖jQuery来发起Ajax请求，它应该属于生产环境依赖。
 
 ```
@@ -143,16 +168,19 @@ npm install jquery --save
 ```
 开发环境依赖和开发环境依赖是有区别的，因为如果你的生产应用依赖jquery写入到了开发环境依赖中，它是无法更新的，除非你手动修改package.json文件中的版本信息，并且将node_modules中的jquery删除和重新使用`npm install`安装之外，你别无它法。正确的方法是写入生产应用依赖，并且用`npm update jquery --save`方式来更新你的jquery。
 
-#### 删除npm包
+#### 2.2 删除npm包
 
 ```
 #删除全局模块
 npm uninstall -g <package>
+
 #删除本地模块时你应该思考的问题：是否将在package.json上的相应依赖信息也删除？
 #该命令删除本地模块，但不删除模块留在package.json中的对应信息
 npm uninstall 模块 
+
 #删除模块，同时删除模块留在package.json中dependencies下的对应信息
 npm uninstall 模块 --save 
+
 #删除模块，同时删除模块留在package.json中devDependencies下的对应信息
 npm uninstall 模块 --save-dev
 ```
@@ -282,3 +310,4 @@ rm -rf node_modules
 6. [npm 常用命令详解](http://www.cnblogs.com/PeunZhang/p/5553574.html)
 7. [npx: npm 5.2.0 内置的包执行器](https://zhuanlan.zhihu.com/p/27832595)
 8. [2018 年了，你还是只会 npm install 吗？](https://juejin.im/post/5ab3f77df265da2392364341)
+9. [npx 是什么](https://zhuanlan.zhihu.com/p/27840803)

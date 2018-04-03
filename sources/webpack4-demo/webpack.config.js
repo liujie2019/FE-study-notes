@@ -27,6 +27,18 @@ module.exports = {
             }, {
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+            }, {
+                test:/\.(jpg|gif|jpeg|gif|png)$/,
+	            use:[
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            outputPath: 'images/', // 图片会被打包在 dist/images 目录下
+                            limit: 1024 * 10, //小于10kb进行base64转码引用
+                            name: '[hash:8].[name].[ext]'//打包后图片的名称，在原图片名前加上8位hash值
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -46,6 +58,7 @@ module.exports = {
         //每次打包都会先清除当前目录中dist目录下的文件
         new CleanWebpackPlugin('./dist/bundle.*.js'),
         new webpack.HotModuleReplacementPlugin(),//热加载插件
+        new webpack.NamedModulesPlugin(),//当开启 HMR 的时候使用该插件会显示模块的相对路径，建议用于开发环境
     ],
     //由于压缩后的代码不易于定位错误, 配置该项后发生错误时即可采用source-map的形式直接显示你出错代码的位置  
     devtool: 'eval-source-map', 

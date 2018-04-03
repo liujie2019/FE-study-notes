@@ -8,7 +8,8 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.[hash].js'
+        filename: 'bundle.[hash].js',
+        publicPath: 'http://cdn.eaxmple.com/assets/'
     },
     module: {
         rules: [
@@ -43,7 +44,7 @@ module.exports = {
                 use: {
                         loader: 'html-loader',
                         options: { 
-                            minimize: true
+                            minimize: false //是否压缩html
                         }
                 }
             }, {

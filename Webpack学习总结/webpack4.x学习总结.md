@@ -1,12 +1,12 @@
 webpack 本质上是一个打包工具，它会根据代码的内容解析模块依赖，帮助我们把多个模块的代码打包。webpack 会把我们项目中使用到的多个代码模块（可以是不同文件类型），打包构建成项目运行仅需要的几个静态文件。
 
 ### webpack核心概念
-1. **Entry：**入口，Webpack 执行构建的第一步将从 Entry 开始，可抽象成输入。
-2. **Module：**模块，在 Webpack 里一切皆模块，一个模块对应着一个文件。Webpack 会从配置的 Entry 开始递归找出所有依赖的模块。
-3. **Chunk：**代码块，一个 Chunk 由多个模块组合而成，用于代码合并与分割。
-4. **Loader：**模块转换器，用于把模块原内容按照需求转换成新内容。
-5. **Plugin：**扩展插件，在 Webpack 构建流程中的特定时机注入扩展逻辑来改变构建结果或做你想要的事情。
-6. **Output：**输出结果，在 Webpack 经过一系列处理并得出最终想要的代码后输出结果
+1. **Entry：** 入口，Webpack 执行构建的第一步将从 Entry 开始，可抽象成输入。
+2. **Module：** 模块，在 Webpack 里一切皆模块，一个模块对应着一个文件。Webpack 会从配置的 Entry 开始递归找出所有依赖的模块。
+3. **Chunk：** 代码块，一个 Chunk 由多个模块组合而成，用于代码合并与分割。
+4. **Loader：** 模块转换器，用于把模块原内容按照需求转换成新内容。
+5. **Plugin：** 扩展插件，在 Webpack 构建流程中的特定时机注入扩展逻辑来改变构建结果或做你想要的事情。
+6. **Output：** 输出结果，在 Webpack 经过一系列处理并得出最终想要的代码后输出结果
 
 ### webpack执行流程
 webpack启动后会在entry里配置的module开始递归解析entry所依赖的所有module，每找到一个module, 就会根据配置的loader去找相应的转换规则，对module进行转换后，再解析当前module所依赖的module，这些模块会以entry为分组，一个entry和所有相依赖的module也就是一个chunk，最后webpack会把所有chunk转换成文件输出，在整个流程中webpack会在恰当的时机执行plugin的逻辑。
@@ -25,7 +25,9 @@ webpack --help
 #在项目目录中安装
 npm install webpack webpack-cli -D
 ```
-**特别注意：**`webpack-cli` 是使用 `webpack` 的命令行工具，在 `webpack4.x` 版本之后不再作为 `webpack` 的依赖了，我们使用时需要单独安装这个工具。
+**特别注意：** `webpack-cli` 是使用 `webpack` 的命令行工具，在 `webpack4.x` 版本之后不再作为 `webpack` 的依赖了，我们使用时需要单独安装这个工具。
+
+引入了 mode 配置项，开发者可在 none，development（开发 ） 以及 production（产品）三种模式间选择。该配置项缺省情况下默认使用 production 模式。
 
 **webpack4有两种模式：development和production，默认为production。**
 
@@ -92,6 +94,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    publicPath: 'http://cdn.eaxmple.com/assets/'
   },
 }
 
@@ -116,6 +119,18 @@ module.exports = {
   },
 }
 ```
+#### 2.1 publicPath属性
+**publicPath属性：**指定了在浏览器中用什么地址来引用静态文件，包括图片、js脚本以及css样式加载的地址，一般用于线上发布以及CDN部署的时候使用。具体例子如下：
+
+```
+<link href="http://cdn.eaxmple.com/assets/main.css" rel="stylesheet"></head>
+<body>
+    <div id="root"></div>
+	<script type="text/javascript" src="http://cdn.eaxmple.com/assets/bundle.7e74c10f3f0fabe41a65.js">
+	</script>
+</body>
+```
+之所以会自动使用`publicPath`属性中设置的值，主要在于使用了`html-webpack-plugin`插件来自动生成项目首页文件，这样一来，**link中的href属性和script中的src属性**都会被自动替换。
 ### 3. 安装项目需要用到的工具包
 #### 3.1 安装bable相关工具包
 ```
@@ -357,6 +372,7 @@ npm install webpack-dev-server react-hot-loader -D
 ```
 #### 6.2 配置文件中进行相关配置
 ```
+#在webpack配置文件中添加devServer相应的配置
 devServer: {
         contentBase: './dist',//本地服务器所加载的页面所在的目录
         historyApiFallback: true,//不跳转
@@ -561,4 +577,5 @@ vue-cli 使用 webpack 模板生成的项目文件中，webpack 相关配置存�
 
 ### 参考文档
 1. [webpack 4 教程](https://blog.zfanw.com/webpack-tutorial/#%E6%9F%A5%E7%9C%8B-webpack-%E7%89%88%E6%9C%AC)
+2. [精读《webpack4.0 升级指南》](https://juejin.im/post/5aafc6846fb9a028d936f97c)
 

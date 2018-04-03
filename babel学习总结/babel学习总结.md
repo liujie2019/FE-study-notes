@@ -33,6 +33,7 @@ $ npm install --save-dev babel-plugin-transform-es2015-arrow-functions
 当然还有很多细节我们不可能一点点全部去安装，我们如果想要转换某些特性的话，可以去安装某个版本的预置，babel可以去向下兼容：
 
 ```
+#把ES2015(即ES6）编译成ES5
 $ npm install --save-dev babel-preset-es2015
 # 在.babelrc文件中添加：
 {
@@ -48,6 +49,97 @@ $ npm install --save-dev babel-preset-env
   "presets": ["env"]
 }
 ```
+#### 2.2 Plugin/Preset 排序
+插件中每个访问者都有排序问题。
+
+这意味着如果两次转译都访问相同的程序节点，则转译将按照**plugin 或 preset** 的规则进行排序然后执行。
+
+1. Plugin 会运行在 Preset 之前;
+2. Plugin 会从第一个开始顺序执行;
+3. Preset 的顺序则刚好相反(从最后一个逆序执行)。
+
+```
+{
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties"
+  ]
+}
+#将先执行 transform-decorators-legacy 再执行 transform-class-properties
+
+一定要记得 preset 的顺序是反向的。举个例子:
+
+{
+  "presets": [
+    "es2015",
+    "react",
+    "stage-2"
+  ]
+}
+#按以下顺序运行: stage-2，react，最后es2015
+```
+这主要是为了保证向后兼容，因为大多数用户会在`stage-0`之前列出 `es2015`。
+#### 2.3 babel-plugin-transform-runtime插件
+```
+#源代码如下
+let obj = {name: 'lisi'};
+let obj2 = {age: 23};
+let obj3 = Object.assign({}, obj, obj2);
+
+console.log(obj3);
+```
+```
+#对Object.assign进行编译
+#没有配置babel-plugin-transform-runtime
+'use strict';
+
+var obj = { name: 'lisi' };
+var obj2 = { age: 23 };
+var obj3 = Object.assign({}, obj, obj2);
+
+console.log(obj3);
+```
+```
+#配置babel-plugin-transform-runtime
+'use strict';
+
+var _assign = require('babel-runtime/core-js/object/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var obj = { name: 'lisi' };
+var obj2 = { age: 23 };
+var obj3 = (0, _assign2.default)({}, obj, obj2);
+
+console.log(obj3);
+```
+#### 2.4 babel-polyfill(使得低版本浏览器兼容es6新语法)
+```
+#安装
+npm install -D babel-polyfill
+```
+使用方法：
+
+1. require("babel-polyfill");
+2. import "babel-polyfill";
+3. module.exports = { entry: ["babel-polyfill", "./app/js"] };
+
+**特别说明：第三种方法适用于使用webpack构建的情况，加入到webpack配置文件(webpack.config.js)的entry项中。**
+
+#### 2.5 babel-polyfill和babel-runtime区别
+**两种方式的原理：**
+
+* **babel-polyfill：**它不会将代码编译成低版本的ECMAScript，他的原理是当运行环境中并没有实现的一些方法，babel-polyfill中会给做兼容。
+* **babel-runtime：**将es6编译成es5去运行，前端可以使用es6的语法来写，最终浏览器上运行的是es5。
+
+**优缺点：**
+
+* **babel-polyfill：**通过向全局对象和内置对象的prototype上添加方法来实现，比如运行环境中不支持Array-prototype.find，引入polyfill，前端就可以放心的在代码里用es6的语法来写；但是这样会造成全局空间污染。比如像Array-prototype.find就不存在了，还会引起版本之前的冲突。不过即便是引入babel-polyfill，也不能全用，代码量比较大。
+* **babel-runtime：**不会污染全局对象和内置的对象原型。比如当前运行环境不支持promise，可以通过引入babel-runtime/core-js/promise来获取promise，或者通过babel-plugin-transform-runtime自动重写你的promise。但是它不会模拟内置对象原型上的方法，比如Array-prototype.find，就没法支持了，如果运行环境不支持es6，代码里又使用了find方法，就会出错，因为es5并没有这个方法。
+
+**babel-polyfill 与 babel-runtime 的最大区别在于：babel-polyfill改造目标浏览器，让你的浏览器拥有本来不支持的特性；babel-runtime改造你的代码，让你的代码能在所有目标浏览器上运行，但不改造浏览器。**
 
 ### 3. 编译使用
 在安装了`babel-cli`之后，在命令行使用`babel`命令去编译文件:
@@ -67,10 +159,9 @@ babel es6.js -o -w compiled.js
 # 编译并运行文件
 $ babel-node es6.js
 ```
-
-
 ### 4. 配置文件`.babelrc`
-Babel的配置文件是 `.babelrc` ，存放在项目的根目录下。使用Babel的第一步，就是配置这个文件。
+Babel的配置文件是 `.babelrc` ，存放在项目的根目录下。使用Babel的第一步，就是配置这个文件。**babel 会自动读取 `.babelrc` 里的配置并应用到编译中。**
+
 该文件用来设置转码规则和插件，基本格式如下：
 
 ```
@@ -107,6 +198,21 @@ $ npm install --save-dev babel-preset-stage-3
   }
 ```
 **注意：** 所有Babel工具和模块的使用，都必须先写好 `.babelrc` 。
+
+需要注意的是：`babel-preset-env` 等同于 `babel-preset-latest`，同时又等同于`babel-preset-es2015`, `babel-preset-es2016`和`babel-preset-es2017`三者的集合。
+
+```
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": ["last 1 Chrome versions"] //表示只想支持最新版本的Chrome
+      }
+    }]
+  ]
+}
+```
+最新版本的 Chrome 已经支持箭头函数、class、const，所以 babel 在编译过程中，不会编译它们。这也是为什么我们把 `@babel/preset-env` 称为 JavaScript 的 `Autoprefixer`。
 
 ### 5. babel-cli(命令行转码)
 Babel提供 `babel-cli` 工具，用于命令行转码。
@@ -164,7 +270,8 @@ npm uninstall -g babel-cli
 ```
 
 ### 6. babel-node(运行代码，是babel-cli 下的一个 command)
-`babel-cli` 工具自带一个 `babel-node ` 命令，提供一个支持ES6的REPL环境。它支持Node的REPL环境的所有功能，而且可以直接运行ES6代码。
+`babel-cli` 工具自带一个 `babel-node `命令，提供一个支持ES6的REPL环境。它支持Node的REPL环境的所有功能，而且可以直接运行ES6代码。`babel-node`实现了 node 执行脚本和命令行写代码的能力。
+
 它不用单独安装，而是随 `babel-cli` 一起安装。然后，执行 `babel-node` 就进入PEPL环境。
 
 ```
@@ -209,7 +316,7 @@ require("./index.js");
 
 ### 8. babel-core
 `babel-core`可以看做`babel`的编译器。`babel`的核心`api`都在这里面。
-如果某些代码需要调用Babel的API进行转码，就要使用 `babel-core` 模块。
+如果某些代码需要调用babel的API进行转码，就要使用 `babel-core` 模块。
 安装命令如下：
 
 ```
@@ -249,7 +356,23 @@ module: {
 ```
 {
 "presets": [
- "env"
+ 	[
+ 		"env",
+ 		{
+        "targets": { // 配支持的环境
+          "browsers": [ // 浏览器
+            "last 2 versions",
+            "safari >= 7"
+          ],
+          "node": "current"
+        },
+        "modules": true,  //设置ES6 模块转译的模块格式 默认是 commonjs
+        "debug": true, // debug，编译的时候 console
+        "useBuiltIns": false, // 是否开启自动支持 polyfill
+        "include": [], // 总是启用哪些 plugins
+        "exclude": []  // 强制不启用哪些 plugins，用来防止某些插件被启用
+      }
+ 	]
 ],
 "plugins": [
  ["transform-runtime", {
@@ -277,7 +400,6 @@ babel example.js --plugins=transform-runtime --presets=env
 ```
 ### 11. `webpack`和`babel`配置`react`开发环境
 #### 11.1 安装`react`
-
 ```
 # 安装以下两个包
 npm install --save react react-dom
@@ -335,3 +457,12 @@ module.exports = {
 ### 参考文章
 1. [Babel 入门教程](http://www.ruanyifeng.com/blog/2016/01/babel.html)
 2. [babel 教程](https://blog.zfanw.com/babel-js/)
+3. [Babel 用户手册](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/user-handbook.md)
+4. [Babel 插件手册](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md)
+5. [plugins](https://babeljs.cn/docs/plugins/)
+6. [babel之配置文件.babelrc入门详解](https://juejin.im/post/5a79adeef265da4e93116430)
+7. [Babel 全家桶](https://github.com/brunoyang/blog/issues/20)
+8. [Runtime transform · Babel](https://babeljs.io/docs/plugins/transform-runtime/)
+9. [Polyfill · Babel](https://babeljs.io/docs/usage/polyfill/#usage-in-node--browserify--webpack)
+10. [babel-polyfill vs babel-runtime](https://blog.souche.com/babel-polyfill-vs-babel-runtime/)
+11. [babel到底该如何配置？](https://juejin.im/post/59ec657ef265da431b6c5b03)
