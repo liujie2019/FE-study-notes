@@ -40,3 +40,6 @@ views, 放模板文件的目录，比如： app.set('views', './views')
 view engine, 模板引擎，比如： app.set('view engine', 'jade')
 ```
 
+### 参考文档
+1. [Express使用手记：核心入门](https://juejin.im/post/5902973eb123db3ee46a0107)
+2. 

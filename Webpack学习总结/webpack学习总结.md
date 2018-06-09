@@ -4,3 +4,4 @@ webpack 可以看做是模块打包机：它要做的事情是分析你的项目
 ### 参考文档
 1. [webpack 3 零基础入门教程](http://webpackbook.rails365.net/467000)
 2. [webpack 学习资源分享](https://www.rails365.net/articles/webpack-xue-xi-zi-yuan-fen-xiang)
+3. [细说 webpack 之流程篇](http://taobaofed.org/blog/2016/09/09/webpack-flow/)

@@ -139,3 +139,22 @@ renice [优先级] PID
 #例如
 renice -10 2122
 ```
+### 守护进程
+"守护进程"（daemon）就是一直在后台运行的进程（daemon）。
+#### nohup 命令
+```
+$ nohup node server.js &
+```
+nohup命令对server.js进程做了三件事。
+
+1. 阻止SIGHUP信号发到这个进程。
+2. 关闭标准输入。该进程不再能够接收任何输入，即使运行在前台。
+3. 重定向标准输出和标准错误到文件nohup.out。
+
+也就是说，nohup命令实际上将子进程与它所在的 session 分离了。注意，nohup命令不会自动把进程变为"后台任务"，所以必须加上&符号。
+
+
+
+### 参考博文
+1. [Linux 守护进程的启动方法](http://www.ruanyifeng.com/blog/2016/02/linux-daemon.html)
+2. 

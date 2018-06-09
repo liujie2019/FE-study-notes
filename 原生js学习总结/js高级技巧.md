@@ -31,3 +31,4 @@ addX(2)(1) // 3
 3. [从一道面试题谈谈函数柯里化(Currying)](http://cnodejs.org/topic/5884574e250bf4e2390e9e99)
 4. [JS中的柯里化(currying)](http://www.zhangxinxu.com/wordpress/2013/02/js-currying/)
 5. [函数柯里化小结](https://www.jianshu.com/p/f88a5175e7a2)
+6. [数组扁平化，柯里化，防抖，节流，对象拷贝](https://juejin.im/entry/5ad006556fb9a028ba1fe102)

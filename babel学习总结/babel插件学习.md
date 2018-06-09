@@ -99,6 +99,39 @@ let result = babel.transform(code, {
 #### 3.3 生成（generate）
 利用 `babel-generator` 将 AST 树输出为转码后的代码字符串。
 
+### 5. demo
+
+* **参数path:** 是捕获到的节点对应的信息，我们可以通过path.node获得这个节点的AST，在这个基础上进行修改就能完成了我们的目标。Path 是一个对象，它表示两个节点之间的连接。
+
+
+```
+const babel = require('babel-core');
+
+//babel插件
+let MyVisitor = function({types: t}) {
+    return {
+        visitor: {
+            AssignmentExpression(path) {
+                if(path.node.operator !== '=') {
+                    return;
+                }
+                //改变当前节点的left和right
+                path.node.left = t.identifier('new-name');
+                path.node.right = t.identifier('new-lisi');
+            }
+        }
+    };
+}
+
+const code = `name = lisi`;
+let demo = babel.transform(code, {
+    //使用插件
+    plugins: [MyVisitor]
+});
+
+console.log(demo); //new-name = new-lisi;
+```
+
 ### 参考文档
 1. [理解 Babel 插件](http://web.jobbole.com/88236/)
 2. [astexplorer(分析AST结构工具)](https://astexplorer.net/)
@@ -121,3 +154,4 @@ let result = babel.transform(code, {
 19. [一看就懂的JS抽象语法树](https://juejin.im/post/5a2bf2dd6fb9a044fd11b0d2)
 20. [你真的会用 Babel 吗?](https://juejin.im/post/59b9ffa8f265da06710d8e89)
 21. [Babel 内部原理分析](https://octman.com/blog/2016-08-27-babel-notes/)
+22. [入门babel--实现一个es6的class转换器](https://juejin.im/post/5ac1c5bf518825558949f898)

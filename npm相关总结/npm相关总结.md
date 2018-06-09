@@ -74,12 +74,17 @@ sudo npm install -g n
 * 4. 安装最新版本的node.js
 
 ```
-#安装稳定版本
+#安装最新的稳定版本
 sudo n stable
+
+#安装最新的 LTS 版
+n lts 
 
 # 也可以选择安装一个指定的版本号
 sudo n 5.5.1
 ```
+在电脑上安装完成多个版本后，直接在命令行窗口中输入不带参数的 `n` 命令，会出现一个已安装版本的列表，用键盘上下键选择版本，然后回车，就可以切换默认 Node 版本。
+
 * 5. 最后确认一下本地的node.js是否已经更新
 
 ```
@@ -92,6 +97,38 @@ npm install npm@latest -g
 # 检查更新后的npm版本
 npm -v
 ```
+
+* 7. 直接启动不同版本的 Node
+假如我们将默认的 Node 版本设置为 6.10.0 了，而我们要使用 7.6.0 启动某个应用，也非常简单，只需要：
+
+```
+n use 7.6.0 index.js
+```
+
+* 8. nvm安装node
+
+```
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
+```
+然后依次执行下面两行代码来配置环境变量。
+
+```
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+```
+然后在命令行输入：
+
+```
+nvm
+```
+出现`node version manger`等信息，表示安装成功。
+
+```
+# 安装对应版本的node
+nvm install node版本号
+```
+
+
 ### 1. 检查node和npm的安装位置及版本
 检查node的安装位置及版本：windows中使用where，linux和mac使用which
 
@@ -311,3 +348,5 @@ rm -rf node_modules
 7. [npx: npm 5.2.0 内置的包执行器](https://zhuanlan.zhihu.com/p/27832595)
 8. [2018 年了，你还是只会 npm install 吗？](https://juejin.im/post/5ab3f77df265da2392364341)
 9. [npx 是什么](https://zhuanlan.zhihu.com/p/27840803)
+10. [轻松管理你的 Node 版本](https://www.h5jun.com/post/manage_node_with_n.html)
+11. [nvm(node version manger)](https://github.com/creationix/nvm#install-script)

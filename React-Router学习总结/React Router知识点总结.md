@@ -300,3 +300,4 @@ http://10.0.0.1/concat
 1. [React Router 使用教程](http://www.ruanyifeng.com/blog/2016/05/react_router.html)
 2. [前端路由实现与 react-router 源码分析](http://web.jobbole.com/86407/)
 3. [React Router 中文文档](https://react-guide.github.io/react-router-cn/index.html)
+4. [深入理解 react-router 路由系统](https://zhuanlan.zhihu.com/p/20381597)

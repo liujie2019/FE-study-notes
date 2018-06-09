@@ -7,6 +7,7 @@ npm install babel-polyfill --save-dev
 ### 使用
 ```
 # babel-polyfillde 引用方式有三种：
+
 1.require("babel-polyfill");
 2.import "babel-polyfill";
 3.module.exports = {
