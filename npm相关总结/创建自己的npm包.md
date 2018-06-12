@@ -239,3 +239,4 @@ versions: [ '1.0.0', '1.0.1', '1.0.2-0', '1.0.2-1' ]
 2. [手把手教你创建你的第一个 NPM 包](https://juejin.im/post/5971aa866fb9a06bb5406c94)
 3. [npm](https://www.cnblogs.com/Leo_wl/p/6844253.html)
 4. [使用 NPM 发布与维护 TypeScript 模块](https://my.oschina.net/fenying/blog/1607571)
+5. [深入 Node 模块的安装和发布](https://segmentfault.com/a/1190000004221514)

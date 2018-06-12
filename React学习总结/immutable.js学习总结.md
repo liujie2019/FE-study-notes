@@ -100,7 +100,6 @@ List 对应的数据结构是 js 中的数组，所以数组的一些方法在 I
 
 
 
-
 ### 参考文档
 1. [immutable入坑指南](http://www.aliued.com/?p=4175)
 2. [Immutable 详解及 React 中实践](https://github.com/camsong/blog/issues/3)
@@ -110,3 +109,8 @@ List 对应的数据结构是 js 中的数组，所以数组的一些方法在 I
 6. [我们需要注意的 immutable 操作](https://juejin.im/post/5aa8ae316fb9a028bd4c0202)
 7. [Immutable 操作在 React 中的实践](https://juejin.im/post/5aefff6a518825672a02d7d8)
 8. [如何用React+Redux+ImmutableJS进行SPA开发](http://yunlaiwu.github.io/blog/2016/12/01/react+redux+immutablejs/)
+9. [精读 Immutable 结构共享](https://zhuanlan.zhihu.com/p/27133830)
+10. [为什么用Immutable.js代替普通js对象？](https://zhuanlan.zhihu.com/p/29983598)
+11. [可变对象与 immutable.js](https://zhuanlan.zhihu.com/p/34231785)
+12. [Immutable.js 以及在 react+redux 项目中的实践](https://juejin.im/post/5948985ea0bb9f006bed7472)
+13. [Immutable 详解及 React 中实践](https://www.cnblogs.com/dhsz/p/6855336.html)
