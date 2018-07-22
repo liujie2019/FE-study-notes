@@ -114,3 +114,5 @@ Access-Control-Max-Age: 180000
 1. [跨域资源共享 CORS 详解](http://www.ruanyifeng.com/blog/2016/04/cors.html)
 2. [跨域资源共享 CORS](http://corsbook.rails365.net/467077)
 3. [前端 | 浅谈preflight request](http://www.jianshu.com/p/b55086cbd9af)
+4. [iframe与主框架跨域相互访问方法](https://blog.csdn.net/fdipzone/article/details/17619673/)
+5. [浏览器同源政策及其规避方法](http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html)

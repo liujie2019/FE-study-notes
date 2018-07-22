@@ -5,12 +5,43 @@ Git保存的不是文件的变化或者差异，而是一系列不同时刻的�
 3. 暂存(stage);
 4. 提交(commit)更改。
 
+### git原理图
+![](../static/git_way.png)
+
+* **Workspace:** 工作区(本地电脑存放项目文件的地方)，执行`git add .`命令就把改动提交到了暂存区，执行`git pull`命令将远程仓库的数据拉到当前分支并合并，执行`git checkout [branch-name]`切换分支；
+* **Index/Stage:** 暂存区，在使用git管理项目文件的时候，其本地的项目文件会多出一个`.git`的文件夹，将这个`.git`文件夹称之为版本库。其中`.git`文件夹中包含了两个部分，一个是暂存区（Index或者Stage）,顾名思义就是暂时存放文件的地方，通常使用add命令将工作区的文件添加到暂存区里。执行`git commit -m '说明'`命令就把改动提交到了仓库区（当前分支）；
+* **Repository:** 仓库区（或本地仓库），`.git`文件夹里还包括git自动创建的master分支，并且将HEAD指针指向master分支。执行`git push origin master`提交到远程仓库，执行`git clone 地址`将克隆远程仓库到本地；
+* **Remote:** 远程仓库，就是类似github，coding等网站所提供的仓库。
+
 ### 1.获取Git仓库
 有两种获取Git项目仓库的方法：
 
 1. 在现有项目或目录下导入所有文件到Git中;
-2. 从一个服务器克隆一个现有的Git仓库(推荐)。
+2. 从一个服务器克隆一个现有的Git仓库(推荐)。 
 
+#### 配置git信息
+```
+# 设置用户名和邮箱
+git config --global user.email "你的邮箱"
+git config --global user.name "你的名字"
+
+# 显示电脑的git配置
+git config --list
+```
+#### 首次推送
+```
+# 添加当前目录的所有文件变更到暂存区
+git add .
+
+# 提交暂存区到仓库区
+git commit -m [message]
+
+# 为远程Git更名为origin
+git remote add origin git@github.com:abcd/tmp.git
+
+# 推送此次修改，这是首次推送需要加上-u,之后推送就可以直接git push  origin master,origin是远程Git名字，这个可以自己定义，不过一般是用origin，master是默认的分支，如果不在master分支提交需要写清楚分支名称
+git push -u origin master
+```
 #### 1.1 在现有目录中初始化仓库
 如果打算使用Git来对现有的项目进行管理，需要在项目目录中执行如下命令：
 
@@ -33,6 +64,19 @@ git clone https://github.com/libgit2/libgit2 mylibgit
 #自定义本地仓库名称为mylibgit
 ```
 #### 1.2 跟踪新文件和暂存已修改文件(git add)
+```
+# 添加指定文件到暂存区
+git add [file1] [file2] ...
+
+# 添加指定目录到暂存区，包括子目录
+git add [dir]
+
+# 添加当前目录的所有文件到暂存区
+git add *
+
+# 添加每个变化前，都会要求确认。对于同一个文件的多处变化，可以实现分次提交
+git add -p
+```
 ![](../static/staged.png)
 如上图所示：
 只要在`Changes to be committed`这行下面的，就说明是已暂存状态。
@@ -52,7 +96,23 @@ git add -A .
 
 #### 1.3 提交文件
 ```
+# 提交暂存区到仓库区
 git commit -m "comment"
+
+# 提交暂存区的指定文件到仓库区
+$ git commit [file1] [file2] ... -m "comment"
+
+# 提交工作区自上次commit之后的变化，直接到仓库区
+git commit -a
+
+# 提交时显示所有diff信息
+git commit -v
+
+# 使用一次新的commit，替代上一次提交。如果代码没有任何新变化，则用来改写上一次commit的提交信息
+git commit --amend -m [message]
+
+# 重做上一次commit，并包括指定文件的新变化
+git commit --amend [file1] [file2] ...
 
 # 如果没有删除过文件，可以合并添加和提交文件为一步
 git commit -am "add and commit"
@@ -82,12 +142,18 @@ git push -u origin master -f
 ### 2. 忽略文件(.gitignore)
 一般我们总会有些文件无需纳入Git的管理，也不希望它们总出现在未跟踪文件列表。通常都是些自动生成的文件，比如日志文件，或者编译过程中创建的临时文件等。在这种情况下，我们可以创建一个名为`.gitignore`的文件，列出要忽略的文件模式。
 
-1. 空行不匹配任何内容，所以可以作为块分隔符；
-2. `#`开头表示注释，如果相匹配`#`，可以在前面加一个反斜杠，即`\#`；
-3. 除非加了反斜杠，否则一连串的空格会被忽略；
-4. 如果在匹配的内容前面加上 !，则这些匹配过的部分将被移出，如果要匹配以 ! 开头的内容，需要加上反斜杠，如 \!important.txt；
-5. 如果一个匹配 pattern 后面有一个斜杠，如 foo/，则默认会匹配所有（包含父子文件夹）中的 foo 文件夹内容，并且它不会匹配单个的文件；
-6. 如果一个匹配 pattern 不包含斜杠，如 foo，Git 会将其作为一个 shell 的查找命令匹配内容。
+#### Git 忽略规则匹配语法
+在 .gitignore 文件中，每一行的忽略规则的语法如下：
+
+1. 空格不匹配任意文件，可作为分隔符，可用反斜杠转义
+2. `#`开头的文件标识注释，可以使用反斜杠进行转义
+3. ! 开头的模式标识否定，该文件将会再次被包含，如果排除了该文件的父级目录，则使用 ! 也不会再次被包含。可以使用反斜杠进行转义
+4. / 结束的模式只匹配文件夹以及在该文件夹路径下的内容，但是不匹配该文件
+5. / 开始的模式匹配项目跟目录
+6. 如果一个模式不包含斜杠，则它匹配相对于当前 .gitignore 文件路径的内容，如果该模式不在 .gitignore 文件中，则相对于项目根目录
+7. ** 匹配多级目录，可在开始，中间，结束
+8. ? 通用匹配单个字符
+9. [] 通用匹配单个字符列表
 
 需要注意的`**`：
 
@@ -95,7 +161,35 @@ git push -u origin master -f
 * 如果一个 pattern 以 /** 开头，如 abc/**，则表示匹配 abc 目录下的所有内容；
 * 如果一个 pattern 中间包含 **，如 a/**/b，则会匹配 a/b、a/x/b、a/x/y/b 以及所有类似的内容。
 
+#### 常用匹配示例：
 ```
+# 忽略当前路径下的bin文件夹，bin文件夹下的所有内容都会被忽略，不忽略 bin 文件
+bin/
+
+# 忽略根目录下的bin文件
+/bin
+
+# 忽略 cat.c，不忽略 build/cat.c
+/*.c
+
+# 忽略 debug/io.obj，不忽略 debug/common/io.obj 和 tools/debug/io.obj
+debug/*.obj
+
+# 忽略/foo, a/foo, a/b/foo等
+**/foo
+
+# 忽略a/b, a/x/b, a/x/y/b等
+a/**/b
+
+# 不忽略 bin 目录下的 run.sh 文件
+!/bin/run.sh
+
+# 忽略所有 .log 文件
+*.log
+
+# 忽略当前路径的 config.php 文件
+config.php
+
 # 忽略所有以.o或.a结尾的文件
 *.[oa]
 
@@ -112,7 +206,7 @@ node_modules/
 foo/
 !foo/bar/
 ```
-#### 2.1 git 操作中，add 之后再加入 gitignore
+#### 2.1 git 操作中，add 之后再加入gitignore
 Git 操作中经常会出现这样的问题，当我们 git add 之后，突然想起来要添加一个 gitignore 文件，但是一些诸如 node_modules/, cache/ 等文件已经被 add 进去了，这些文件不会被 ignore 掉，怎么办？最直接的方式是：
 
 ```
@@ -120,6 +214,8 @@ Git 操作中经常会出现这样的问题，当我们 git add 之后，突然�
 git rm -r --cached .
 # 然后重新 add
 git add --all .
+# 重新提交
+git commit -m 'update .gitignore'
 ```
 ### 3. 查看已暂存和未暂存的修改(可以使用git diff命令)
 ```
@@ -177,8 +273,37 @@ git commit -m "说明"
 #给git commit加上-a选项，Git就会自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过git add 步骤。
 git commit -am "说明"
 ```
-### 6. 移除文件
+### 6. 标签
+标签的作用主要是用来做版本回退的，关于版本回退，这也是Git的亮点之一，起到了后悔药的功能。
 
+```
+# 列出所有tag
+git tag
+
+# 新建一个tag在当前commit
+git tag [tag]
+
+# 新建一个tag在指定commit
+git tag [tag] [commit]
+
+# 删除本地tag
+git tag -d [tag]
+
+# 删除远程tag
+git push origin :refs/tags/[tagName]
+
+# 查看tag信息
+git show [tag]
+
+# 提交指定tag
+git push [remote] [tag]
+
+# 提交所有tag
+git push [remote] --tags
+
+# 新建一个分支，指向某个tag
+git checkout -b [branch] [tag]
+```
 ### 7. git设置关闭自动换行
 ```
 $ git config --global core.autocrlf false 
@@ -195,12 +320,15 @@ $ git config --global core.safecrlf true
 
 ```
 # git rm命令后面可以列出文件或者目录的名字
-# 删除文件file1
+# 删除文件file1，并将这次删除放入暂存区
 git rm file1
+
 # 提交刚才的删除动作，之后git不再管理该文件
 git commit
+
 # 此命令删除log/目录下扩展名为.log的所有文件
 git rm log/\*.log
+
 # 删除以~结尾的所有文件
 git rm \*~
 ```
@@ -211,15 +339,21 @@ git rm \*~
 这种情况是我们想把文件从Git仓库中删除(即从暂存区中移除)，但仍然希望保留在当前工作目录中。换句话说，就是想让文件保留在磁盘，但是并不想让Git继续跟踪。
 
 ```
-git rm --cached file1 
+# 停止追踪指定文件，但该文件会保留在工作区
+git rm --cached file1
+ 
 # 提交刚才的删除动作，之后git不再管理该文件，但是文件系统中还是有file1
 git commit
 ```
-
 ### 9. 移动文件(重命名操作)
 ```
-git mv README.md READ
-#git mv相当于运行了下面三条命令：
+# 改名文件，并且将这个改名放入暂存区
+git mv [file-original] [file-renamed]
+
+# 将README.md文件重新命名为README.jsx
+git mv README.md READ.jsx
+
+# git mv相当于运行了下面三条命令
 mv README.md READ
 git rm README.md
 git add README
@@ -228,6 +362,40 @@ git add README
 版本回退用于线上系统出现问题后恢复旧版本的操作，回退到的版本。
 
 ```
+# 恢复暂存区的指定文件到工作区
+git checkout [file]
+
+# 恢复某个commit的指定文件到暂存区和工作区
+git checkout [commit] [file]
+
+# 恢复暂存区的所有文件到工作区
+git checkout .
+
+# 回退到上一个版本，在Git中，用HEAD表示当前版本
+git reset --hard HEAD^
+
+# 重置暂存区的指定文件，与上一次commit保持一致，但工作区不变
+git reset [file]
+
+# 重置暂存区与工作区，与上一次commit保持一致
+git reset --hard
+
+# 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变
+git reset [commit]
+
+# 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致
+git reset --hard [commit]
+
+# 重置当前HEAD为指定commit，但保持暂存区和工作区不变
+git reset --keep [commit]
+
+# 新建一个commit，用来撤销指定commit。后者的所有变化都将被前者抵消，并且应用到当前分支
+git revert [commit]
+
+# 暂时将未提交的变化移除，稍后再移入
+git stash
+git stash pop
+
 git reset --hard 版本号 
 ```
 这一回退操作针对的是所有文件，如果后悔回退，继续`git pull`操作就可以了。
@@ -238,8 +406,36 @@ git reset --hard 版本号
 ![](../static/gitLog.png)
 
 ```
-# 普通查看
+# 普通查看，显示当前分支的版本历史
 git log
+
+# 显示commit历史，以及每次commit发生变更的文件
+git log --stat
+
+# 搜索提交历史，根据关键词
+git log -S [keyword]
+
+# 显示某个commit之后的所有变动，每个commit占据一行
+git log [tag] HEAD --pretty=format:%s
+
+# 显示某个commit之后的所有变动，其"提交说明"必须符合搜索条件
+git log [tag] HEAD --grep feature
+
+# 显示某个文件的版本历史，包括文件改名
+git log --follow [file]
+git whatchanged [file]
+
+# 显示指定文件相关的每一次diff
+git log -p [file]
+
+# 显示过去5次提交
+git log -5 --pretty --oneline
+
+# 显示所有提交过的用户，按提交次数排序
+git shortlog -sn
+
+# 显示指定文件是什么人在什么时间修改过
+git blame [file]
 
 # 简略形式(每次提交占一行)
 git log --oneline
@@ -278,12 +474,34 @@ alias gitlog="git log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%
 * 查看某一历史版本的提交内容，这里能看到版本的详细修改代码
 
 ```
+# 显示某次提交的元数据和内容变化
 git show 版本号
+
+# 显示某次提交发生变化的文件
+git show --name-only [commit]
+
+# 显示某次提交时，某个文件的内容
+git show [commit]:[filename]
 ```
 * 对比不同版本
 
 ```
 git diff 版本号1 版本号2
+
+# 显示暂存区和工作区的差异
+git diff
+
+# 显示暂存区和上一个commit的差异
+git diff --cached [file]
+
+# 显示工作区与当前分支最新commit之间的差异
+git diff HEAD
+
+# 显示两次提交之间的差异
+git diff [first-branch]...[second-branch]
+
+# 显示今天你写了多少行代码
+git diff --shortstat "@{0 day ago}"
 ```
 ### 12. 远程仓库的使用
 #### 12.1 查看远程仓库
@@ -333,7 +551,38 @@ git remote rm 远程仓库名称
 ### 13. 分支的意义与管理
 创建分支可以避免提交代码后对主分支的影响，同时也使你有了相对独立的开发环境。分支具有很重要的意义。
 
-* 创建并切换分支(需要注意：提交代码后才能在其它机器拉分支代码)
+```
+# 新建一个分支，但依然停留在当前分支
+git branch [branch-name]
+
+# 新建一个分支，指向指定commit
+git branch [branch] [commit]
+
+# 新建一个分支，与指定的远程分支建立追踪关系
+git branch --track [branch] [remote-branch]
+
+# 切换到指定分支，并更新工作区
+git checkout [branch-name]
+
+# 切换到上一个分支
+git checkout -
+# 建立追踪关系，在现有分支与指定的远程分支之间
+git branch --set-upstream [branch] [remote-branch]
+
+# 合并指定分支到当前分支，如果有冲突需要手动合并冲突（就是手动编辑文件保存咯），然后add,commit再提交
+git merge [branch]
+
+# 选择一个commit，合并进当前分支
+git cherry-pick [commit]
+# 删除分支
+git branch -d [branch-name]
+
+# 删除远程分支
+git push origin --delete [branch-name]
+git branch -dr [remote/branch]
+```
+
+* 创建并切换到新建的分支(需要注意：提交代码后才能在其它机器拉分支代码)
 
 ```
 git checkout -b 分支名
@@ -342,11 +591,16 @@ git checkout -b 分支名
 
 ```
 git branch 
+
+# 列出所有远程分支
+git branch -r
 ```
 * 查看本地+远程分支
 
 ```
 git branch -va
+# 列出所有本地分支和远程分支
+git branch -a
 ```
 * 切换分支
 
@@ -433,6 +687,9 @@ git pull --rebase = git fetch + git rebase
 ### 14. git冲突文件编辑
 冲突标记`<<<<<<< （7个<）与=======`之间的内容是我的修改，`=======与>>>>>>>`之间的内容是别人的修改。
 解决冲突的关键：需要把代码合并好后重新走一遍代码提交流程就好了。
+
+### 15. 使用.gitkeep来追踪空的文件夹
+Git会忽略空的文件夹。如果你想版本控制包括空文件夹，根据惯例会在空文件夹下放置`.gitkeep`文件。其实对文件名没有特定的要求。一旦一个空文件夹下有文件后，这个文件夹就会在版本控制范围内。
 
 ### 参考文章
 1. [这些GIT经验够你用一年了](http://www.techug.com/post/some-git-tips.html)

@@ -350,3 +350,4 @@ rm -rf node_modules
 9. [npx 是什么](https://zhuanlan.zhihu.com/p/27840803)
 10. [轻松管理你的 Node 版本](https://www.h5jun.com/post/manage_node_with_n.html)
 11. [nvm(node version manger)](https://github.com/creationix/nvm#install-script)
+12. [npm 基本用法和实用技巧](https://github.com/theicebear/npm-basic-usage)

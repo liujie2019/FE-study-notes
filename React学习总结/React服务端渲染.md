@@ -18,3 +18,4 @@ renderToStaticMarkup 转换成不带reactid的html字符串，如果是静态文
 3. [基于create-react-app 和 koa2 脚手架 搭建的 react 服务端渲染项目](https://github.com/yangfan0095/react-koa2-ssr)
 4. [服务端渲染与 Universal React App](https://github.com/AlanWei/blog/blob/master/2017/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93%E4%B8%8E%20Universal%20React%20App/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93%E4%B8%8E%20Universal%20React%20App.md)
 5. [彻底理解React 之React SSR、React服务端渲染，教你从零搭建配置](https://www.jianshu.com/p/47c8e364d0bc?appinstall=1&mType=Group)
+6. [ReactJS 服务端同构实践](https://cloud.tencent.com/developer/article/1032428)

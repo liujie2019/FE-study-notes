@@ -765,3 +765,4 @@ Switch用于渲染第一个被location匹配到的并且作为子元素的<Route
 1. [babel配置-各阶段的stage的区别](https://www.vanadis.cn/2017/03/18/babel-stage-x/)
 2. [npm scripts 使用指南](http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html)
 3. [react-router](http://reacttraining.cn/web/guides/quick-start)
+4. [从零搭建React全家桶框架教程](https://github.com/brickspert/blog/issues/1#init)

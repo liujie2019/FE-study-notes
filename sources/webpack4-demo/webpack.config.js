@@ -28,7 +28,15 @@ module.exports = {
                 }
             }, {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: [{
+                    loader: 'style-loader'
+                }, {
+                    loader: 'css-loader',
+                    options: {
+                        modules: true,
+                        localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                    }
+                }]
             }, {
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
@@ -64,6 +72,10 @@ module.exports = {
         new CleanWebpackPlugin('./dist/bundle.*.js'),
         new webpack.HotModuleReplacementPlugin(), // 热加载插件
         new webpack.NamedModulesPlugin(), // 当开启 HMR 的时候使用该插件会显示模块的相对路径，建议用于开发环境
+        new webpack.ProvidePlugin({
+            _: 'lodash',
+            $: 'jquery'
+        })
     ],
     // 由于压缩后的代码不易于定位错误, 配置该项后发生错误时即可采用source-map的形式直接显示你出错代码的位置
     devtool: 'eval-source-map',

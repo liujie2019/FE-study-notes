@@ -82,3 +82,4 @@ const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
 ### 参考博文
 1. [精读 React 高阶组件](https://github.com/dt-fe/weekly/blob/master/12.%E7%B2%BE%E8%AF%BB%20React%20%E9%AB%98%E9%98%B6%E7%BB%84%E4%BB%B6.md)
 2. [助你完全理解React高阶组件](https://github.com/brickspert/blog/issues/2)
+3. [React高阶组件（译）](http://imweb.io/topic/5907038a2739bbed32f60dad)

@@ -1,3 +1,127 @@
+```
+# man命令用来查看某些命令的用法，这里查看rm命令的用法
+man rm
+```
+
+### 绝对路径和相对路径
+* 绝对路径：都是以"/"开头
+* 相对路径：以"."或者".."开头，一个"."代表当前目录，两个".."代表上一级目录
+
+```
+# 回到上次进入的目录
+cd -
+```
+### 操作文件和目录
+```
+# 复制文件和目录
+cp file1 file2
+cp -r dir1 dir2
+
+# 移动文件和目录
+# 将文件移动到上一级目录
+mv file ..
+# 将文件移动到指定的文件夹
+mv file dir/
+
+# 重命名文件和目录
+mv file1 file2
+# dir2 存在，则为移动操作
+mv dir1 dir2
+
+# 删除文件和目录
+rm file
+rm -r dir
+```
+```
+# 此时当前目录只有dir1目录
+➜  test ls
+dir1
+# 复制dir1目录为dir2目录
+➜  test cp -r dir1 dir2
+➜  test ls
+dir1 dir2
+➜  test cd dir2
+➜  dir2 ls
+a.txt
+# 创建新目录mydir
+➜  test mkdir mydir
+➜  test ls
+dir1  dir2  mydir
+# 复制dir1到已存在的目录mydir时，则实际上是移动dir1到mydir中
+➜  test cp -r dir1 ./mydir
+➜  test ls
+dir1  dir2  mydir
+➜  test cd mydir
+➜  mydir ls
+dir1
+```
+```
+# 创建文件
+touch a.txt
+>a.txt
+
+# 创建目录
+mkdir dir
+
+# 查看文件
+cat file
+
+# 查看文件类型
+file a.txt
+```
+#### 创建隐藏文件和目录
+```
+➜  test touch .aa
+➜  test mkdir .mydir2
+➜  test ls
+dir1  dir2  mydir
+# 想要查看隐藏的目录和文件需要加-a参数
+➜  test ls -a
+.       ..      .aa     .mydir2 dir1    dir2    mydir
+```
+```
+# 查看当前目录下所有可见文件
+➜  test ls
+a.txt   ab.txt  abc.txt b.txt
+# echo可以查看a*匹配的文件
+➜  test echo a*
+a.txt ab.txt abc.txt
+➜  test
+# 查看所有以.txt结尾的文件
+➜  test echo *.txt
+a.txt ab.txt abc.txt b.txt
+```
+### 重定向
+```
+➜  test date >output.txt
+➜  test ls
+a.txt      ab.txt     abc.txt    b.txt      output.txt
+➜  test cat output.txt
+2018年 7月15日 星期日 18时07分06秒 CST
+```
+```
+➜  test ls ./>test.txt
+➜  test ls
+a.txt      ab.txt     abc.txt    b.txt      output.txt test.txt
+➜  test cat test.txt
+a.txt
+ab.txt
+abc.txt
+b.txt
+output.txt
+test.txt
+➜  test ls ./>test.txt | grep ab
+ab.txt
+abc.txt
+➜  test grep less <test.txt
+➜  test grep ab <test.txt
+ab.txt
+abc.txt
+```
+### 用户和文件权限
+### 进程
+### Linux 查找
+
 ### 1. 命令提示符
 ```
 [root@localhost~]#
@@ -141,3 +265,9 @@ grep [选项] 字符串 文件名
 -i 忽略大小写
 -v 排除指定字符串
 ```
+
+### 参考博文
+1. [对 Linux 新手非常有用的 20 个命令](https://zhuanlan.zhihu.com/p/30383450)
+2. [后端程序员必备的Linux基础知识](https://zhuanlan.zhihu.com/p/39157806)
+3. [Linux命令大全](http://man.linuxde.net/cat)
+4. [手册](http://billie66.github.io/TLCL/book/index.html)

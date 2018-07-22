@@ -345,8 +345,21 @@ new CleanWebpackPlugin('./dist/bundle.*.js')
 ```
 #### 5.4 DefinePlugin
 webpack.DefinePlugin相当于是给配置环境定义了一组全局变量，业务代码可以直接使用定义在里面的变量。
-#### 5.5 ProvidePlugin(暴露全局变量)
+#### 5.5 ProvidePlugin(自动加载模块，而不必到处 import 或 require )
+```
+new webpack.ProvidePlugin({
+  identifier: 'module1',
+  // ...
+})
+```
+```
+# 自动加载lodash和jquery，可以将两个变量($和_)都指向对应的 node 模块：
 
+new webpack.ProvidePlugin({
+  $: 'jquery',
+  _: 'lodash'
+})
+```
 #### 5.6 (copy-webpack-plugin)复制静态资源
 ```
 #安装
@@ -574,8 +587,89 @@ vue-cli 使用 webpack 模板生成的项目文件中，webpack 相关配置存�
 
 通常 angular 的项目开发和生产的构建任务都是使用 angular-cli 来运行的，但 angular-cli 只是命令的使用接口，基础功能是由 [angular/devkit](https://github.com/angular/devkit)来实现的，webpack 的构建相关只是其中一部分，详细的配置可以参考[webpack-configs](https://github.com/angular/devkit/tree/master/packages/angular_devkit/build_webpack/src/angular-cli-files/models/webpack-configs)。
 
-
+```
+# webpack.config.js
+const path = require('path');  //引入node的path模块
+const webpack = require('webpack'); //引入的webpack,使用lodash
+const HtmlWebpackPlugin = require('html-webpack-plugin')  //将html打包
+const ExtractTextPlugin = require('extract-text-webpack-plugin')     //打包的css拆分,将一部分抽离出来  
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+// console.log(path.resolve(__dirname,'dist')); //物理地址拼接
+module.exports = {
+    entry: './src/index.js', //入口文件  在vue-cli main.js
+    output: {       //webpack如何输出
+        path: path.resolve(__dirname, 'dist'), //定位，输出文件的目标路径
+        filename: '[name].js'
+    },
+    module: {       //模块的相关配置
+        rules: [     //根据文件的后缀提供一个loader,解析规则
+            {
+                test: /\.js$/,  //es6 => es5 
+                include: [
+                    path.resolve(__dirname, 'src')
+                ],
+                // exclude:[], 不匹配选项（优先级高于test和include）
+                use: 'babel-loader'
+            },
+            {
+                test: /\.less$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                    'css-loader',
+                    'less-loader'
+                    ]
+                })
+            },
+            {       //图片loader
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'file-loader' //根据文件地址加载文件
+                    }
+                ]
+            }
+        ]                  
+    },
+    resolve: { //解析模块的可选项  
+        // modules: [ ]//模块的查找目录 配置其他的css等文件
+        extensions: [".js", ".json", ".jsx",".less", ".css"],  //用到文件的扩展名
+        alias: { //模快别名列表
+            utils: path.resolve(__dirname,'src/utils')
+        }
+    },
+    plugins: [  //插进的引用, 压缩，分离美化
+        new ExtractTextPlugin('[name].css'),  //[name] 默认  也可以自定义name  声明使用
+        new HtmlWebpackPlugin({  //将模板的头部和尾部添加css和js模板,dist 目录发布到服务器上，项目包。可以直接上线
+            file: 'index.html', //打造单页面运用 最后运行的不是这个
+            template: 'src/index.html'  //vue-cli放在跟目录下
+        }),
+        new CopyWebpackPlugin([  //src下其他的文件直接复制到dist目录下
+            { from:'src/assets/favicon.ico',to: 'favicon.ico' }
+        ]),
+        new webpack.ProvidePlugin({  //引用框架 jquery  lodash工具库是很多组件会复用的，省去了import
+            '_': 'lodash'  //引用webpack
+        })
+    ],
+    devServer: {  //服务于webpack-dev-server  内部封装了一个express 
+        port: '8080',
+        before(app) {
+            app.get('/api/test.json', (req, res) => {
+                res.json({
+                    code: 200,
+                    message: 'Hello World'
+                })
+            })
+        }
+    }
+    
+}
+```
 ### 参考文档
 1. [webpack 4 教程](https://blog.zfanw.com/webpack-tutorial/#%E6%9F%A5%E7%9C%8B-webpack-%E7%89%88%E6%9C%AC)
 2. [精读《webpack4.0 升级指南》](https://juejin.im/post/5aafc6846fb9a028d936f97c)
+3. [手写一个webpack4.0配置](https://juejin.im/post/5b4609f5e51d4519596b66a7)
+4. [webpack详解](https://juejin.im/post/5aa3d2056fb9a028c36868aa)
+5. [webpack中文文档](https://webpack.docschina.org/plugins/provide-plugin/)
+6. [Webpack 实用技巧高效实战](https://cloud.tencent.com/developer/article/1033564)
 

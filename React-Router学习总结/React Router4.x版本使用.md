@@ -10,3 +10,4 @@ $ npm install react-router --save
 
 ### 参考博文
 1. [初探 React Router 4.0](https://blog.csdn.net/sinat_17775997/article/details/69218382)
+2. [React Router](http://reacttraining.cn/web/example/preventing-transitions)

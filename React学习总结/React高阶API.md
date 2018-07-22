@@ -18,9 +18,9 @@ React.PureComponent 与 React.Component 几乎完全相同，但 React.PureCompo
 如果React组件的 render() 函数在给定相同的props和state下渲染为相同的结果，在某些场景下你可以使用 React.PureComponent 来提升性能。
 
 ### 2. React.Children(顶层API之一)
-`React.Children` 提供了处理 `this.props.children` 这个不透明数据结构的工具。从本质上来讲， props.children 可以使任何的类型，比如数组、函数、对象等等。
+`React.Children` 提供了处理 `this.props.children`(**表示组件的所有子节点**) 这个不透明数据结构的工具。从本质上来讲， props.children 可以使任何的类型，比如数组、函数、对象等等。
 
->特别注意：this.props 对象的属性与组件的属性一一对应，但是有一个例外，就是 this.props.children 属性。它表示组件的所有子节点。
+>特别注意：this.props 对象的属性与组件的属性一一对应，但是有一个例外，就是 this.props.children 属性，它表示组件的所有子节点。
 
 #### 2.1 React.Children.map
 ```
