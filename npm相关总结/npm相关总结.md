@@ -336,7 +336,25 @@ $ npm cache clean
 rm -rf node_modules
 ```
 ### 8. npx(npm 5.2.0 内置的包执行器)
+### 9. 解决安装某些npm包失败问题
+#### 9.1 通过config命令
+```
+npm config set registry https://registry.npm.taobao.org 
+npm info underscore （如果上面配置正确这个命令会有字符串response）
+```
+#### 9.2 命令行指定
+```
+npm --registry https://registry.npm.taobao.org info underscore 
+```
+#### 9.3 编辑`~/.npmrc`加入下面内容
+```
+registry = https://registry.npm.taobao.org
 
+# 查找.npmrc文件可以使用find命令
+find .npmrc
+```
+
+>.npmrc文件的作用，就是配置npm源。
 
 ### 参考文档
 1. [npm 模块安装机制简介](http://www.ruanyifeng.com/blog/2016/01/npm-install.html)
@@ -351,3 +369,4 @@ rm -rf node_modules
 10. [轻松管理你的 Node 版本](https://www.h5jun.com/post/manage_node_with_n.html)
 11. [nvm(node version manger)](https://github.com/creationix/nvm#install-script)
 12. [npm 基本用法和实用技巧](https://github.com/theicebear/npm-basic-usage)
+13. [安装 node-sass 的正确姿势](https://github.com/lmk123/blog/issues/28)

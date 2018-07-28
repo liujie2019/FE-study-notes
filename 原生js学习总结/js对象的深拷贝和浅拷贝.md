@@ -146,3 +146,5 @@ console.log(obj1.arr1);
 ### 参考文档
 1. [js中对象的复制，浅复制（浅拷贝）和深复制（深拷贝）](https://www.jianshu.com/p/0d7bd31ccf43)
 2. [浅谈js中的浅拷贝和深拷贝](https://www.cnblogs.com/MECN/p/6606119.html)
+3. [javascript中的深拷贝和浅拷贝？](https://www.zhihu.com/question/23031215)
+4. [React 数据为什么要使用immutable方式？浅复制与深复制思考](https://segmentfault.com/a/1190000006729489)

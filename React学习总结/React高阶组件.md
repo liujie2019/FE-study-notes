@@ -2,6 +2,12 @@
 
 高阶组件（ higher-order component ，HOC ）是 React 中复用组件逻辑的一种进阶技巧。它本身并不是 React 的 API，而是一种 React 组件的设计理念，众多的 React 库已经证明了它的价值，例如耳熟能详的 react-redux。
 
+>简单来讲：高阶组件是一个函数，能够接受一个组件并返回一个新的组件。
+
+```
+const EnhancedComponent = higherOrderComponent(WrappedComponent);
+```
+
 ### 使用场景
 当多个组件之间存在很多重复代码(相同属性或者相同方法)，为了提高代码的复用性和可维护性，就可以使用React 高阶组件。高阶组件其实是一个函数，它并不是一个组件，我们需要向它传递一些参数(想要操作的组件、属性)，它的作用就是存储一些公共的属性和方法。
 
@@ -56,7 +62,6 @@ const HocComponent = HOCFactory(WrappedComponent);
 export default HocComponent;
 ```
 ### 理解react-redux的connect函数
-
 把redux的state和action创建函数，通过props注入给了Component。
 你在目标组件Component里面可以直接用this.props去调用redux state和action创建函数了。
 

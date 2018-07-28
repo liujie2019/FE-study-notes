@@ -42,6 +42,17 @@ git remote add origin git@github.com:abcd/tmp.git
 # 推送此次修改，这是首次推送需要加上-u,之后推送就可以直接git push  origin master,origin是远程Git名字，这个可以自己定义，不过一般是用origin，master是默认的分支，如果不在master分支提交需要写清楚分支名称
 git push -u origin master
 ```
+#### 生成Ssh Key
+```
+ssh-keygen -t rsa
+cd $HOME/.ssh/
+# 目录下的id_rsa.pub即公钥
+```
+添加Ssh Key到gitgub 
+
+```
+github.com -> Settings -> SSH and GPG -> New SSH key 
+```
 #### 1.1 在现有目录中初始化仓库
 如果打算使用Git来对现有的项目进行管理，需要在项目目录中执行如下命令：
 
@@ -698,3 +709,5 @@ Git会忽略空的文件夹。如果你想版本控制包括空文件夹，根�
 4. [Git，Github和Gitlab简介和基本使用](https://www.jianshu.com/p/8d497989f704)
 5. [Git 常用操作总结](https://juejin.im/post/5a2cdfe26fb9a0452936b07f)
 6. [用对 gitignore](https://www.barretlee.com/blog/2015/09/06/set-gitignore-after-add-file/)
+7. [一篇文章，教你学会Git](https://cloud.tencent.com/developer/article/1159736)
+8. [Git分支管理策略](https://cloud.tencent.com/developer/article/1096412)

@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack'); // 用于访问内置插件
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     // 入口文件
@@ -16,8 +15,9 @@ module.exports = {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: 'babel-loader'
+                exclude: /node_modules/, // 排除不处理的目录
+                include: path.resolve(__dirname, 'src'), // 精确指定要处理的目录
+                use: 'babel-loader?cacheDirectory' // 缓存loader执行结果 发现打包速度已经明显提升了
             }, {
                 test: /\.html$/,
                 use: {
@@ -75,6 +75,9 @@ module.exports = {
         new webpack.ProvidePlugin({
             _: 'lodash',
             $: 'jquery'
+        }),
+        new webpack.DefinePlugin({
+            VERSION: JSON.stringify('1.0.0')
         })
     ],
     // 由于压缩后的代码不易于定位错误, 配置该项后发生错误时即可采用source-map的形式直接显示你出错代码的位置

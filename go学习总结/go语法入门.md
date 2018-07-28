@@ -204,3 +204,5 @@ fmt.Print(c) //1
 fmt.Print(d) //4
 fmt.Print(f) //2
 ```
+### 参考文档
+1. [厚土Go学习笔记](https://cloud.tencent.com/developer/article/1076012)

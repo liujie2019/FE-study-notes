@@ -4,9 +4,6 @@ import { observer } from 'mobx-react';
 
 // 启用严格模式
 configure({ enforceActions: true });
-console.log();
-const arr = _.map([1, 2, 3], item => item * 2);
-console.log(arr);
 
 class MyState {
     @observable num1 = 0;

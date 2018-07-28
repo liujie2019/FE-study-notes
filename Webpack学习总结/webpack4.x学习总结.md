@@ -1,4 +1,4 @@
-webpack 本质上是一个打包工具，它会根据代码的内容解析模块依赖，帮助我们把多个模块的代码打包。webpack 会把我们项目中使用到的多个代码模块（可以是不同文件类型），打包构建成项目运行仅需要的几个静态文件。
+webpack 是一个强大的模块打包工具，之所以强大的一个原因在于它拥有灵活、丰富的插件机制。webpack 本质上是一个打包工具，它会根据代码的内容解析模块依赖，帮助我们把多个模块的代码打包。webpack 会把我们项目中使用到的多个代码模块（可以是不同文件类型），打包构建成项目运行仅需要的几个静态文件。
 
 ### webpack核心概念
 1. **Entry：** 入口，Webpack 执行构建的第一步将从 Entry 开始，可抽象成输入。
@@ -7,6 +7,8 @@ webpack 本质上是一个打包工具，它会根据代码的内容解析模块
 4. **Loader：** 模块转换器，用于把模块原内容按照需求转换成新内容。
 5. **Plugin：** 扩展插件，在 Webpack 构建流程中的特定时机注入扩展逻辑来改变构建结果或做你想要的事情。
 6. **Output：** 输出结果，在 Webpack 经过一系列处理并得出最终想要的代码后输出结果
+
+>特别注意：webpack 4 不是必须要有配置文件。它将查找./src/index.js作为默认入口点。 而且，它会在./dist/main.js中输出模块包。
 
 ### webpack执行流程
 webpack启动后会在entry里配置的module开始递归解析entry所依赖的所有module，每找到一个module, 就会根据配置的loader去找相应的转换规则，对module进行转换后，再解析当前module所依赖的module，这些模块会以entry为分组，一个entry和所有相依赖的module也就是一个chunk，最后webpack会把所有chunk转换成文件输出，在整个流程中webpack会在恰当的时机执行plugin的逻辑。
@@ -665,6 +667,18 @@ module.exports = {
     
 }
 ```
+#### 8. cross-env(跨平台设置环境变量)
+```
+npm install --save-dev cross-env
+```
+```
+"scripts": {
+    "build": "cross-env NODE_ENV=production webpack --config webpack.production.config.js --mode production",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development --open",
+    "dll": "webpack --config webpack_dll.config.js --mode development"
+  }
+```
+
 ### 参考文档
 1. [webpack 4 教程](https://blog.zfanw.com/webpack-tutorial/#%E6%9F%A5%E7%9C%8B-webpack-%E7%89%88%E6%9C%AC)
 2. [精读《webpack4.0 升级指南》](https://juejin.im/post/5aafc6846fb9a028d936f97c)
@@ -672,4 +686,9 @@ module.exports = {
 4. [webpack详解](https://juejin.im/post/5aa3d2056fb9a028c36868aa)
 5. [webpack中文文档](https://webpack.docschina.org/plugins/provide-plugin/)
 6. [Webpack 实用技巧高效实战](https://cloud.tencent.com/developer/article/1033564)
+7. [玩转webpack（一）上篇：webpack的基本架构和构建流程](https://cloud.tencent.com/developer/article/1006353)
+8. [玩转webpack（二）：webpack的核心对象](https://cloud.tencent.com/developer/article/1030740)
+9. [Webpack 持久化缓存实践](https://cloud.tencent.com/developer/article/1037440)
+10. [cross-env](https://www.npmjs.com/package/cross-env)
+11. [webpack4 中文文档](http://webpack.css88.com/)
 

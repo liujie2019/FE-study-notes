@@ -33,7 +33,7 @@ $ npm install --save-dev babel-plugin-transform-es2015-arrow-functions
 当然还有很多细节我们不可能一点点全部去安装，我们如果想要转换某些特性的话，可以去安装某个版本的预置，babel可以去向下兼容：
 
 ```
-#把ES2015(即ES6）编译成ES5
+# 把ES2015(即ES6）编译成ES5(目前已经废弃)
 $ npm install --save-dev babel-preset-es2015
 # 在.babelrc文件中添加：
 {
@@ -49,6 +49,49 @@ $ npm install --save-dev babel-preset-env
   "presets": ["env"]
 }
 ```
+> 配置项目所支持浏览器所需的polyfill和transform。只编译所需的代码会使你的代码包更小。
+
+```
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions", "safari >= 7"]
+      }
+    }]
+  ]
+}
+```
+上面的例子只包含了支持每个浏览器最后两个版本和safari大于等于7版本所需的polyfill和代码转换。我们使用 `browserslist` 来解析这些信息，所以你可以使用 [browserslist](https://github.com/browserslist/browserslist) 支持的有效的查询格式。
+
+>同样，如果你目标开发 Node.js 而不是浏览器应用的话，你可以配置 babel-preset-env 仅包含特定版本所需的polyfill和transform:
+
+```
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "6.10"
+      }
+    }]
+  ]
+}
+```
+>方便起见，你可以使用"node": "current" 来包含用于运行Babel的Node.js最新版所必需的polyfills和transforms。
+
+```
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "current"
+      }
+    }]
+  ]
+}
+```
+[具体配置详见](https://www.babeljs.cn/docs/plugins/preset-env/)
+
 #### 2.2 Plugin/Preset 排序
 插件中每个访问者都有排序问题。
 
@@ -79,9 +122,9 @@ $ npm install --save-dev babel-preset-env
 #按以下顺序运行: stage-2，react，最后es2015
 ```
 这主要是为了保证向后兼容，因为大多数用户会在`stage-0`之前列出 `es2015`。
-#### 2.3 babel-plugin-transform-runtime插件
+#### 2.3 `babel-plugin-transform-runtime`插件
 ```
-#源代码如下
+# 源代码如下
 let obj = {name: 'lisi'};
 let obj2 = {age: 23};
 let obj3 = Object.assign({}, obj, obj2);
@@ -89,8 +132,8 @@ let obj3 = Object.assign({}, obj, obj2);
 console.log(obj3);
 ```
 ```
-#对Object.assign进行编译
-#没有配置babel-plugin-transform-runtime
+# 对Object.assign进行编译
+# 没有配置babel-plugin-transform-runtime
 'use strict';
 
 var obj = { name: 'lisi' };
@@ -100,7 +143,7 @@ var obj3 = Object.assign({}, obj, obj2);
 console.log(obj3);
 ```
 ```
-#配置babel-plugin-transform-runtime
+# 配置babel-plugin-transform-runtime
 'use strict';
 
 var _assign = require('babel-runtime/core-js/object/assign');
@@ -117,7 +160,7 @@ console.log(obj3);
 ```
 #### 2.4 babel-polyfill(使得低版本浏览器兼容es6新语法)
 ```
-#安装
+# 安装
 npm install -D babel-polyfill
 ```
 使用方法：
@@ -141,7 +184,7 @@ npm install -D babel-polyfill
 
 **babel-polyfill 与 babel-runtime 的最大区别在于：babel-polyfill改造目标浏览器，让你的浏览器拥有本来不支持的特性；babel-runtime改造你的代码，让你的代码能在所有目标浏览器上运行，但不改造浏览器。**
 
-### 3. 编译使用
+### 3. 命令行转码`babel-cli`
 在安装了`babel-cli`之后，在命令行使用`babel`命令去编译文件:
 
 ```
@@ -179,7 +222,7 @@ $ npm install --save-dev babel-preset-es2015
 react转码规则
 $ npm install --save-dev babel-preset-react
 
-ES7不同阶段语法提案的转码规则（共有4个阶段），选装一个
+# ES7不同阶段语法提案的转码规则（共有4个阶段），选装一个,其中0功能最全
 $ npm install --save-dev babel-preset-stage-0
 $ npm install --save-dev babel-preset-stage-1
 $ npm install --save-dev babel-preset-stage-2
@@ -453,6 +496,26 @@ module.exports = {
   }
 };
 ```
+### 12. 问题处理
+#### 对ES7async的支持
+使用 eES7的async 会报：`ReferenceError: regeneratorRuntime is not defined".`
+
+```
+$ npm i --save-dev babel-plugin-transform-runtime
+```
+在 `.babelrc` 文件中添加：
+
+```
+"plugins": [[
+    "transform-runtime",
+    {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true,
+      "moduleName": "babel-runtime"
+    }
+ ]]
+ ```
 
 ### 参考文章
 1. [Babel 入门教程](http://www.ruanyifeng.com/blog/2016/01/babel.html)

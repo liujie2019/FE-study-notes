@@ -1,3 +1,16 @@
+* React.Component – 您创建新组件的方式
+* render（方法） – 描述特定组件的 UI 外观 。
+* ReactDOM.render – 将React组件渲染到DOM节点。
+* state – 组件的内部数据存储（对象）。
+* constructor（this.state） – 建立组件初始 state(状态) 的方式。
+* setState – 一种辅助方法，用于更新组件的 state(状态) 并重新渲染 UI。
+* props – 从父组件传递给子组件的数据。
+* propTypes – 允许您控制传递给子组件的某些 props(属性) 的存在或类型。
+* defaultProps – 允许您为组件设置默认 props(属性) 。
+* componentDidMount – 装载组件后触发
+* componentWillUnmount – 在组件卸载之前触发
+* getDerivedStateFromProps – 当组件装载时以及每当 props 更改时触发。 用于在其 props(属性) 更改时更新组件的状态
+
 ### 1. Context
 Context 通过组件树提供了一个传递数据的方法，从而避免了在每一个层级手动的传递 props 属性。
 #### 1.1 API

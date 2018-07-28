@@ -37,6 +37,47 @@ Greeting.defaultProps = {
   name: 'Stranger'
 };
 ```
+```
+# App.jsx
+import React, { Component, Fragment } from 'react';
+import Test from './componnents/Test';
+
+export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div style={{ marginLeft: 20, padding: 10 }}>
+                <Test testStr="我是父组件传递的值" />
+            </div>
+        );
+    }
+}
+```
+```
+# Test.jsx
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+
+export default class Test extends Component {
+    static defaultProps = {
+        testStr: '我是默认值'
+    }
+    render() {
+        return (
+            <Fragment>
+                {this.props.testStr}
+            </Fragment>
+        );
+    }
+}
+
+Test.propTypes = {
+    testStr: PropTypes.string
+};
+```
 
 ### 3. ref机制
 ```
@@ -115,6 +156,8 @@ class Popper extends React.Component{
     }
 }
 ```
+### getDerivedStateFromProps(生命周期方法)
+
 ### 参考文档
 1. [React 源码剖析系列 － 解密 setState](https://zhuanlan.zhihu.com/p/20328570)
 2. [谈谈 react 中的 key](https://juejin.im/post/5a7c04746fb9a063461fe700)
