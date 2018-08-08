@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import { observable, action, configure, computed } from 'mobx';
 import { observer } from 'mobx-react';
 
@@ -35,13 +35,13 @@ const Main = observer(props => (
 ));
 
 @observer
-export default class App extends React.Component {
+export default class App extends Component {
     render() {
         return (
-            <React.Fragment>
+            <Fragment>
                <Main store={newState} />
                <AllNum store={newState} />
-            </React.Fragment>
+            </Fragment>
         );
     }
 }

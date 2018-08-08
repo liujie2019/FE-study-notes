@@ -2,7 +2,7 @@ import React from 'react';
 import Test from './componnents/Test';
 // import { Controlled as CodeMirror } from 'react-codemirror2';
 // import { Icon, Steps, Button } from 'antd';
-import Routes from './router2';
+// import Routes from './router2';
 // import HocComponent from './User';
 
 // require('codemirror/lib/codemirror.css');
@@ -28,11 +28,12 @@ export default class App extends React.Component {
         const { value } = this.state;
         return (
             <div style={{ marginLeft: 20, padding: 10 }}>
-                {Routes}
+                hello world!
+                {/* {Routes} */}
                 {/* <span>
                     {VERSION}
                 </span> */}
-                {/* <Test testStr="我是父组件传递的值" /> */}
+                <Test testStr="我是父组件传递的值" />
                 {/* <Button type="primary">
                     <Icon type="plus"></Icon>新增app
                 </Button> */}

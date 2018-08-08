@@ -2,11 +2,11 @@ const path = require('path');
 const webpack = require('webpack'); // 用于访问内置插件
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+// const HtmlIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    entry: path.resolve(__dirname, 'src'),
+    entry: path.resolve(__dirname, 'src/index.jsx'),
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.[hash].js'
@@ -16,14 +16,18 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: ['env', 'react']
-                        }
+                use: 'babel-loader'
+            }, {
+                test: /\.css$/,
+                use: [{
+                    loader: 'style-loader'
+                }, {
+                    loader: 'css-loader',
+                    options: {
+                        modules: true,
+                        localIdentName: '[path][name]__[local]--[hash:base64:5]'
                     }
-                ]
+                }]
             }, {
                 test: /\.scss$/,
                 use: ExtractTextPlugin.extract({
@@ -56,28 +60,28 @@ module.exports = {
     },
     plugins: [
         // 每次打包都会先清除当前目录中dist目录下的文件
-        new CleanWebpackPlugin('./dist/bundle.*.js'),
+        new CleanWebpackPlugin(['./dist/bundle.*.js', './dist/*.*.*.js', './dist/**.js']),
         new ExtractTextPlugin({
             filename: '[name].css'
         }),
         // 统一引入lodash和jquery,避免在每个需要的文件中多次引入
-        new webpack.ProvidePlugin({
-            _: 'lodash',
-            $: 'jquery'
-        }),
+        // new webpack.ProvidePlugin({
+        //     _: 'lodash',
+        //     $: 'jquery'
+        // }),
         // 当我们需要使用动态链接库时，首先会找到manifest文件，得到name值记录的全局变量名称，然后找到动态链接库文件进行加载
-        new webpack.DllReferencePlugin({
-            manifest: require('./dist/react.manifest.json')
-        }),
+        // new webpack.DllReferencePlugin({
+        //     manifest: require('./dist/react.manifest.json')
+        // }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             title: 'webpack实战练习',
             template: path.join(__dirname, 'src/index.html')
         }),
-        new HtmlIncludeAssetsPlugin({
-            assets: ['./react.dll.js'], // 添加的资源相对html的路径
-            append: false // false 在其他资源的之前添加 true 在其他资源之后添加
-        })
+        // new HtmlIncludeAssetsPlugin({
+        //     assets: ['./react.dll.js'], // 添加的资源相对html的路径
+        //     append: false // false 在其他资源的之前添加 true 在其他资源之后添加
+        // })
     ],
     // 由于压缩后的代码不易于定位错误, 配置该项后发生错误时即可采用source-map的形式直接显示你出错代码的位置
     devtool: 'eval-source-map',

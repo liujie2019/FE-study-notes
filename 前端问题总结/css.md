@@ -67,3 +67,4 @@ opacity属性我相信大家都知道表示元素的透明度，而将元素的�
 ```
 ### 参考文档
 1. [我遇到的前端面试题2017](http://www.imooc.com/article/20319)
+2. [解决浏览器兼容——css hack](http://www.cnblogs.com/yjzhu/archive/2012/11/06/2756395.html)
