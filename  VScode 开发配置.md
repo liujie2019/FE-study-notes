@@ -38,6 +38,14 @@ import moduleName from 'module';
 # 快捷键
 control + alt + D
 ```
+### fileheader插件(自动生成文件说明注释)
+安装完成后，在用户设置里面加入如下配置即可。
+
+```
+"fileheader.Author": "自己的名字",
+"fileheader.LastModifiedBy": "自己的名字",
+"fileheader.tpl": "/*\r\n * @Author: {author} \r\n * @Date: {createTime} \r\n * @Last Modified by:   {lastModifiedBy} \r\n * @Last Modified time: {updateTime} \r\n */\r\n"
+```
 ### 参考文档
 1. [能让你开发效率翻倍的 VSCode 插件配置（上)](https://juejin.im/post/5a08d1d6f265da430f31950e)
 2. [能让你开发效率翻倍的 VSCode 插件配置（中）](https://juejin.im/post/5ad13d8a6fb9a028ce7c0721)

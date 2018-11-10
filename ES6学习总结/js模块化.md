@@ -1,9 +1,9 @@
 ### 最早这样写
 ```
-function foo(){
+function foo() {
     //...
 }
-function bar(){
+function bar() {
     //...
 }
 ```
@@ -236,3 +236,6 @@ math.foo()
 1. [javascript中的define用法](https://blog.csdn.net/qq_16633405/article/details/77961539)
 2. [JavaScript 模块化七日谈](http://huangxuan.me/2015/07/09/js-module-7day/)
 3. [前端模块化开发那点历史](https://github.com/seajs/seajs/issues/588)
+4. [浅析JS模块规范：AMD和CMD](http://ghmagical.com/article/page/id/N7VY7Hg4TlgW)
+5. [CMD 模块定义规范](https://github.com/seajs/seajs/issues/242)
+6. [AMD (中文版)](https://github.com/amdjs/amdjs-api/wiki/AMD-(%E4%B8%AD%E6%96%87%E7%89%88))
