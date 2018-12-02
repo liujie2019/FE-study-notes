@@ -9,6 +9,6 @@ const Schema = new mongoose.Schema({
 });
 
 // 由schema构造生成Model
-const Model = mongoose.model('user', Schema);
+const Person = mongoose.model('Person', Schema);
 
-module.exports = Model;
+module.exports = Person;
