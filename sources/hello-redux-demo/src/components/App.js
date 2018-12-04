@@ -23,7 +23,7 @@ const mapStateToProps = (state, ownProps) => {
 //     };
 // }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return bindActionCreators(actions, dispatch);
 }
 
@@ -52,6 +52,5 @@ class App extends Component {
         );
     }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
