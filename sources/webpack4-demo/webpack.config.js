@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack'); // 用于访问内置插件
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     // 入口文件
@@ -54,11 +55,11 @@ module.exports = {
         ]
     },
     devServer: {
-        contentBase: './dist', // 本地服务器所加载的页面所在的目录
+        // contentBase: path.join(__dirname, 'dist'), // 本地服务器所加载的页面所在的目录
         historyApiFallback: true, // 不跳转
         inline: true, // 实时刷新
         compress: true,
-        port: 8088,
+        port: 8080,
         hot: true // 热加载
     },
     plugins: [
@@ -70,6 +71,11 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             VERSION: JSON.stringify('1.0.0')
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            title: 'webpack实战练习',
+            template: path.join(__dirname, 'src/index.html')
         })
     ],
     // 由于压缩后的代码不易于定位错误, 配置该项后发生错误时即可采用source-map的形式直接显示你出错代码的位置
