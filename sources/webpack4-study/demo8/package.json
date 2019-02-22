@@ -4,6 +4,8 @@
   "description": "脑壳疼的webpack按需加载",
   "main": "webpack.config.js",
   "dependencies": {
+    "lodash": "^4.17.11",
+    "lodash-es": "^4.17.11",
     "webpack": "^4.29.4",
     "webpack-cli": "^3.2.3"
   },
@@ -13,7 +15,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --open"
+    "dev": "webpack-dev-server --open",
+    "build": "webpack --color --progress --display-used-exports"
   },
   "keywords": [],
   "author": "liujie",

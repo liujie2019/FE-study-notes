@@ -1,14 +1,5 @@
-// import a from './a';
-console.log('this is index.js');
-const btn = document.querySelector('#btn');
+import { chunk } from 'lodash-es';
 
-btn.onclick = () => {
-    import(/* webpackChunkName: "a" */'./a').then(module => {
-        const a = module.default;
-        a();
-    });
-};
-
-if (module.hot) {
-    module.hot.accept();
-}
+console.log(chunk([1, 2, 3], 2));
+// import { a } from './util';
+// a();

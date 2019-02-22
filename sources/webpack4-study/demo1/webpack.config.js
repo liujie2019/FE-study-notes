@@ -1,8 +1,3 @@
-/**
- * 必须使用CommonJs规范
- * 更多高级用法：https://www.webpackjs.com/concepts/output/
- */
-
 const path = require('path');
 
 module.exports = {
