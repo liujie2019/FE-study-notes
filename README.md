@@ -28,6 +28,7 @@
 * [Linux](#Linux)
 * [数据库](#database)
 * [好用工具](#tool)
+* [Mac](#mac)
 
 
 ## <a id="优质博文"></a>优质博文
@@ -193,3 +194,5 @@
 8. [Moment.js-时间之间的各种转换](http://momentjs.com/)
 9. [lodash-各种算法的集合](https://lodash.com/docs/4.17.10)
 10. [vim操作全面讲解](https://www.barretlee.com/blog/2013/06/11/cb-linux-learning-details/)
+## <a id="mac"></a>Mac
+1. [MAC下使用iTerm2和zsh](https://blog.csdn.net/u014102846/article/details/77964493)
