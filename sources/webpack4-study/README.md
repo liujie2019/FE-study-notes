@@ -1,2 +1,2 @@
-1. demo1：打包js
-2. demo2：编译ES6
+* [demo1-打包js](https://github.com/liujie1990/Blog/issues/6)
+* [demo2-编译ES2015+](https://github.com/liujie1990/Blog/issues/6)
