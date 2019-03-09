@@ -196,3 +196,5 @@
 10. [vim操作全面讲解](https://www.barretlee.com/blog/2013/06/11/cb-linux-learning-details/)
 ## <a id="mac"></a>Mac
 1. [MAC下使用iTerm2和zsh](https://blog.csdn.net/u014102846/article/details/77964493)
+2. [最简单iTerm2 + oh-my-zsh打造Mac炫酷终端教程-菜鸟版实操整理](https://www.jianshu.com/p/53eb1075f627)
+
