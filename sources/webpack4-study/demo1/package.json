@@ -1,15 +1,8 @@
 {
-  "name": "demo3",
+  "name": "demo1",
   "version": "1.0.0",
   "description": "",
-  "main": "webpack.config.js",
-  "dependencies": {},
-  "devDependencies": {
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.2.3"
-  },
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development",
@@ -17,5 +10,9 @@
   },
   "keywords": [],
   "author": "liujie",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  }
 }

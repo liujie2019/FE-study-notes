@@ -1,14 +1,4 @@
-// import a from './a';
-console.log('this is index.js');
-const btn = document.querySelector('#btn');
+import './index.css';
 
-btn.onclick = () => {
-    import(/* webpackChunkName: "a" */'./a').then(module => {
-        const a = module.default;
-        a();
-    });
-};
-
-if (module.hot) {
-    module.hot.accept();
-}
+console.log(_.chunk(['a', 'b', 'c', 'd'], 2));
+$('#root').css('background','red');

@@ -1,34 +1,21 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    mode: 'none',
-    // 多页面应用
-    entry: {
-        pageA: './src/pageA.js',
-        pageB: './src/pageB.js'
-    },
+    entry: './src/index.js',
     output: {
+        publicPath: __dirname + '/dist/',
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].bundle.js',
-        chunkFilename: '[name].chunk.js'
+        filename: '[name].bundle.js'
     },
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                // priority属性设置打包优先级
-                common: {
-                    name: 'common', // 代码块的名称
-                    chunks: 'all',
-                    minChunks: 1,
-                    priority: 0
-                },
-                vendor: {
-                    name: 'vendor',
-                    test: /[\\/]node_modules[\\/]/,
-                    chunks: 'all',
-                    priority: 10
-                }
-            }
-        }
-    }
+    module: {
+        rules: []
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+          title: 'Custom template', // 指定生成页面的title
+          template: './src/index.html', // 指定模版文件路径
+          filename: './index.html' // 生成的html文件的文件名。默认index.html，可以直接配置带有子目录
+        })
+    ]
 };

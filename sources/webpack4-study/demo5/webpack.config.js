@@ -1,51 +1,32 @@
-var path = require("path");
+const path = require('path');
 
 module.exports = {
-    // mode: "development",
-    mode: "production",
-	entry: {
-		pageA: "./src/pageA",
-		pageB: "./src/pageB",
-		pageC: "./src/pageC"
-	},
-	optimization: {
-		splitChunks: {
-			cacheGroups: {
-				commons: { // 默认priority为0
-					chunks: "initial",
-					minChunks: 2,
-					maxInitialRequests: 5, // The default limit is too small to showcase the effect
-                    minSize: 0 // This is example is too small to create commons chunks,
-                },
-                vendorA: {
-                    test: /lodash/, // 直接使用test来做路径匹配
-                    chunks: "initial",
-                    name: "vendor-pageA",
-                    enforce: true,
-                },
-                vendorB: {
-                    test: /react/, // 直接使用test来做路径匹配
-                    chunks: "initial",
-                    name: "vendor-pageB",
-                    enforce: true,
+    mode: 'none',
+    entry: {
+        app: './src/index.js'
+    },
+    output: {
+        publicPath: __dirname + '/dist/', // js引用路径或者CDN地址
+        path: path.resolve(__dirname, 'dist'), // 打包文件的输出目录
+        filename: 'bundle.js'
+    },
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [ 'style-loader', 'css-loader' ]
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: {
+                    loader: 'url-loader',
+                    options: {
+                        limit: 1024 * 30, // 30kb以下的文件采用url-loader
+                        // 否则采用file-loader，默认值是file-loader
+                        fallbacck: 'file-loader'
+                    }
                 }
-				// vendor: {
-				// 	test: /node_modules/,
-				// 	chunks: "initial",
-				// 	name: "vendor",
-				// 	priority: 10,
-				// 	enforce: true
-				// }
-			}
-        },
-        runtimeChunk: 'single'
-        // 等价于
-        // runtimeChunk: {
-        //     name: 'runtime'
-        // }
-	},
-	output: {
-		path: path.join(__dirname, "dist"),
-		filename: "[name].js"
-	}
+            }
+        ]
+    }
 };
