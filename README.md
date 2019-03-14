@@ -110,17 +110,19 @@
  16. [react-widgets(react组件库)](https://github.com/jquense/react-widgets)
  17. [从零搭建React全家桶框架教程](https://github.com/brickspert/blog/issues/1#explain)
  18. [React.js 小书](http://huziketang.mangojuice.top/books/react/)
- 19. [redux-saga](https://redux-saga-in-chinese.js.org/)
- 20. [精益 react 学习指南](https://github.com/leanklass/leanreact/)
- 21. [React 学习路线图 - 2018版](https://zhuanlan.zhihu.com/p/39744174)
+ 19. [精益 react 学习指南](https://github.com/leanklass/leanreact/)
+ 20. [React 学习路线图 - 2018版](https://zhuanlan.zhihu.com/p/39744174)
+ 21. [React填坑记(三）：国际化方案](https://zhuanlan.zhihu.com/p/33880069)
 
 ### <a id="redux"></a>redux
  9. [redux中文文档](http://www.redux.org.cn/)
  10. [Redux从设计到源码](https://tech.meituan.com/redux-design-code.html)
  11. [redux-in-chinese](https://github.com/camsong/redux-in-chinese)
+### <a id="Redux-Saga"></a>Redux-Saga
+ 1. [redux-saga](https://redux-saga-in-chinese.js.org/)
 
 ### <a id="react-router"></a>react-router
- 11. [React Router 中文文档](http://react-guide.github.io/react-router-cn/docs/API.html)
+ 1. [React Router 中文文档](http://react-guide.github.io/react-router-cn/docs/API.html)
 
 ## <a id="Webpack"></a>Webpack
 
@@ -196,3 +198,5 @@
 10. [vim操作全面讲解](https://www.barretlee.com/blog/2013/06/11/cb-linux-learning-details/)
 ## <a id="mac"></a>Mac
 1. [MAC下使用iTerm2和zsh](https://blog.csdn.net/u014102846/article/details/77964493)
+2. [最简单iTerm2 + oh-my-zsh打造Mac炫酷终端教程-菜鸟版实操整理](https://www.jianshu.com/p/53eb1075f627)
+
