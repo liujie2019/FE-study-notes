@@ -1,13 +1,14 @@
+[TOC]
 ### 1. 在本地创建一个项目
 
 ```
 $ mkdir hello-world  //创建项目目录hello-world
 $ cd hello-world  //进入项目目录
-$ git init  //初始化项目 
+$ git init  //初始化项目
 $ touch README
 $ git add README  //添加README文件到暂存区
 $ git commit -m 'first commit'   //提交更新，并注释信息“first commit”
-$ git remote add origin git@github.test/hellotest.git    //与远程github仓库建立连接 
+$ git remote add origin git@github.test/hellotest.git    //与远程github仓库建立连接
 $ git push -u origin master   //将本地仓库的更改更新到github仓库上去
 ```
 
@@ -17,7 +18,7 @@ $ git push -u origin master   //将本地仓库的更改更新到github仓库上
 ```
 #把所有文件放入暂存区
 git add .
-#把所有文件从暂存区提交到本地仓库 
+#把所有文件从暂存区提交到本地仓库
 git commit -m "comment"
 #把所有文件从本地仓库推送到相应的远程仓库
 git push origin <branch>
@@ -134,7 +135,7 @@ Git里这三个区域很重要：
 
 所以我们可以发现，HEAD、Index、Working Directory这个时候内容都是一模一样的。
 
-**注意：一般会误解为，Index中的内容是空的，只有`git add`后才会有东西。实际上不是，Index里一直是有内容的。**Git的所有操作就是对这三个区域的状态（或内容）的操作。
+**注意：一般会误解为，Index中的内容是空的，只有`git add`后才会有东西。实际上不是，Index里一直是有内容的。** Git的所有操作就是对这三个区域的状态（或内容）的操作。
 
 ##### Changed
 如果你在Working Directory里修改了文件，git会发现Working Directory里的内容和Index区域里的内容不一致了。这个时候执行`git status`的结果是：
@@ -162,7 +163,7 @@ Git里这三个区域很重要：
 好的，那么现在，我发现代码写的不好，需要回退到上一次的提交，有一下几个命令可以选择：
 
 ##### 1.git reset --hard
-这个命令 非常危险 ，是 git 中少有的几个会丢失信息的操作。它会把回退点之前的所有信息都删掉，一个不留，干干净净。 
+这个命令 非常危险 ，是 git 中少有的几个会丢失信息的操作。它会把回退点之前的所有信息都删掉，一个不留，干干净净。
 举个例子：现在我把 A 文件修改了两次，到了 C 状态 ，并且已提交。 那么我的分支指针是指向 C , 当前文件编辑的状态也是在 C。
 
 ```
@@ -215,7 +216,7 @@ A-B-C
   ↑
 master
 ```
-分支指针指向上次提交点，但是文件状态还是在当前文件C,我看到的现象就是C文件还在，但是没有 add，是红色的。 
+分支指针指向上次提交点，但是文件状态还是在当前文件C,我看到的现象就是C文件还在，但是没有 add，是红色的。
 可以看出，三个命令中 mixed 是最好的回退处理方式，其实这也是`git reset`的默认参数。
 #### 常用的三种操作(带不同参数)
 ##### 1. filename
