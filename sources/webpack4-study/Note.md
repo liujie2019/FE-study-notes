@@ -1,4 +1,4 @@
->目录：
+## 目录
 
 - [npm初始化](#%E5%AE%89%E8%A3%85%E5%89%8D%E5%85%88npm%E5%88%9D%E5%A7%8B%E5%8C%96)
 - [本地服务](#%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1)
@@ -11,7 +11,7 @@
 - [es6 转 es5](#es6-%E8%BD%AC-es5)
 - [es 7的语法](#es-7%E7%9A%84%E8%AF%AD%E6%B3%95)
 - [全局变量引入](#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%BC%95%E5%85%A5)
-- [webpack图片打包](#webpack%E5%9B%BE%E7%89%87%E6%89%93%E5%8C%85)
+- 10. [图片打包处理](#图片打包处理)
 - [当图片小于多少，用base64](#%E5%BD%93%E5%9B%BE%E7%89%87%E5%B0%8F%E4%BA%8E%E5%A4%9A%E5%B0%91%E7%94%A8base64)
 - [打包文件分类](#%E6%89%93%E5%8C%85%E6%96%87%E4%BB%B6%E5%88%86%E7%B1%BB)
 - [希望输出的时候，给这些css\img加上前缀，传到服务器也能访问](#%E5%B8%8C%E6%9C%9B%E8%BE%93%E5%87%BA%E7%9A%84%E6%97%B6%E5%80%99%E7%BB%99%E8%BF%99%4%B8%8A%E5%89%8D%E7%BC%80%E4%BC%A0%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B9%9F%E8%83%BD%E8%AE%BF%E9%97%AE)
@@ -381,91 +381,86 @@ import $ from 'jquery'
 console.log($, 123456)   // 可以正常运行
 ```
 
-## webpack图片打包
+## 图片打包处理
+使用webpack打包我们项目中的图片，在项目中使用图片有如下三种方式：
 
-1. js中创建
-2. css中引入
-3. `<img src="">`
-
-`yarn add file-loader -D`
-
-适合一二情况
-
+>1. 在js中创建图片来引入：
+```js
+import logo from './logo.png'; // 把图片引入，返回的结果是一个新的图片地址
+let image = new Image();
+// image.src = './logo.png'; // 这样写就是一个普通字符串，webpack并不会去打包相应的图片
+console.log(logo); // 可以手动打印出来查看
+image.src = logo; // logo实际存储的是图片打包后的路径
+document.body.appendChild(image);
 ```
-{
-    test: /\.(png|jpg|gif)$/,
-    // 当图片小于多少，用base64,否则用file-loader产生真实的图片
-    use: {
-        loader: 'url-loader',
-        options: {
-            limit: 1,  // 200k 200 * 1024
-            outputPath: '/img/',   // 打包后输出地址
-            publicPath: 'http://www.mayufo.cn'
-        }
-    }
+>注意：图片地址要`import`或者`require`方式引入，如果直接写图片的地址，会默认为字符串，webpack并不会去打包相应的图片。
+
+>2. 在css中引入，如`background('url')`；
+```css
+.box {
+    background: url('./logo.png');
 }
 ```
+这种情况下，`css-loader`会将`css`里面的图片引用转化为`require`的格式，有了`require`，相当于引用了图片，webpack就会对相应的图片打包。例如上述代码实际上被转化为：
+```css
+.box {
+    background: url(require('./logo.png'));
+}
+```
+>3. `<img src="" alt=""/>`；
 
-默认会内部生成一张图片到build,生成图片的路径返回回来
-
-第一种情况: 图片地址要`import`引入，直接写图片的地址，会默认为字符串
+这种情况下，需要解析`html`中的`image`。
 
 ```
-import logo from './logo.png'
-
-console.log(logo)
-let image = new Image()
-
-image.src = logo
-
-document.body.appendChild(image)
+npm i html-withimg-loader -D
 ```
-
-第二种情况: `css-loader`会将`css`里面的图片转为`require`的格式
-
-```
-div {
-    background: url("./logo.png");
-   }
-```
-
-第三种情况: 解析html中的image
-
-`yarn add html-withimg-loader -D`
-
-```
+在webpack中增加如下配置：
+```js
 {
     test: /\.html$/,
     use: 'html-withimg-loader'
 }
 ```
-
-## 当图片小于多少，用base64
-
-`yarn add url-loader -D`
-
-如果过大，才用file-loader
-
+这样一来，我们可以在`html`文件通过`<img src="" alt=""/>`来引入图片了，打包后图片会自动切换成打包后的路径。
 ```
+npm i file-loader -D
+```
+>file-loader默认会在内部生成一张图片到webpack的打包目录(默认是dist)下，并且把生成的图片的路径返回回来。
+
+具体配置如下：适用于上述情况。
+```js
 {
     test: /\.(png|jpg|gif)$/,
-    // 当图片小于多少，用base64,否则用file-loader产生真实的图片
+    use: 'file-loader'
+}
+```
+
+我们都知道，引用图片都将会发送`http`请求，为了减少页面请求数，可以对图片做下限制，当图片小于指定大小时，使用base64编码；
+如果大于指定限制，则使用file-loader生成原图片。
+
+```
+// url-loader是依赖file-loader的，因此这里也会自动安装file-loader
+npm i url-loader -D
+```
+```js
+{
+    test: /\.(png|jpg|gif)$/,
+    // 当图片小于多少k时使用base64，否则用file-loader生成原图片
     use: {
         loader: 'url-loader',
         options: {
-            limit: 1,  // 200k 200 * 1024
-            outputPath: '/img/',   // 打包后输出地址
-            publicPath: 'http://www.mayufo.cn'
+            limit: 200 * 1024,  // 200k
+            outputPath: 'img/', // 打包后输出路径
         }
     }
 }
 ```
-
+[返回目录](#目录)
 ## 打包文件分类
 
-图片
+>1. 打包图片：
 
-```
+```js
  {
     test: /\.(png|jpg|gif)$/,
     // 当图片小于多少，用base64,否则用file-loader产生真实的图片
@@ -478,45 +473,39 @@ div {
     }
  },
 ```
-
-css
-
-```
+>2. 打包样式CSS、Less等
+```js
 plugins: [
  new MiniCssExtractPlugin({
             filename: 'css/main.css'
         }),
 ]
 ```
+>3. 在打包输出的时候，给这些静态资源js/css/img等加上前缀，传到CDN服务器上也能访问，需要进行如下配置：
 
-## 希望输出的时候，给这些css\img加上前缀，传到服务器也能访问
-
-```
+```js
 output: {
-    filename: 'bundle.[hash:8].js',   // hash: 8只显示8位
+    filename: 'bundle.[hash:8].js', // hash: 8只显示8位
     path: path.resolve(__dirname, 'dist'),
-    publicPath: 'http://www.mayufo.cn'  // 给静态资源统一加
+    publicPath: 'http://www.baidu.cn' // 给静态资源统一加(js/css/img)
 },
 ```
-
-
-## 如果只希望处理图片
-
-```
+>如果只需要处理图片，则只单独给图片配置：
+```js
 {
     test: /\.(png|jpg|gif)$/,
     // 当图片小于多少，用base64,否则用file-loader产生真实的图片
     use: {
         loader: 'url-loader',
         options: {
-            limit: 1,  // 200k 200 * 1024
-            outputPath: '/img/',   // 打包后输出地址
-            publicPath: 'http://www.mayufo.cn'
+            limit: 200 * 1024, // 200k
+            outputPath: '/img/', // 打包后输出地址
+            publicPath: 'http://www.baidu.cn' // 设置存放静态资源的服务器地址，将会在打包输出的文件中静态文件前面加上该地址
         }
     }
 }
 ```
-
+[返回目录](#目录)
 ## 打包多页应用
 
 ```
