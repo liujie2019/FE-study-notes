@@ -11,26 +11,22 @@
 - [es6 转 es5](#es6-%E8%BD%AC-es5)
 - [es 7的语法](#es-7%E7%9A%84%E8%AF%AD%E6%B3%95)
 - [全局变量引入](#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%BC%95%E5%85%A5)
-- 10. [图片打包处理](#图片打包处理)
-- [当图片小于多少，用base64](#%E5%BD%93%E5%9B%BE%E7%89%87%E5%B0%8F%E4%BA%8E%E5%A4%9A%E5%B0%91%E7%94%A8base64)
-- [打包文件分类](#%E6%89%93%E5%8C%85%E6%96%87%E4%BB%B6%E5%88%86%E7%B1%BB)
-- [希望输出的时候，给这些css\img加上前缀，传到服务器也能访问](#%E5%B8%8C%E6%9C%9B%E8%BE%93%E5%87%BA%E7%9A%84%E6%97%B6%E5%80%99%E7%BB%99%E8%BF%99%4%B8%8A%E5%89%8D%E7%BC%80%E4%BC%A0%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B9%9F%E8%83%BD%E8%AE%BF%E9%97%AE)
-- [如果只希望处理图片](#%E5%A6%82%E6%9E%9C%E5%8F%AA%E5%B8%8C%E6%9C%9B%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87)
-- [打包多页应用](#%E6%89%93%E5%8C%85%E5%A4%9A%E9%A1%B5%E5%BA%94%E7%94%A8)
-- [配置source-map](#%E9%85%8D%E7%BD%AEsource-map)
-- [watch 改完代表重新打包实体](#watch-%E6%94%B9%E5%AE%8C%E4%BB%A3%E8%A1%A8%E9%87%8D%E6%96%B0%E6%89%93%E5%8C%85%E5%AE%9E%E4%BD%93)
-- [webpack的其他三个小插件](#webpack%E7%9A%84%E5%85%B6%E4%BB%96%E4%B8%89%E4%B8%AA%E5%B0%8F%E6%8F%92%E4%BB%B6)
-- [webpack 跨域](#webpack-%E8%B7%A8%E5%9F%9F)
-- [如果后端给的请求没有API 「跨域」](#%E5%A6%82%E6%9E%9C%E5%90%8E%E7%AB%AF%E7%BB%99%E7%9A%84%E8%AF%B7%E6%B1%82%E6%B2%A1%E6%9C%89api-%E8%B7%A8%E5%9F%9F)
-- [前端只想单纯mock数据 「跨域」](#%E5%89%8D%E7%AB%AF%E5%8F%AA%E6%83%B3%E5%8D%95%E7%BA%AFmock%E6%95%B0%E6%8D%AE-%E8%B7%A8%E5%9F%9F)
-- [有服务端，不用代理, 服务端启动webpack 「跨域」](#%E6%9C%89%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%8D%E7%94%A8%E4%BB%A3%E7%90%86-%E6%9C%8D%E5%8A%A1%E5%8A%A8webpack-%E8%B7%A8%E5%9F%9F)
-- [webpack解析resolve](#webpack%E8%A7%A3%E6%9E%90resolve)
-- [但是每次引入都很长，如何优雅引入](#%E4%BD%86%E6%98%AF%E6%AF%8F%E6%AC%A1%E5%BC%95%E5%85%A5%E9%83%BD%E5%BE%88%E9%95%BF%E5%A6%82%E4%BD%95%E4%BC%9%95%E5%85%A5)
-- [省略扩展名](#%E7%9C%81%E7%95%A5%E6%89%A9%E5%B1%95%E5%90%8D)
-- [定义环境变量](#%E5%AE%9A%E4%B9%89%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F)
-- [区分两个不同的环境](#%E5%8C%BA%E5%88%86%E4%B8%A4%E4%B8%AA%E4%B8%8D%E5%90%8C%E7%9A%84%E7%8E%AF%E5%A2%83)
-- [webpack 优化](#webpack-%E4%BC%98%E5%8C%96)
-- [优化：当某些包是独立的个体没有依赖](#%E4%BC%98%E5%8C%96%E5%BD%93%E6%9F%90%E4%BA%9B%E5%8C%85%E6%98%AF%E7%8B%AC%E7%AB%8B%E7%9A%84%E4%B8%AA%E4%BD%93%E6%B2%A1%E6%9C%89%E4%BE%9D%E8%B5%96)
+- [10. 图片打包处理](#图片打包处理)
+- [11. 打包文件分类](#打包文件分类)
+- [12. 打包多页面应用](#打包多页面应用)
+- [13. 配置source-map](#配置source-map)
+- [14. watch用法](#watch用法)
+- [15. webpack小插件应用](#webpack小插件应用)
+    - [clean-webpack-plugin](#clean-webpack-plugin)
+    - [copy-webpack-plugin](#copy-webpack-plugin)
+    - [BannerPlugin](#BannerPlugin)
+- [16. webpack跨域问题](#webpack跨域问题)
+- [17. resolve属性的配置](#resolve属性的配置)
+- [18. 定义环境变量](#定义环境变量)
+- [19. 区分不同环境](#区分不同环境)
+- [20. webpack优化](#webpack优化)
+    - [20. noParse优化](#noParse优化)
+    - [优化：当某些包是独立的个体没有依赖](#%E4%BC%98%E5%8C%96%E5%BD%93%E6%9F%90%E4%BA%9B%E5%8C%85%E6%98%AF%E7%8B%AC%E7%AB%8B%E7%9A%84%E4%B8%AA%E4%BD%93%E6%B2%A1%E6%9C%89%E4%BE%9D%E8%B5%96)
 - [优化：规则匹配设置范围](#%E4%BC%98%E5%8C%96%E8%A7%84%E5%88%99%E5%8C%B9%E9%85%8D%E8%AE%BE%E7%BD%AE%E8%8C%83%E5%9B%B4)
 - [优化：忽略依赖中不必要的语言包](#%E4%BC%98%E5%8C%96%E5%BF%BD%E7%95%A5%E4%BE%9D%E8%B5%96%E4%B8%AD%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E8%AF%AD%85)
 - [动态链接库](#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93)
@@ -499,6 +495,7 @@ output: {
         loader: 'url-loader',
         options: {
             limit: 200 * 1024, // 200k
+            // 注意img前面要多加一个/。否则打包后地址不对
             outputPath: '/img/', // 打包后输出地址
             publicPath: 'http://www.baidu.cn' // 设置存放静态资源的服务器地址，将会在打包输出的文件中静态文件前面加上该地址
         }
@@ -506,12 +503,12 @@ output: {
 }
 ```
 [返回目录](#目录)
-## 打包多页应用
+## 打包多页面应用
 
-```
+```js
 // 多入口
-let path = require('path')
-let HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -520,174 +517,155 @@ module.exports = {
         other: './src/other.js'
     },
     output: {
-        filename: "[name].js",
-        path: path.resolve(__dirname, 'dist2')
+        filename: '[name].js',
+        path: path.resolve(__dirname, 'dist')
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html',
             filename: 'home.html',
-            chunks: ['home']
+            chunks: ['home'] // home.html里只有home.js
         }),
         new HtmlWebpackPlugin({
             template: './index.html',
             filename: 'other.html',
-            chunks: ['other', 'home']   // other.html 里面有 other.js & home.js
+            chunks: ['other', 'home'] // other.html里有 other.js和home.js
         }),
     ]
 }
-
 ```
-
+[返回目录](#目录)
 ## 配置source-map
-
-`yarn add @babel/core  @babel/preset-env babel-loader  webpack-dev-server -D`
-
-`devtool: 'source-map'` // 增加映射文件调试源代码
-
-1. 源码映射 会标识错误的代码 打包后生成独立的文件 大而全 「source-map」
-2. 不会陈胜单独的文件 但是可以显示行和列  「evl-source-map」
-3. 不会产生列，产生单独的映射文件  「cheap-module-source-map」
-4. 不会产生文件 集成在打包后的文件中 不会产生列 「cheap-module-eval-source-map」
-
-
-## watch 改完代表重新打包实体
-
 ```
-watch: true,
-watchOptions: {
-    poll: 1000,   // 每秒检查一次变动
-    aggregateTimeout: 300,  // 当第一个文件更改，会在重新构建前增加延迟
-    ignored: /node_modules/  // 对于某些系统，监听大量文件系统会导致大量的 CPU 或内存占用。这个选项可以排除一些巨大的文件夹，
-},
+npm i @babel/core @babel/preset-env babel-loader webpack-dev-server -D
+```
+```js
+devtool: 'source-map' // 增加映射文件，可以帮助我们调试源代码
 ```
 
+1. **source-map**：源码映射，打包后会单独生成一个source-map文件，出错了会标识当前报错的列和行，特点：大而全；
+2. **evl-source-map**：不会生成单独的文件 但是可以显示行和列(实际上是把source-map文件放到了打包后的js文件中)，特点：集成到打包后的文件中；
+3. **cheap-module-source-map(用的少)**：不会产生列，但是生成一个单独的映射文件；
+4. **cheap-module-eval-source-map**：不会产生文件，集成在打包后的文件中，不会产生列(即不会定位到精确的报错列)；
 
-## webpack的其他三个小插件
-
-1. cleanWebpackPlugin
-
-每次打包之前删掉dist目录
-`yarn add clean-webpack-plugin -D`
-
-[clean-webpack-plugin](https://github.com/johnagan/clean-webpack-plugin)
-
+[返回目录](#目录)
+## watch用法
+`wacth`用于监听代码的变更，进行代码实时编译打包。具体配置如下：
+```js
+module.exports = {
+  // 只有在开启监听模式时，watchOptions才有意义
+  // 默认为false，也就是不开启
+  watch: true,
+  // 监听模式运行时的参数
+  // 在开启监听模式时才有意义
+  watchOptions: {
+    // 不监听的文件或文件夹，支持正则匹配
+    // 默认为空
+    ignored: /node_modules/,
+    // 监听到变化发生后等300ms再去执行动作，防抖
+    // 防止文件更新太快而导致重新编译频率太快。默认为300ms
+    aggregateTimeout: 300,
+    // 判断文件是否发生变化是通过不停地询问系统指定文件有没有变化实现的
+    // 默认每秒询问1000次
+    poll: 1000
+  }
+};
 ```
+[返回目录](#目录)
+
+## webpack小插件应用
+
+### clean-webpack-plugin
+>1. [clean-webpack-plugin](https://github.com/johnagan/clean-webpack-plugin)：每次打包之前先删除`dist`目录(即webpack配置的打包输出目录)下的文件。
+```
+npm i clean-webpack-plugin -D
+```
+```js
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 output: {
-    path: path.resolve(process.cwd(), 'dist'),
+    path: path.resolve(process.cwd(), 'dist')
 },
 plugins: [
     new CleanWebpackPlugin()
 ]
 ```
-
-2. copyWebpackPlugin
-一些静态资源也希望拷贝的dist中
-
-`yarn add copy-webpack-plugin -D`
+### copy-webpack-plugin
+>2. copy-webpack-plugin：将静态资源拷贝到打包输出目录dist中。
 
 ```
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+npm i copy-webpack-plugin -D
+```
+
+```js
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
   plugins: [
      new CopyWebpackPlugin([
-    {from: './src/doc', to: './public'}
+        {
+            from: './doc',
+            to: './'
+        }
     ])
   ]
 }
 ```
+### BannerPlugin
+>3. BannerPlugin：该插件是webpack内置模块，用于版权声明。
 
-3. bannerPlugin  内置模块
-
-版权声明
-
-```
+```js
 const webpack = require('webpack');
 
-new webpack.BannerPlugin('hello world')
+new webpack.BannerPlugin('edit by liujie');
 // or
-new webpack.BannerPlugin({ banner: 'hello world'})
-
+new webpack.BannerPlugin({
+    banner: 'edit by liujie'
+});
 ```
+[返回目录](#目录)
 
-## webpack 跨域
+## webpack跨域问题
+重启一个服务，其实`webpack-dev-server`内含`express`。
 
-设置一个服务,由于`webpack-dev-server`内含`express`
+>`server.js`
+```js
+const express = require('express');
+const app = express();
 
-[express](https://expressjs.com/zh-cn/starter/hello-world.html)
-
-`server.js`
-
+app.get('/api/user', res => {
+    res.json({name: 'liujie'});
+});
+app.listen(3000, () => {
+    console.log('服务启动在3000端口');
+});
 ```
-// express
+>启动服务：`node server.js`，访问`http://localhost:3000/api/user`，可见内容。
 
-let express = require('express')
-
-let app = express();
-
-app.get('/api/user', (res) => {
-    res.json({name: 'mayufo'})
-})
-
-app.listen(3000)   // 服务端口在3000
-```
-
-写完后记得node server.js
-
-访问 `http://localhost:3000/api/user` 可见内容
-
-
-`index.js`
-
-```
+>`index.js`
+```js
 // 发送一个请求
-let xhr = new XMLHttpRequest();
-
-// 默认访问 http://localhost:8080  webpack-dev-server 的服务 再转发给3000
+const xhr = new XMLHttpRequest();
+// 默认访问 http://localhost:8080 webpack-dev-server的服务，再转发给3000
 xhr.open('GET', '/api/user', true);
-
 xhr.onload = function () {
-    console.log(xhr.response)
+    console.log(xhr.response);
 }
-
 xhr.send();
-
 ```
-
-
-`webpack.config.js`
-
-```
+>`webpack.config.js`
+```js
 devServer: {
+  // webpack-dev-server服务转发给http://localhost:3000
   proxy: {
       '/api': 'http://localhost:3000' // 配置一个代理
   }
 },
 ```
+>特殊场景一：如果后端给的请求路径中没有`/api`：
 
-## 如果后端给的请求没有API 「跨域」
+我们的请求还以`/api`开头，在请求转发的时候删掉`/api`，具体配置如下：
 
-```
-// express
-
-let express = require('express')
-
-let app = express();
-
-
-app.get('/user', (res) => {
-    res.json({name: 'mayufo'})
-})
-
-app.listen(3000)   // 服务端口在3000
-```
-
-
-请求已api开头, 转发的时候再删掉api
-
-```
+```js
 devServer: {
     proxy: {
         '/api': {
@@ -697,79 +675,67 @@ devServer: {
     }
 }
 ```
-
-## 前端只想单纯mock数据 「跨域」
-```
+>特殊场景二：前端单纯mock数据
+```js
 devServer: {
-    // proxy: {
-    //     '/api': 'http://localhost:3000' // 配置一个代理
-    // }
-    //   proxy: {   // 重写方式 把请求代理到express 上
-    //       '/api': {
-    //           target: 'http://localhost:3000',
-    //           pathRewrite: {'^/api': ''}
-    //       }
-    //   }
-    before: function (app) {  // 勾子
+    before(app) {  // 钩子
         app.get('/api/user', (req, res) => {
-            res.json({name: 'mayufo - before'})
+            res.json({name: 'liujie-before'})
         })
     }
 },
 ```
+>特殊场景三：有服务端，不用代理，在服务端启动webpack，端口用服务端端口。
 
-## 有服务端，不用代理, 服务端启动webpack 「跨域」
-
-`server.js`中启动`webpack`
-
-`yarn add webpack-dev-middleware -D`
-
-`server.js`
+>`server.js`中启动`webpack`
 
 ```
-// express
+npm i webpack-dev-middleware -D
+```
+>`server.js`
 
-let express = require('express')
-let webpack = require('webpack')
-let app = express();
-
-
+```js
+const express = require('express');
+const webpack = require('webpack');
+const app = express();
 // 中间件
-let middle = require('webpack-dev-middleware')
+// webpack-dev-middleware用于在服务端启动webpack
+const middle = require('webpack-dev-middleware');
+const config = require('./webpack.config');
 
-let config = require('./webpack.config')
-
-
-let compiler = webpack(config)
-
-
-app.use(middle(compiler))
+const compiler = webpack(config);
+app.use(middle(compiler));
 
 app.get('/user', (req, res) => {
-    res.json({name: 'mayufo'})
-})
+    res.json({name: 'liujie'});
+});
 
+app.listen(3000, () => {
+    console.log('服务启动在3000端口');
+});
+```
+[返回目录](#目录)
 
-app.listen(3000)
+## resolve属性的配置
+resolve属性的配置Webpack如何寻找模块对应的文件。
 
 ```
-
-## webpack解析resolve
-
-以bootstrap为例
-
+// 以bootstrap为例
+npm i bootstrap  -D
 ```
-npm install bootstrap  -D
-```
-
-`index.js`
-
-```
-import 'bootstrap/dist/css/bootstrap.css'
+```js
+// bootstrap前面没有加./，说明是一个安装好的模块，会去当前目录下的node_modules下查找
+import 'bootstrap'
 ```
 
-报错
+>`index.js`：
+
+```js
+import 'bootstrap/dist/css/bootstrap.css';
 ```
+
+>报错
+```js
 ERROR in ./node_modules/bootstrap/dist/css/bootstrap.css 7:0
 Module parse failed: Unexpected token (7:0)
 You may need an appropriate loader to handle this file type.
@@ -780,109 +746,101 @@ You may need an appropriate loader to handle this file type.
 |   --indigo: #6610f2;
  @ ./src/index.js 22:0-42
  @ multi (webpack)-dev-server/client?http://localhost:8081 ./src/index.js
-
 ```
+这是因为`bootstrap 4.0`的`css`引入了新的特性，`CSS Variables`。
 
-这是因为bootstrap 4.0的css引入了新的特性，CSS Variables
-
-安装
-`npm install postcss-custom-properties --save-dev`
-
-
-配置`webpack.config.js`
+>安装：
 ```
+npm i postcss-custom-properties -D
+```
+>配置`webpack.config.js`：
+```js
 {
     test: /\.css$/,
-    use: ['style-loader', 'css-loader', {
-        loader: 'postcss-loader',
-        options: {
-            plugins: (loader) => [
-                require("postcss-custom-properties")
-            ]
+    use: [
+        'style-loader',
+        'css-loader',
+        {
+            loader: 'postcss-loader',
+            options: {
+                plugins: (loader) => [
+                    require('postcss-custom-properties')
+                ]
+            }
         }
-    }]
+    ]
 }
 ```
-
-## 但是每次引入都很长，如何优雅引入
-```
+>配置`modules`属性，设置模块查找目录：
+```js
 resolve: {
     // 在当前目录查找
-    modules: [path.resolve('node_modules')],
-    alias: {
-        'bootstrapCss': 'bootstrap/dist/css/bootstrap.css'
+    modules: [path.resolve('node_modules')]
+},
+```
+>配置`alias`属性，解决模块路径引入很长问题。
+```js
+resolve: {
+    alias: { // 别名配置
+        'bootstrap-css': 'bootstrap/dist/css/bootstrap.css'
     }
 },
 ```
-
+```js
+import 'bootstrap-css';  // 在node_modules查找
 ```
-import 'bootstrapCss'  // 在node_modules查找
-```
-
-## 省略扩展名
-
-```
+>配置`mainFields`属性：配置优先使用的入口文件。
+```js
 resolve: {
-    // 在当前目录查找
-    modules: [path.resolve('node_modules')],
-    // alias: {
-    //     'bootstrapCss': 'bootstrap/dist/css/bootstrap.css'
-    // },
-    mainFields: ['style', 'main'],   // 先用bootstrap中在package中的style,没有在用main
+    mainFields: ['style', 'main'], // 先用bootstrap中在package中的style，没有style再用main
     // mainFiles: []  // 入口文件的名字 默认index
-    extensions: ['.js', '.css', '.json']  // 当没有拓展命的时候，先默认js、次之css、再次之json
-},
-```
-
-## 定义环境变量
-
-`DefinePlugin` 允许创建一个在编译时可以配置的全局常量。这可能会对开发模式和生产模式的构建允许不同的行为非常有用。
-
-```
-let url = ''
-if (DEV === 'dev') {
-    // 开发环境
-    url = 'http://localhost:3000'
-} else {
-    // 生成环境
-    url = 'http://www.mayufo.cn'
 }
 ```
-
-`webpack.config.js`
-
+>配置`extensions`属性：省略扩展名。
+```js
+resolve: {
+    extensions: ['.js', '.css', '.json'] // 当没有拓展命的时候，先默认js、css次之、json最后
+}
 ```
+[返回目录](#目录)
+## 定义环境变量
+`DefinePlugin`允许创建一个在编译时可以配置的全局常量。这可能会对开发模式和生产模式的构建允许不同的行为非常有用。
+
+```js
+let url = '';
+if (DEV === 'dev') {
+    // 开发环境
+    url = 'http://localhost:3000';
+} else {
+    // 生产环境
+    url = 'http://www.baidu.cn';
+}
+```
+>`webpack.config.js`
+
+```js
 new webpack.DefinePlugin({
-    // DEV: '"production"',
+    // DEV: "'production'", // 注意字符串需要加上双引号
     DEV: JSON.stringify('production'),
-    FLAG: 'true',   // 布尔
-    EXPRESSION: '1 + 1'   // 字符串 如果希望是字符串 JSON.stringify('1 + 1')
+    FLAG: 'true', // 单引号会被去掉，实际为布尔值true
+    EXPRESSION: '1 + 1' // EXPRESSION值是数字2，如果希望是字符串 JSON.stringify('1 + 1')
 })
 ```
-
-## 区分两个不同的环境
-
-分别配置不同的环境
-
-webpack.base4.js   基础配置
-webpack.dev4.js    开发环境
-webpack.prod4.js   生产环境
-
-`yarn add webpack-merge -D`
-
-
-npx run build -- config webpack.dev4.js
-npx run build -- config webpack.build.js
-
-[官方文档](https://webpack.docschina.org/guides/production/)
-
-
-`webpack.base4.js`
+[返回目录](#目录)
+## 区分不同环境
+1. webpack.base.config.js：公共基础配置；
+2. webpack.dev.config.js：开发环境配置；
+3. webpack.prod.config.js：生产环境配置；
 
 ```
-let path = require('path')
-let HtmlWebpackPlugin = require('html-webpack-plugin')
-let CleanWebpackPlugin = require('clean-webpack-plugin')
+npm i webpack-merge -D
+```
+>`webpack.base.config.js`：
+
+```js
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -890,7 +848,7 @@ module.exports = {
     },
     output: {
         filename: "[name].js",
-        path: path.resolve(process.cwd(), 'dist3')
+        path: path.resolve(process.cwd(), 'dist')
     },
     module: {
         rules: [
@@ -925,46 +883,38 @@ module.exports = {
         })
     ]
 }
-
 ```
+>`webpack.dev.config.js`：控制开发环境
 
-`webpack.dev4.js`
+```js
+const {smart} = require('webpack-merge');
+const base = require('./webpack.base.config.js');
 
-```
-let merge = require('webpack-merge')
-let base = require('./webpack.base4.js')
-
-
-module.exports = merge(base, {
+module.exports = smart(base, {
     mode: 'development',
     devServer: {},
     devtool: 'source-map'
 })
-
 ```
+>`webpack.prod.config.js`：控制生产环境
 
-`webpack.prod4.js`
+```js
+const {smart} = require('webpack-merge');
+const base = require('./webpack.base.config.js');
 
-```
-let merge = require('webpack-merge')
-let base = require('./webpack.base4.js')
-
-
-module.exports = merge(base, {
+module.exports = smart(base, {
     mode: 'production'
 })
-
 ```
+>`package.json`配置：
 
-`package.json`
-
-```
+```js
 "scripts": {
-    "build": "webpack-dev-server  --config webpack.prod4.js",
-    "dev": "webpack-dev-server --config webpack.dev4.js"
+    "build": "webpack --config webpack.prod.config.js",
+    "dev": "webpack-dev-server --config webpack.dev.config.js"
 },
 ```
-
+[返回目录](#目录)
 
 ## webpack 优化
 
