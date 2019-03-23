@@ -1,3 +1,6 @@
+>温馨提示：相关webpack配置总结，详见[Note.md](https://github.com/liujie1990/FE-study-notes/tree/master/sources/webpack4-study/Note.md)
+
+>源码目录：
 * [demo1 打包js](https://github.com/liujie1990/FE-study-notes/tree/master/sources/webpack4-study/demo1)
 * [demo2-1 Babel7转译ES2015+](https://github.com/liujie1990/FE-study-notes/tree/master/sources/webpack4-study/demo2-1)
 * [demo2-2 webpack4配置转译React](https://github.com/liujie1990/FE-study-notes/tree/master/sources/webpack4-study/demo2-2)
