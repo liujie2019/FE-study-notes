@@ -1,89 +1,159 @@
 ## 目录
 
-- [npm初始化](#%E5%AE%89%E8%A3%85%E5%89%8D%E5%85%88npm%E5%88%9D%E5%A7%8B%E5%8C%96)
-- [本地服务](#%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1)
-- [复制html](#%E5%A4%8D%E5%88%B6html)
-- [处理css](#%E5%A4%84%E7%90%86css)
-- [处理less](#%E5%A4%84%E7%90%86less)
-- [抽离css文件，通过link引入](#%E6%8A%BD%E7%A6%BBcss%E6%96%87%E4%BB%B6%E9%80%9A%E8%BF%87link%E5%BC%95%E5%85%A5)
-- [压缩css和js](#%E5%8E%8B%E7%BC%A9css%E5%92%8Cjs)
-- [给css加上兼容浏览器的前缀](#%E7%BB%99css%E5%8A%A0%E4%B8%8A%E5%85%BC%E5%AE%B9%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%89%8D%E7%BC%80)
-- [es6 转 es5](#es6-%E8%BD%AC-es5)
-- [es 7的语法](#es-7%E7%9A%84%E8%AF%AD%E6%B3%95)
-- [全局变量引入](#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E5%BC%95%E5%85%A5)
-- [10. 图片打包处理](#图片打包处理)
-- [11. 打包文件分类](#打包文件分类)
-- [12. 打包多页面应用](#打包多页面应用)
-- [13. 配置source-map](#配置source-map)
-- [14. watch用法](#watch用法)
-- [15. webpack小插件应用](#webpack小插件应用)
+- [webpack基础配置](#webpack基础配置)
+    - [项目初始化](#项目初始化)
+- [webpack打包输出文件分析](#webpack打包输出文件分析)
+- [webpack-dev-server](#webpack-dev-server)
+- [自动生成html](#自动生成html)
+- [样式处理](#样式处理)
+    - [处理css](#处理css)
+    - [处理less](#处理less)
+    - [抽离样式文件](#抽离样式文件)
+    - [压缩css和js](#压缩css和js)
+    - [css加兼容浏览器的前缀](#css加兼容浏览器的前缀)
+- [转化es6+语法](#转化es6+语法)
+- [全局变量引入](#全局变量引入)
+- [图片打包处理](#图片打包处理)
+- [打包文件分类](#打包文件分类)
+- [打包多页面应用](#打包多页面应用)
+- [配置source-map](#配置source-map)
+- [watch用法](#watch用法)
+- [webpack小插件应用](#webpack小插件应用)
     - [clean-webpack-plugin](#clean-webpack-plugin)
     - [copy-webpack-plugin](#copy-webpack-plugin)
     - [BannerPlugin](#BannerPlugin)
-- [16. webpack跨域问题](#webpack跨域问题)
-- [17. resolve属性的配置](#resolve属性的配置)
-- [18. 定义环境变量](#定义环境变量)
-- [19. 区分不同环境](#区分不同环境)
-- [20. webpack优化](#webpack优化)
-    - [20. noParse优化](#noParse优化)
-    - [优化：当某些包是独立的个体没有依赖](#%E4%BC%98%E5%8C%96%E5%BD%93%E6%9F%90%E4%BA%9B%E5%8C%85%E6%98%AF%E7%8B%AC%E7%AB%8B%E7%9A%84%E4%B8%AA%E4%BD%93%E6%B2%A1%E6%9C%89%E4%BE%9D%E8%B5%96)
-- [优化：规则匹配设置范围](#%E4%BC%98%E5%8C%96%E8%A7%84%E5%88%99%E5%8C%B9%E9%85%8D%E8%AE%BE%E7%BD%AE%E8%8C%83%E5%9B%B4)
-- [优化：忽略依赖中不必要的语言包](#%E4%BC%98%E5%8C%96%E5%BF%BD%E7%95%A5%E4%BE%9D%E8%B5%96%E4%B8%AD%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E8%AF%AD%85)
-- [动态链接库](#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93)
-- [多线程打包happypack](#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%89%93%E5%8C%85happypack)
-- [webpack 自带的优化](#webpack-%E8%87%AA%E5%B8%A6%E7%9A%84%E4%BC%98%E5%8C%96)
-- [抽取公共代码](#%E6%8A%BD%E5%8F%96%E5%85%AC%E5%85%B1%E4%BB%A3%E7%A0%81)
-- [懒加载(延迟加载)](#%E6%87%92%E5%8A%A0%E8%BD%BD%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD)
-- [热更新(当页面改变只更新改变的部分，不重新打包)](#%E7%83%AD%E6%9B%B4%E6%96%B0%E5%BD%93%E9%A1%B5%E9%9D%A2%E6%94%B9%E5%8F%98%E5%8F%AA%E6%9B%B4%E6%96%B0%E6%94%B9%E5%8F%98%E7%9A%84%E9%83%A8%E5%88%86%E4%B8%8D%E9%87%8D%E6%96%B0%E6%89%93%E5%8C%85)
-- [tapable介绍 - SyncHook](#tapable%E4%BB%8B%E7%BB%8D---synchook)
-- [tapable介绍 - SyncBailHook](#tapable%E4%BB%8B%E7%BB%8D---syncbailhook)
-- [tapable介绍 - SyncWaterfallHook](#tapable%E4%BB%8B%E7%BB%8D---syncwaterfallhook)
-- [tapable介绍 - SyncLoopHook](#tapable%E4%BB%8B%E7%BB%8D---syncloophook)
-- [`AsyncParallelHook` 与 `AsyncParallelBailHook`](#asyncparallelhook-%E4%B8%8E-asyncparallelbailhook)
-    + [AsyncParallelHook](#asyncparallelhook)
-    + [AsyncParallelBailHook](#asyncparallelbailhook)
-- [异步串行](#%E5%BC%82%E6%AD%A5%E4%B8%B2%E8%A1%8C)
+- [webpack跨域问题](#webpack跨域问题)
+- [resolve属性的配置](#resolve属性的配置)
+- [定义环境变量](#定义环境变量)
+- [区分不同环境](#区分不同环境)
+- [webpack优化](#webpack优化)
+    - [noParse](#noParse)
+    - [exclude&include](#exclude&include)
+    - [IgnorePlugin](#IgnorePlugin)
+    - [dllPlugin](#dllPlugin)
+    - [happyPack](#happyPack)
+    - [webpack自带优化](#webpack自带优化)
+        - [tree-shaking](#tree-shaking)
+        - [作用域提升](#作用域提升)
+    - [抽离公共代码](#抽离公共代码)
+    - [懒加载](#懒加载)
+    - [热更新](#热更新)
+- [tapable介绍](#tapable介绍)
+    - [SyncHook](#SyncHook)
+    - [SyncBailHook](#SyncBailHook)
+    - [SyncWaterfallHook](#SyncWaterfallHook)
+    - [SyncLoopHook](#SyncLoopHook)
+    - [AsyncParallelHook&AsyncParallelBailHook](#AsyncParallelHook&AsyncParallelBailHook)
+        - [AsyncParallelHook](#AsyncParallelHook)
+        - [AsyncParallelBailHook](#AsyncParallelBailHook)
+    - [异步串行](#异步串行)
+        - [AsyncSeriesHook](#AsyncSeriesHook)
+        - [AsyncSeriesBailHook](#AsyncSeriesBailHook)
+        - [AsyncSeriesWaterfallHook](#AsyncSeriesWaterfallHook)
+- [手写webpack](#手写webpack)
+- [webpack分析及处理](#webpack分析及处理)
+- [创建依赖关系](#创建依赖关系)
+- [AST递归解析](#AST递归解析)
+- [生成打包结果](#生成打包结果)
+- [增加loader](#增加loader)
+- [增加plugins](#增加plugins)
+- [loader](#loader)
+    - [loader配置](#loader配置)
+    - [babel-loader实现](#babel-loader实现)
+    - [banner-loader实现](#banner-loader实现)
+    - [file-loader和url-loader实现](#file-loader和url-loader实现)
+    - [less-loader和css-loader](#less-loader和css-loader)
+    - [css-loader](#css-loader)
+- [webpack中的插件](#webpack中的插件)
+    - [文件列表插件](#文件列表插件)
+    - [内联webpack插件](#内联webpack插件)
+- [打包后自动发布](#打包后自动发布)
 
-## 安装前先npm初始化
+## webpack基础配置
+### 项目初始化
 ```
 npm init -y
 npm i webpack webpack-cli -D
 ```
 
 ```js
-const path = require('path')   // 相对路径变绝对路径
+const path = require('path');
 
 module.exports = {
-    mode: 'production', // 模式 默认 production development
-    entry: './src/index',    // 入口
+    mode: 'production', // 模式，默认production和development两种
+    entry: './src/index', // 入口
     output: {
-        filename: 'bundle.[hash:8].js',   // hash: 8只显示8位
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: 'http://www.mayufo.cn'  // 给所有打包文件引入时加前缀，包括css，js，img，如果只想处理图片可以单独在url-loader配置中加publicPath
+        filename: 'bundle.[hash:8].js', // 打包后的文件名 hash: 8只显示8位
+        path: path.resolve(__dirname, 'dist'), // 路径必须是一个绝对路径
+        publicPath: 'http://www.baidu.cn' // 给所有打包文件引入时加前缀，包括css，js，img，如果只想处理图片可以单独在url-loader配置中加publicPath
     }
 }
 ```
-## 本地服务
+[返回目录](#目录)
+## webpack打包输出文件分析
+```js
+// 打包结果是一个自执行的匿名函数
+ (function(modules) { // webpackBootstrap webpack启动函数
+   	// The module cache 先定义一个缓存
+ 	var installedModules = {};
 
-`npm i webpack-dev-server -D`
+ 	// The require function 实现了require方法
+ 	function __webpack_require__(moduleId) { // "./src/index.js"
 
+ 		// Check if module is in cache 模块是否在缓存中
+ 		if(installedModules[moduleId]) {
+ 			return installedModules[moduleId].exports;
+ 		}
+ 		// Create a new module (and put it into the cache)
+ 		var module = installedModules[moduleId] = {
+ 			i: moduleId,
+ 			l: false,
+ 			exports: {}
+ 		};
+
+ 		// Execute the module function
+ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+         // Flag the module as loaded
+         // l标识模块是否加载完成
+ 		module.l = true;
+
+ 		// Return the exports of the module
+ 		return module.exports;
+ 	}
+ 	// Load entry module and return exports
+ 	return __webpack_require__(__webpack_require__.s = "./src/index.js"); // 入口模块
+ })
+ ({ // 匿名函数参数是一个对象
+ "./src/index.js": // key
+    (function(module, exports) { // value
+        eval("console.log(1, '------');\n\n//# sourceURL=webpack:///./src/index.js?");
+    })
+});
 ```
+[返回目录](#目录)
+## webpack-dev-server
+```
+npm i webpack-dev-server -D
+```
+
+```js
 devServer: {
     port: 3000,
-    progress: true    // 滚动条
-    // contentBase: ''  // 起服务的地址
-    // open: true    // 自动打开浏览器
-    // compress： true   // 压缩
+    progress: true, // 滚动条
+    // contentBase: '', // 起服务的地址
+    open: true, // 自动打开浏览器
+    // compress: true // 压缩
 }
 ```
-
-
-## 复制html
-
-`npm i html-webpack-plugin -D`
-
+[返回目录](#目录)
+## 自动生成html
 ```
-let HtmlWebpackPlugin = require('html-webpack-plugin')
+npm i html-webpack-plugin -D
+```
+
+```js
+let HtmlWebpackPlugin = require('html-webpack-plugin');
 plugins: [ // 放着所有webpack插件
     new HtmlWebpackPlugin({ // 用于使用模板打包时生成index.html文件，并且在run dev时会将模板文件也打包到内存中
       template: './index.html', // 模板文件
@@ -97,15 +167,15 @@ plugins: [ // 放着所有webpack插件
 ]
 
 ```
+具体配置详见：[html-webpack-plugin#options](https://github.com/jantimon/html-webpack-plugin#options)
 
-[html-webpack-plugin#options](https://github.com/jantimon/html-webpack-plugin#options)
-
-
-## 处理css
-
-`npm i css-loader style-loader -D`
-
+[返回目录](#目录)
+## 样式处理
+### 处理css
 ```
+npm i css-loader style-loader -D
+```
+```js
 module: {    // 模块
         rules: [   // 规则
             // style-loader 把css插入head标签中
@@ -132,14 +202,15 @@ module: {    // 模块
         ]
 }
 ```
-
-## 处理less
-
-`npm i less-loader`
-
+[返回目录](#目录)
+### 处理less
 ```
+npm i less-loader -D
+```
+
+```js
 {
-    test: /\.less$/,   // less 处理
+    test: /\.less$/, // less 处理
     // use: 'css-loader'
     // use: ['style-loader', 'css-loader'],
     use: [
@@ -158,18 +229,18 @@ module: {    // 模块
     ]
 }
 ```
-
-## 抽离css文件，通过link引入
-
-`yarn add mini-css-extract-plugin -D`
+[返回目录](#目录)
+### 抽离样式文件
+```
+npm i mini-css-extract-plugin -D
+```
 
 [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin)
 
-```
-let MiniCssExtractPlugin = require('mini-css-extract-plugin')
+```js
+let MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 // 压缩css
-
 plugins: [
     new MiniCssExtractPlugin({
         filename: 'css/main.css'
@@ -192,16 +263,15 @@ plugins: [
         'postcss-loader'
     ]
 }
-
 ```
+抽离css插件文件时可使用`optimize-css-assets-webpack-plugin`优化压缩css以及js文件。
 
-抽离css插件文件时可使用`optimize-css-assets-webpack-plugin`优化压缩css以及js文件
+[返回目录](#目录)
+### 压缩css和js
 
-## 压缩css和js
-
-```
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+```js
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 optimization: {   // 优化项目
     minimizer: [
@@ -215,12 +285,13 @@ optimization: {   // 优化项目
 }
 
 ```
-
-## 给css加上兼容浏览器的前缀
-
-`yarn add postcss-loader autoprefixer -D`
-
+[返回目录](#目录)
+### css加兼容浏览器的前缀
 ```
+npm i postcss-loader autoprefixer -D
+```
+
+```js
 // css
 {
     test: /\.css$/,   // css 处理
@@ -259,27 +330,23 @@ optimization: {   // 优化项目
     ]
 },
 ```
+`postcss`需要配置文件`postcss.config.js`，具体配置见[postcss-loader](https://github.com/postcss/postcss-loader)
 
-postcss 需要配置文档   `postcss.config1.js`
-
-[postcss-loader](https://github.com/postcss/postcss-loader)
-
-```
+```js
 module.exports = {
     plugins: [
         require('autoprefixer')
     ]
 }
 ```
-
-
-
-
-## es6 转 es5
-
-`npm i babel-loader @babel/core  @babel/preset-env -D`
+[返回目录](#目录)
+## 转化es6+语法
 
 ```
+npm i babel-loader @babel/core  @babel/preset-env -D
+```
+
+```js
 {
     test: /\.js$/,
     use: {
@@ -296,87 +363,79 @@ module.exports = {
     }
 }
 ```
-
-
-## es 7的语法
-```
+>es7的语法：
+```js
 // class
 npm i @babel/plugin-proposal-class-properties -D
 // 装饰器
 npm i @babel/plugin-proposal-decorators -D
 ```
-配置如上
-
+[返回目录](#目录)
 ## 全局变量引入
 
-jquery的引入
+例如`jQuery`的引入：
 
-```
+```js
 npm i jquery -S
 ```
 
-```
-let webpack = require('webpack')
+```js
+let webpack = require('webpack');
 
 new webpack.ProvidePlugin({
   $: 'jquery'
 })
 ```
 
-其他情况
+其他情况：
 
-1. 暴露全局
-
-`npm i expose-loader -D` 暴露全局的loader
-
-可以在js中 `import $ from 'expose-loader?$!jquery'`   // 全局暴露jquery为$符号
-
-可以调用window.$
-
-也可在webpack.config.js 中配置 rules
+>1. 暴露全局
 
 ```
+暴露全局变量的loader
+npm i expose-loader -D
+```
+
+可以在js中`import $ from 'expose-loader?$!jquery'`// 全局暴露jquery为$符号，这样就可以调用window.$。
+
+也可在`webpack.config.js`中配置`rules`：
+
+```js
 {
     test: require.resolve('jquery'),
     use: 'expose-loader?$'
 }
 ```
-
-以后在.js文件中引入
-
-```
-import $ from 'jquery'
+以后在`.j`s文件中引入
+```js
+import $ from 'jquery';
 ```
 
-2. 如何在每个模块中注入
+>2. 在每个模块中都注入：
 
-```
-let webpack = require('webpack')
+```js
+let webpack = require('webpack');
 
 // 在plugins中配置
 new webpack.ProvidePlugin({
     $: 'jquery'
 })
 ```
+>3. 在index.html中通过script标签引入jquery, 但是在js中，用import会重新打包jquery，如何避免？
 
-3. 在index.html中通过script标签引入jquery, 但是在js中，用import会重新打包jquery,如何避免
+>解决方法：从输出的bundle中排除依赖。
 
-从输出的bundle 中排除依赖
-
-```
+```js
  externals: {
   jquery: 'jQuery'
  }
 ```
-
 此时在index.js上
-
+```js
+import $ from 'jquery';
+console.log($, 123456); // 可以正常运行
 ```
-import $ from 'jquery'
-
-console.log($, 123456)   // 可以正常运行
-```
-
+[返回目录](#目录)
 ## 图片打包处理
 使用webpack打包我们项目中的图片，在项目中使用图片有如下三种方式：
 
@@ -916,16 +975,17 @@ module.exports = smart(base, {
 ```
 [返回目录](#目录)
 
-## webpack 优化
-
-`yarn add webpack webpack-cli html-webpack-plugin @babel/core babel-loader @babel/preset-env @babel/preset-react -D`
-
-`webpack.config.js`
+## webpack优化
 
 ```
-let path = require('path')
-let HtmlWebpackPlugin = require('html-webpack-plugin')
+npm i webpack webpack-cli html-webpack-plugin @babel/core babel-loader @babel/preset-env @babel/preset-react -D
+```
 
+>`webpack.config.js`：
+
+```js
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -957,15 +1017,15 @@ module.exports = {
         }),
     ]
 }
-
 ```
-##  优化：当某些包是独立的个体没有依赖
+### noParse
+`noParse`优化：当某些包是独立的个体即没有依赖时，通过配置告知webpack不要去解析该模块的依赖库。
 
-以jquery为例，`yarn add jquery -D`,它是一个独立的包没有依赖，可以在webpack配置中，配置它不再查找依赖
+以`jQuery`为例，`npm i jquery -D`，它是一个独立的包没有依赖，可以在webpack配置中，配置它不再查找依赖，具体配置如下：
 
-```
+```js
 module: {
-    noParse: /jquery/, // 不用解析某些包的依赖
+    noParse: /jquery/, // 不去解析jquery中的依赖库
     rules: [
       {
           test: /\.js$/,
@@ -982,18 +1042,16 @@ module: {
   ]
 },
 ```
-运行`npx webpack`
+[返回目录](#目录)
+### exclude&include
+>优化：给匹配规则设置范围：
 
-从2057ms  -> 1946 ms
-
-## 优化：规则匹配设置范围
-
-```a
+```js
 rules: [
   {
       test: /\.js$/,
-      exclude: '/node_modules/',   // 排除
-      include: path.resolve('src'),  // 在这个范围内
+      exclude: '/node_modules/', // 排除相关查找范围
+      include: path.resolve('src'), // 限定查找范围
       use: {
           loader: 'babel-loader',
           options: {
@@ -1005,42 +1063,42 @@ rules: [
       }
   }
 ```
-
-## 优化：忽略依赖中不必要的语言包
-`yarn add moment webpack-dev-server -D`
-
-忽略掉moment的其他语言包
+[返回目录](#目录)
+### IgnorePlugin
+`IgnorePlugin`优化：忽略依赖中不必要的语言包：
 
 ```
-let webpack = require('webpack')
+npm i moment webpack-dev-server -D
+```
+```js
+const webpack = require('webpack');
 
 plugins: [
+    // 忽略掉moment的其他语言包
+    // 从moment中引入.locale时忽略
     new webpack.IgnorePlugin(/\.\/locale/, /moment/)
 ]
-
 ```
+>`index.js`:
 
-`index.js`
+```js
+// 会加载所有的语言包
+import moment from 'moment';
 
-```
-import moment from 'moment'
-
-let r = moment().endOf('day').fromNow()  // 距离现在多少天
+// 手动引入所需要的中文语言包
+import 'moment/locale/zh-cn';
+const r = moment().endOf('day').fromNow(); // 距离现在多少天
 console.log(r);
 ```
-
-
-从 1.2MB 到  800kb
-
-## 动态链接库
-
-`yarn add react react-dom`
-
-正常使用
-
-`webpack.config.js`
-
+[返回目录](#目录)
+### dllPlugin
+`dllPlugin`即动态链接库。
 ```
+npm i react react-dom
+```
+>正常使用：`webpack.config.js`
+
+```js
 {
   test: /\.js$/,
   exclude: '/node_modules/',
@@ -1056,31 +1114,27 @@ console.log(r);
   }
 }
 ```
-
-`index.js`
-```
+>`index.js`：
+```js
 import React from 'react'
-
 import {render} from 'react-dom'
 
-
-render(<h1>111111</h1>, window.root)
+render(
+    <h1>dllPlugin test</h1>,
+    document.getElementById('root')
+);
 ```
-
-`index.html`
-
-```
+>`index.html`：
+```html
 <div id="root"></div>
 ```
+将react、react-dom独立地打包好，打包好再引用，从而减少webpack每次都要打包react。
 
-独立的将react react-dom 打包好, 打包好再引用，从而减少webpack每次都要打包react
+>创建`webpack.dll.config.js`：
 
-创建`webpack.config.react.js`
-
-
-```
-let path = require('path')
-let webpack = require('webpack')
+```js
+const path = require('path');
+const webpack = require('webpack');
 module.exports = {
     mode: 'development',
     entry: {
@@ -1088,38 +1142,32 @@ module.exports = {
         react: ['react', 'react-dom']
     },
     output: {
-        filename: '_dll_[name].js',  // 产生的文件名
+        filename: '_dll_[name].js', // 生成的文件名
         path: path.resolve(__dirname, 'dist'),
-        library: '_dll_[name]',     // 给输出的结果加个名字
-        // libraryTarget: 'var'   // 配置如何暴露 library
-        // commonjs 结果放在export属性上， umd统一资源模块, 默认是var
+        library: '_dll_[name]', // 给输出的结果加个名字，这里叫_dll_react
+        // libraryTarget: 'var' // 配置如何暴露library，默认为var
+        // commonjs 结果放在export属性上，umd统一资源模块, 默认是var
     },
     plugins: [
        new webpack.DllPlugin({
-           name: '_dll_[name]',   // name === library
+           name: '_dll_[name]', // name === library
            path: path.resolve(__dirname, 'dist', 'manifest.json')  // manifest.json 定义了各个模块的路径
        })
     ]
 }
 ```
+`manifest.json`就是一个任务清单or动态链接库，先在这个清单里面查找react。
 
-[libraryTarget](https://webpack.docschina.org/configuration/output/#%E6%9A%B4%E9%9C%B2%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%8F%98%E9%87%8F)
+>在`index.html`中增加引用：
 
-`manifest.json`就是一个任务清单or动态链接库，在这个清单里面查找react
-
-`npx webpack --config webpack.config.react.js`
-
-在`index.html`增加引用
-
-```
+```html
 <body>
 <div id="root"></div>
 <script src="/_dll_react.js"></script>
 </body>
 ```
-
-在webpack.config.js 中配置，现在动态链接库`manifest.json`中查找,如果没有再打包react
-```
+在`webpack.config.js`中配置，先在动态链接库`manifest.json`中查找，如果没有找到再打包react：
+```js
 plugins: [
     new webpack.DllReferencePlugin({
         manifest: path.resolve(__dirname, 'dist', 'manifest.json')
@@ -1128,25 +1176,21 @@ plugins: [
 
 ```
 
-[DLLPlugin 和 DLLReferencePlugin](https://webpack.docschina.org/plugins/dll-plugin/#src/components/Sidebar/Sidebar.jsx)
-
-`npm run build`
-
-打包后的`bunle.js`文件变小
-
-`npm run dev`
-
-可以理解为先把react打包，后面每次都直接使用react打包后的结果
-
-## 多线程打包happypack
-
-`yarn add happypack`
-
-`webpack.config.js`
-
 ```
-let Happypack = require('happypack')
+npm run build
+```
+打包后的`bunle.js`文件变小，可以理解为先把`react和react-dom`打包，后面每次都直接使用`react和react-dom`打包后的结果而不是重新打包。
 
+[返回目录](#目录)
+### happyPack
+`happyPack主要实现了多线程打包。
+```
+npm i happypack -D
+```
+>`webpack.config.js`：
+
+```js
+const Happypack = require('happypack');
 
 rules: [
     {
@@ -1172,12 +1216,11 @@ plugins: [
     })
 ]
 ```
+>需要注意：js启用多线程，由于启用多线程也会浪费时间，因此当项目比较大的时候启用效果更好。
 
-js启用多线程，由于启用多线程也会浪费时间，因此当项目比较大的时候启用效果更好
+>css启用多线程：
 
-css启用多线程
-```
-
+```js
 {
     test: /\.css$/,
     use: 'happypack/loader?id=css'
@@ -1188,13 +1231,12 @@ css启用多线程
     use: ['style-loader', 'css-loader']
 }),
 ```
+[返回目录](#目录)
+### webpack自带的优化
 
-
-## webpack 自带的优化
-
-`test.js`
-
-```
+#### tree-shaking
+>`test.js`：
+```js
 let sum = (a, b) => {
     return a + b + 'sum'
 }
@@ -1204,69 +1246,69 @@ let minus = (a, b) => {
 }
 
 export default {
- sum, minus
+ sum,
+ minus
 }
 ```
 
 1. 使用import
 
-`index.js`
+>`index.js`：
 
-```
+```js
 import calc from './test'
 
 console.log(calc.sum(1, 2));
 ```
+import在生产环境下会自动去除掉没有用的代码`minus`，这叫`tree-shaking`，将没有用的代码自动删掉。
 
+>`index.js`：
 
-import在生产环境下会自动去除没有用的代码`minus`，这叫`tree-shaking`，将没有用的代码自动删除掉
-
-
-`index.js`
-
-```
-let calc = require('./test')
-console.log(calc);   // es 6导出，是一个default的对象
+```js
+const calc = require('./test');
+// test模块是es6语法导出，导出结果放在default属相上，default是一个对象
+console.log(calc);
+// 所以这里需要使用calc.default.sum
 console.log(calc.default.sum(1, 2));
 ```
+>需要注意：`require`引入`es6`模块，打包`build`后并不会把多余`minus`代码删除掉，不支持`tree-shaking`。
 
-require引入es6 模块会把结果放在default上,打包build后并不会把多余`minus`代码删除掉，不支持`tree-shaking`
+[返回目录](#目录)
+#### 作用域提升
+Scope Hoisting即作用域提升。
 
+>`index.js`：
 
-2. 作用域的提升
-
-`index.js`
-
-```
-let a = 1
-let b = 2
-let c = 3
-let d = a + b + c
+```js
+let a = 1;
+let b = 2;
+let c = 3;
+let d = a + b + c;
 
 console.log(d, '---------');
 ```
-打包出来的文件
+打包结果如下：
 
+```js
+// 加入"---------"，方便在打包后的代码中找到对应代码
+console.log(6,"---------")
 ```
-console.log(r.default.sum(1,2));console.log(6,"---------")
-```
+在webpack中可以省略一些可以简化的代码。
 
-在webpack中可以省略一些可以简化的代码
-
+[返回目录](#目录)
 ## 抽取公共代码
+>1. 抽离自有模块
 
-1. 抽离自有模块
+>`webpack.config.js`
 
-`webpack.config.js`
-
-```
+```js
 optimization: {
     splitChunks: {  // 分割代码块，针对多入口
-        cacheGroups: {   // 缓存组
-            common: {   // 公共模块
-                minSize: 0,  // 大于多少抽离
-                minChunks: 2,  // 使用多少次以上抽离抽离
-                chunks: 'initial'  // 从什么地方开始,刚开始
+        cacheGroups: { // 缓存组
+            common: { // 公共模块
+                minSize: 0, // 大于多少抽离
+                minChunks: 2, // 使用多少次以上抽离
+                chunks: 'initial' // 从什么地方开始，表示initial刚开始
             }
         }
     }
@@ -1274,111 +1316,104 @@ optimization: {
 ```
 [SplitChunksPlugin](https://webpack.docschina.org/plugins/split-chunks-plugin/)
 
+分别有a.js和b.js，index.js和other.js分别引入a和b两个js。
 
-分别有a.js和b.js, index.js和other.js分别引入a和b两个js
-
-`index.js`
-
-```
+>`index.js`：
+```js
 import './a'
 import './b'
 
 console.log('index.js');
 ```
 
-`other.js`
+>`other.js`:
 
-```
+```js
 import './a'
 import './b'
 
 console.log('other.js');
 ```
 
-`webpack.config.js`
+>`webpack.config.js`：
 
-```
+```js
 optimization: {
-    splitChunks: {  // 分割代码块，针对多入口
-        cacheGroups: {   // 缓存组
-            common: {   // 公共模块
-                minSize: 0,  // 大于多少抽离
-                minChunks: 2,  // 使用多少次以上抽离抽离
-                chunks: 'initial'  // 从什么地方开始,刚开始
+    splitChunks: { // 分割代码块，针对多入口
+        cacheGroups: { // 缓存组
+            common: { // 公共模块
+                minSize: 0, // 大于多少抽离
+                minChunks: 2, // 使用多少次以上抽离抽离
+                chunks: 'initial' // 从什么地方开始,刚开始
             }
         }
     },
 },
 ```
-
-2. 抽离第三方模块
-
+>2. 抽离第三方模块
 比如jquery
 
 `index.js` 和 `other.js`分别引入
 
-```
+```js
 import $ from 'jquery'
 
 console.log($);
 ```
+>`webpack.config.js`：
 
-`webpack.config.js`
-
-```
+```js
 optimization: {
-    splitChunks: {  // 分割代码块，针对多入口
-        cacheGroups: {   // 缓存组
-            common: {   // 公共模块
-                minSize: 0,  // 大于多少抽离
-                minChunks: 2,  // 使用多少次以上抽离抽离
+    splitChunks: { // 分割代码块，针对多入口
+        cacheGroups: { // 缓存组
+            common: { // 公共模块
+                minSize: 0, // 大于多少抽离
+                minChunks: 2, // 使用多少次以上抽离抽离
                 chunks: 'initial'  // 从什么地方开始,刚开始
             },
             vendor: {
-                priority: 1, // 增加权重,先抽离第三方
+                priority: 1, // 增加权重，先抽离第三方
                 test: /node_modules/,
-                minSize: 0,  // 大于多少抽离
-                minChunks: 2,  // 使用多少次以上抽离抽离
-                chunks: 'initial'  // 从什么地方开始,刚开始
+                minSize: 0, // 大于多少抽离
+                minChunks: 2, // 使用多少次以上抽离抽离
+                chunks: 'initial' // 从什么地方开始,刚开始
             }
         }
     },
 },
 ```
-
-
-## 懒加载(延迟加载)
-
-`yarn add @babel/plugin-syntax-dynamic-import  -D`
-
-`source.js`
-
+[返回目录](#目录)
+## 懒加载
+懒加载即延迟加载。
 ```
-export default 'mayufo'
+npm i @babel/plugin-syntax-dynamic-import -D
 ```
 
-`index.js`
+>`source.js`：
 
+```js
+export default 'liujie';
 ```
-let button = document.createElement('button')
+>`index.js`：
 
-button.innerHTML = 'may'
+```js
+const button = document.createElement('button');
+
+button.innerHTML = 'test'
 button.addEventListener('click', function () {
-    console.log('click')
+    console.log('click');
     // es6草案中的语法，jsonp实现动态加载文件
     import('./source.js').then(data => {
         console.log(data.default);
     })
-})
+});
 
-
-document.body.appendChild(button)
-
+document.body.appendChild(button);
 ```
 
-`webpack.config.js`
+>`webpack.config.js`
 
-```
+```js
 {
     test: /\.js$/,
     exclude: '/node_modules/',
@@ -1397,503 +1432,457 @@ document.body.appendChild(button)
     }]
 }
 ```
+[返回目录](#目录)
+## 热更新
 
-## 热更新(当页面改变只更新改变的部分，不重新打包)
+>热更新：即当页面改变只更新改变的部分，而不是重新打包。
 
-`webpack.config.js`
+>`webpack.config.js`：
 
-```
+```js
 plugins: [
     new HtmlWebpackPlugin({
         template: './src/index.html',
         filename: 'index.html'
     }),
-    new webpack.NameModulesPlugin(), // 打印更新的模块路径
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.NameModulesPlugin(), // 打印更新的模块路径，即说明哪个文件热更新了
+    new webpack.HotModuleReplacementPlugin() // 热更新插件
 ]
 ```
+>`index.js`：
 
-`index.js`
-
-```
-
-import str from './source'
+```js
+import str from './source';
 
 console.log(str);
 
 if (module.hot) {
     module.hot.accept('./source', () => {
         console.log('文件更新了');
-        require('./source')
+        let str = require('./source');
         console.log(str);
     })
 }
-
 ```
-
-## tapable介绍 - SyncHook
+[返回目录](#目录)
+## tapable介绍
 
 [tapable](https://juejin.im/post/5abf33f16fb9a028e46ec352)
 
-`webpack`本质上是一种事件流的机制，它的工作流程就是将各个插件串联起来，而实现这一切的核心就是`Tapable`，`webpack`中最核心的负责编译的`Compiler`和负责创建`bundles`的`Compilation`都是`Tapable`的实例。
+`Webpack`本质上是一种事件流的机制，它的工作流程就是将各个插件串联起来，而实现这一切的核心就是`Tapable`，`Tapable`有点类似于nodejs的events库，核心原理也是依赖于发布订阅模式。
+```js
+const {
+	SyncHook,
+	SyncBailHook,
+	SyncWaterfallHook,
+	SyncLoopHook,
+	AsyncParallelHook,
+	AsyncParallelBailHook,
+	AsyncSeriesHook,
+	AsyncSeriesBailHook,
+	AsyncSeriesWaterfallHook
+ } = require("tapable");
+```
+`Webpack`中最核心的负责编译的`Compiler`和负责创建`bundles`的`Compilation`都是`Tapable`的实例。
+>hooks概览
 
-`SyncHook` 不关心监听函数的返回值
+常用的钩子主要包含以下几种，分为同步和异步，异步又分为并发执行和串行执行，如下图：
+![](./static/Tabable.png)
 
-`yarn add tabable`
-
-`1.use.js`
+### SyncHook
+`SyncHook`不关心监听函数的返回值
 
 ```
-let {SyncHook} = require('tapable')   // 结构同步勾子
-
-
-class Lesson {
-    constructor () {
-        this.hooks = {
-            // 订阅勾子
-            arch: new SyncHook(['name']),
-
-        }
-    }
-    start () {
-        this.hooks.arch.call('may')
-    }
-    tap () {   //  注册监听函数
-        this.hooks.arch.tap('node', function (name) {
-            console.log('node', name)
-        })
-        this.hooks.arch.tap('react', function (name) {
-            console.log('react', name)
-        })
-    }
-}
-
-
-let l = new Lesson()
-
-l.tap();  //注册两个函数
-l.start() // 启动勾子
-
+npm i tabable -D
 ```
 
-`1.theory.js`
+>`demo1.js`：
 
-```
-class SyncHook {  // 勾子是同步的
-    constructor(args) {  // args => ['name']
-        this.tasks = []
-    }
-    tap (name, task) {
-        this.tasks.push(task)
-    }
-    call (...args) {
-        this.tasks.forEach((task) => task(...args))
-    }
-}
-
-let hook = new SyncHook(['name'])
-
-hook.tap('react', function (name) {
-    console.log('react', name);
-})
-
-
-hook.tap('node', function (name) {
-    console.log('node', name);
-})
-
-
-hook.call('jw')
-```
-
-
-## tapable介绍 - SyncBailHook
-
-`SyncBailHook`为勾子加了个保险，当`return`返回不是`undefine`就会停止
-
-`2.use.js`
-
-```
-let {SyncBailHook} = require('tapable')   // 解构同步勾子
-
-
-class Lesson {
-    constructor () {
-        this.hooks = {
-            // 订阅勾子
-            arch: new SyncBailHook(['name']),
-
-        }
-    }
-    start () {
-        // 发布
-        this.hooks.arch.call('may')
-    }
-    tap () {   //  注册监听函数,订阅
-        this.hooks.arch.tap('node', function (name) {
-            console.log('node', name)
-            return '停止学习'  // 会停止
-            // return undefined
-        })
-        this.hooks.arch.tap('react', function (name) {
-            console.log('react', name)
-        })
-    }
-}
-
-
-let l = new Lesson()
-
-l.tap();  //注册两个函数
-l.start() // 启动勾子
-
-```
-
-`2.theory.js`
-
-```
-class SyncBailHook {  // 勾子是同步的
-    constructor(args) {  // args => ['name']
-        this.tasks = []
-    }
-    tap (name, task) {
-        this.tasks.push(task)
-    }
-    call (...args) {
-        let ret;   // 当前函数的返回值
-        let index = 0; // 当前要执行的第一个
-        do {
-            ret = this.tasks[index](...args)
-        } while (ret === undefined  && index < this.tasks.length)
-    }
-}
-
-let hook = new SyncBailHook(['name'])
-
-hook.tap('react', function (name) {
-    console.log('react', name);
-    return '停止学习'
-    // return undefined
-})
-
-
-hook.tap('node', function (name) {
-    console.log('node', name);
-})
-
-
-hook.call('jw')
-
-```
-
-## tapable介绍 - SyncWaterfallHook
-
-`SyncWaterfallHook`上一个监听函数的返回值可以传给下一个监听函数
-
-`3.use.js`
-
-```
-let {SyncWaterfallHook} = require('tapable')   // 解构同步勾子
-
-// waterfall 瀑布
-
-class Lesson {
-    constructor () {
-        this.hooks = {
-            // 订阅勾子
-            arch: new SyncWaterfallHook(['name']),
-
-        }
-    }
-    start () {
-        // 发布
-        this.hooks.arch.call('may')
-    }
-    tap () {   //  注册监听函数,订阅
-        this.hooks.arch.tap('node', function (name) {
-            console.log('node', name)
-            return '学的不错'
-        })
-        this.hooks.arch.tap('react', function (name) {
-            console.log('react', name)
-        })
-    }
-}
-
-
-let l = new Lesson()
-
-l.tap();  //注册两个函数
-l.start() // 启动勾子
-
-```
-
-`3.theory.js`
-
-```
-class SyncWaterfallHook {  // 勾子是同步的 - 瀑布
-    constructor(args) {  // args => ['name']
-        this.tasks = []
-    }
-    tap (name, task) {
-        this.tasks.push(task)
-    }
-    call (...args) {
-        let [first, ...others] = this.tasks;
-        let ret = first(...args)
-        others.reduce((a, b) => {
-            return b(a);
-        }, ret);
-
-    }
-}
-
-let hook = new SyncWaterfallHook(['name'])
-
-hook.tap('react', function (name) {
-    console.log('react', name);
-    return 'react Ok'
-    // return undefined
-})
-
-
-hook.tap('node', function (name) {
-    console.log('node', name);
-    return 'node Ok'
-})
-
-hook.tap('webpack', function (data) {
-    console.log('webpack', data);
-})
-
-
-
-hook.call('jw')
-
-
-```
-
-## tapable介绍 - SyncLoopHook
-
-`SyncLoopHook`当监听函数被触发的时候，如果该监听函数返回`true`时则这个监听函数会反复执行，如果返回 `undefined` 则表示退出循环
-
-`4.use.js`
-
-```
-let {SyncLoopHook} = require('tapable')   // 解构同步勾子
-
-// 不返回undefined 会多次执行
-
-class Lesson {
-    constructor () {
-        this.index = 0
-        this.hooks = {
-            // 订阅勾子
-            arch: new SyncLoopHook(['name']),
-
-        }
-    }
-    start () {
-        // 发布
-        this.hooks.arch.call('may')
-    }
-    tap () {   //  注册监听函数,订阅
-        this.hooks.arch.tap('node',  (name) => {
-            console.log('node', name)
-            return ++this.index === 3 ? undefined : '继续学'
-        })
-        this.hooks.arch.tap('react',  (name) => {
-            console.log('react', name)
-        })
-    }
-}
-
-
-let l = new Lesson()
-
-l.tap();  //注册两个函数
-l.start() // 启动勾子
-
-```
-
-`4.theory.js`
-
-```
-class SyncLoopHook {  // 勾子是同步的 - 瀑布
-    constructor(args) {  // args => ['name']
-        this.tasks = []
-    }
-    tap (name, task) {
-        this.tasks.push(task)
-    }
-    call (...args) {
-        this.tasks.forEach(task => {
-            let ret
-            do {
-                ret = task(...args);
-            } while(ret !== undefined)
-        })
-    }
-}
-
-let hook = new SyncLoopHook(['name'])
-let total = 0
-hook.tap('react', function (name) {
-    console.log('react', name);
-    return ++total === 3 ? undefined: '继续学'
-})
-
-
-hook.tap('node', function (name) {
-    console.log('node', name);
-})
-
-hook.tap('webpack', function (data) {
-    console.log('webpack', data);
-})
-
-
-
-hook.call('jw')
-
-```
-
-
-## `AsyncParallelHook` 与 `AsyncParallelBailHook`
-
-异步的勾子分两种`串行`和`并行`
-
-`并行`等待所有并发的异步事件执行后执行回调
-
-注册的三种方法
-
-1. 异步的注册方法`tap`
-2. 异步的注册方法`tapAsync`， 还有个回调参数
-3. `topPromise`,注册`promise`
-
-调用的三种
-
-1. call (同步)
-2. callAsync （异步）
-3. promise （异步）
-
-这里介绍的是异步并行的
-
-#### AsyncParallelHook
-
-不关心监听函数的返回值。
-
-`5.use.js`
-
-```
-let {AsyncParallelHook} = require('tapable')   // 解构同步勾子
-
-// 不返回undefined 会多次执行
+```js
+const {SyncHook} = require('tapable'); // 结构同步勾子
 
 class Lesson {
     constructor() {
-        this.index = 0
         this.hooks = {
             // 订阅勾子
-            arch: new AsyncParallelHook(['name']),
+            arch: new SyncHook(['name']) // 参数可选
+        }
+    }
+    start() {
+        this.hooks.arch.call('liujie');
+    }
+    tap() { // 注册监听函数
+        this.hooks.arch.tap('node', function (name) {
+            console.log('node', name);
+        });
+        this.hooks.arch.tap('react', function (name) {
+            console.log('react', name);
+        });
+    }
+}
+let l = new Lesson();
 
+l.tap();  //注册两个事件
+l.start(); // 启动钩子
+```
+
+>`case1.js`：`SyncHook`钩子实现。
+
+```js
+class SyncHook {  // 钩子是同步的
+    constructor(args) {  // args => ['name']
+        this.tasks = [];
+    }
+    tap(name, task) {
+        this.tasks.push(task);
+    }
+    call(...args) {
+        this.tasks.forEach(task => task(...args));
+    }
+}
+
+let hook = new SyncHook(['name']);
+hook.tap('react', function (name) {
+    console.log('react', name);
+});
+hook.tap('node', function (name) {
+    console.log('node', name);
+});
+hook.call('liujie');
+```
+[返回目录](#目录)
+
+### SyncBailHook
+`SyncBailHook`为钩子加个保险，当`return`返回不是`undefine`就会停止。
+
+>`demo2.js`：
+
+```js
+let {SyncBailHook} = require('tapable'); // 解构同步钩子
+
+class Lesson {
+    constructor () {
+        this.hooks = {
+            // 订阅勾子
+            arch: new SyncBailHook(['name'])
+        }
+    }
+    start() {
+        // 发布
+        this.hooks.arch.call('liujie');
+    }
+    tap() {   //  注册监听函数,订阅
+        this.hooks.arch.tap('node', function (name) {
+            console.log('node', name);
+            return '想停止学习';  // 会停止
+            // return undefined; // 不会停止
+        });
+        this.hooks.arch.tap('react', function (name) {
+            console.log('react', name);
+            // 没有return语句，默认是return undefined;
+        });
+    }
+}
+
+let l = new Lesson();
+
+l.tap();  //注册两个函数
+l.start(); // 启动勾子
+```
+
+`case2.js`：`SyncBailHook`钩子实现。
+
+```js
+class SyncBailHook {  // 钩子是同步的
+    constructor(args) {  // args => ['name']
+        this.tasks = [];
+    }
+    tap(name, task) {
+        this.tasks.push(task);
+    }
+    call(...args) {
+        let res; // 当前函数的返回值
+        let index = 0; // 当前要执行的第一个
+        // 至少要执行一个，没有返回undefined的话再继续执行
+        do {
+            res = this.tasks[index++](...args);
+        } while (res === undefined && index < this.tasks.length)
+    }
+}
+
+let hook = new SyncBailHook(['name']);
+hook.tap('react', function (name) {
+    console.log('react', name);
+    return '停止学习';
+    // return undefined
+});
+hook.tap('node', function (name) {
+    console.log('node', name);
+});
+hook.call('liujie');
+```
+[返回目录](#目录)
+### SyncWaterfallHook
+
+`SyncWaterfallHook`上一个监听函数的返回值可以传给下一个监听函数。
+
+>`demo3.js`:
+
+```js
+let {SyncWaterfallHook} = require('tapable'); // 解构同步钩子
+// waterfall 瀑布
+
+class Lesson {
+    constructor() {
+        this.hooks = {
+            // 订阅钩子
+            arch: new SyncWaterfallHook(['name'])
+        }
+    }
+    start() {
+        // 发布
+        this.hooks.arch.call('liujie');
+    }
+    tap() { //注册监听函数，即订阅
+        this.hooks.arch.tap('node', function (name) {
+            console.log('node', name);
+            return '学的不错';
+        })
+        this.hooks.arch.tap('react', function (name) {
+            console.log('react', name);
+        })
+    }
+}
+let l = new Lesson();
+
+l.tap();  //注册两个函数
+l.start(); // 启动钩子
+```
+>SyncWaterfallHook钩子实现：
+
+```js
+class SyncWaterfallHook { // 勾子是同步的 - 瀑布
+    constructor(args) { // args => ['name']
+        this.tasks = [];
+    }
+    tap(name, task) {
+        this.tasks.push(task);
+    }
+    call(...args) {
+        // 解构获取第一个task和其余剩余的task
+        let [first, ...others] = this.tasks;
+        // res是第一个task的返回结果
+        let res = first(...args);
+        // reduce迭代，a是前一个task的返回结果，b是当前task
+        others.reduce((a, b) => {
+            return b(a);
+        }, res);
+    }
+}
+
+let hook = new SyncWaterfallHook(['name']);
+
+hook.tap('react', function (name) {
+    console.log('react', name);
+    return 'react Ok';
+    // return undefined
+})
+hook.tap('node', function (name) {
+    console.log('node', name);
+    return 'node Ok';
+})
+hook.tap('webpack', function (data) {
+    console.log('webpack', data);
+})
+hook.call('liujie');
+```
+[返回目录](#目录)
+### SyncLoopHook
+`SyncLoopHook`当监听函数被触发的时候，如果该监听函数返回`true`时则这个监听函数会多次执行，如果返回`undefined`，则表示退出循环。
+
+>`demo4.js`：
+
+```js
+let {SyncLoopHook} = require('tapable'); // 解构同步钩子
+// 不返回undefined，会多次执行
+class Lesson {
+    constructor() {
+        this.index = 0;
+        this.hooks = {
+            // 订阅钩子
+            arch: new SyncLoopHook(['name'])
+        }
+    }
+    start() {
+        // 发布
+        this.hooks.arch.call('liujie');
+    }
+    tap() { // 注册监听函数,订阅
+        this.hooks.arch.tap('node', name => {
+            console.log('node', name);
+            return ++this.index === 3 ? undefined : '继续学';
+        });
+        this.hooks.arch.tap('react', name => {
+            console.log('react', name);
+        });
+    }
+}
+let l = new Lesson();
+
+l.tap();  //注册两个函数
+l.start(); // 启动钩子
+```
+>SyncLoopHook钩子实现：
+
+```js
+class SyncLoopHook {  // 钩子是同步的
+    constructor(args) {  // args => ['name']
+        this.tasks = [];
+    }
+    tap(name, task) {
+        this.tasks.push(task);
+    }
+    call(...args) {
+        this.tasks.forEach(task => {
+            let res;
+            do {
+                res = task(...args);
+            } while(res !== undefined)
+        })
+    }
+}
+
+let hook = new SyncLoopHook(['name']);
+let total = 0;
+hook.tap('react', function (name) {
+    console.log('react', name);
+    return ++total === 3 ? undefined : '继续学';
+})
+
+hook.tap('node', function (name) {
+    console.log('node', name);
+})
+
+hook.tap('webpack', function (name) {
+    console.log('webpack', name);
+})
+hook.call('liujie');
+```
+[返回目录](#目录)
+### AsyncParallelHook&AsyncParallelBailHook
+异步的钩子分两种`串行`和`并行`，`并行`需要等待所有并发的异步事件执行后执行回调。
+
+>Tapable库中有三种注册方法
+
+1. 同步注册方法`tap`；
+2. 异步注册方法`tapAsync(callback)`，有一个回调函数参数；
+3. `topPromise`，注册`promise`；
+
+调用的三种方式：
+
+1. call(同步调用)
+2. callAsync（异步调用）
+3. promise（异步）
+
+#### AsyncParallelHook
+`AsyncParallelHook`是异步并行的钩子：不关心监听函数的返回值。
+
+>`demo5.js`：
+
+```js
+let {AsyncParallelHook} = require('tapable'); // 解构同步钩子
+class Lesson {
+    constructor() {
+        this.index = 0;
+        this.hooks = {
+            // 订阅钩子
+            arch: new AsyncParallelHook(['name'])
         }
     }
 
     start() {
         // 发布callAsync
-        // this.hooks.arch.callAsync('may', function () {
+        // this.hooks.arch.callAsync('liujie', function () { // 所有异步钩子执行完才会执行
         //     console.log('end');
-        // })
+        // });
         // 另一种发布promise
-        this.hooks.arch.promise('may').then(function () {
+        this.hooks.arch.promise('liujie').then(function () {
                 console.log('end');
             }
-        )
+        );
     }
-
-    tap() {   //  注册监听函数,订阅
+    tap() {  // 注册监听函数,订阅
         // 注册tapAsync
         // this.hooks.arch.tapAsync('node',  (name, callback) => {
         //     setTimeout(() => {
-        //         console.log('node', name)
-        //         callback()
+        //         console.log('node', name);
+        //         callback();
         //     }, 1000)
         // })
         // this.hooks.arch.tapAsync('react',  (name, callback) => {
         //     setTimeout(() => {
-        //         console.log('react', name)
-        //         callback()
+        //         console.log('react', name);
+        //         callback();
         //     }, 1000)
         // })
         // 另一种订阅 tapPromise
         this.hooks.arch.tapPromise('node', (name) => {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    console.log('node', name)
-                    resolve()
-                }, 1000)
+                    console.log('node', name);
+                    resolve();
+                }, 1000);
             })
         })
         this.hooks.arch.tapPromise('react', (name) => {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    console.log('react', name)
-                    resolve()
-                }, 1000)
-            })
-        })
+                    console.log('react', name);
+                    resolve();
+                }, 1000);
+            });
+        });
     }
 }
-
-
-let l = new Lesson()
+let l = new Lesson();
 
 l.tap();  //注册两个函数
-l.start() // 启动勾子
-
-
+l.start(); // 启动钩子
 ```
-
-
-`5.theory.js`
-
-```
-class AsyncParallelHook {  // 勾子是同步的 - 瀑布
-    constructor(args) {  // args => ['name']
-        this.tasks = []
+>AsyncParallelHook钩子实现：
+```js
+class AsyncParallelHook { // 钩子是异步的
+    constructor(args) { // args => ['name']
+        this.tasks = [];
     }
 
     tapAsync(name, task) {
-        this.tasks.push(task)
+        this.tasks.push(task);
     }
 
     tapPromise(name, task) {
-        this.tasks.push(task)
+        this.tasks.push(task);
     }
     callAsync(...args) {
-        let finalCallback = args.pop()   // 拿出最终的函数
-        let index = 0
-        let done = () => {   // 类似promise.all的实现
+        let finalCallback = args.pop(); // 拿出最终的函数
+        let index = 0;
+        let done = () => { //类似promise.all的实现
             index++;
             if (index === this.tasks.length) {
                 finalCallback();
             }
         }
         this.tasks.forEach(task => {
-            task(...args, done) // 这里的args 已经把最后一个参数删掉
-        })
+            task(...args, done); // 这里的args已经把最后一个参数删掉
+        });
     }
-
     promise(...args) {
-        let tasks = this.tasks.map(task => task(...args))
-        return Promise.all(tasks)
+        let tasks = this.tasks.map(task => task(...args));
+        return Promise.all(tasks);
     }
 }
 
-let hook = new AsyncParallelHook(['name'])
-
-
+let hook = new AsyncParallelHook(['name']);
 // hook.tapAsync('react', function (name, callback) {
 //     setTimeout(() => {
 //         console.log('react', name);
@@ -1911,84 +1900,69 @@ let hook = new AsyncParallelHook(['name'])
 // hook.tapAsync('webpack', function (name, callback) {
 //     setTimeout(() => {
 //         console.log('webpack', name);
-//         callback()
-//     }, 1000)
+//         callback();
+//     }, 1000);
 // })
 
 hook.tapPromise('react', function (name, callback) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             console.log('react', name);
-            resolve()
-        }, 1000)
-    })
-})
+            resolve();
+        }, 1000);
+    });
+});
 
 hook.tapPromise('node', function (name, callback) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             console.log('node', name);
-            resolve()
-        }, 1000)
-    })
-})
-
-
-
-//
-// hook.callAsync('jw', function () {
+            resolve();
+        }, 1000);
+    });
+});
+// hook.callAsync('liujie', function () {
 //     console.log('end');
 // })
 
-
-hook.promise('jw').then(function () {
+hook.promise('liujie').then(function () {
     console.log('end');
 })
-
-
 ```
-
-
+[返回目录](#目录)
 #### AsyncParallelBailHook
+`AsyncParallelBailHook`是一个带保险的异步回调钩子，只要监听函数的返回值不为`null`，就会忽略后面的监听函数执行，直接跳跃到`callAsync`等触发函数绑定的回调函数，然后执行这个被绑定的回调函数。使用和原理与`SyncBailHook`相似。
 
-只要监听函数的返回值不为 `null`，就会忽略后面的监听函数执行，直接跳跃到`callAsync`等触发函数绑定的回调函数，然后执行这个被绑定的回调函数。
+### 异步串行
+#### AsyncSeriesHook
+`AsyncSeriesHook`钩子是`异步串行(`one by one)。
 
-使用和原理与`SyncBailHook`相似
+>`demo6.js`：
 
-
-## 异步串行 —— AsyncSeriesHook
-
-`串行 `one by one
-
-`6.use.js`
-
-```
-let {AsyncSeriesHook} = require('tapable')   // 解构同步勾子
-
-
+```js
+let {AsyncSeriesHook} = require('tapable'); // 解构异步钩子
 class Lesson {
     constructor() {
-        this.index = 0
+        this.index = 0;
         this.hooks = {
-            // 订阅勾子
-            arch: new AsyncSeriesHook(['name']),
-
+            // 订阅钩子
+            arch: new AsyncSeriesHook(['name'])
         }
     }
 
     start() {
         // 发布
-        // this.hooks.arch.callAsync('may', function () {
+        // this.hooks.arch.callAsync('liujie', function () {
         //     console.log('end');
         // })
         // 另一种发布
-        this.hooks.arch.promise('may').then(function () {
+        this.hooks.arch.promise('liujie').then(function () {
                 console.log('end');
             }
         )
     }
 
-    tap() {   //  注册监听函数,订阅
+    tap() { //注册监听函数,订阅
         // this.hooks.arch.tapAsync('node',  (name, callback) => {
         //     setTimeout(() => {
         //         console.log('node', name)
@@ -2005,48 +1979,45 @@ class Lesson {
         this.hooks.arch.tapPromise('node', (name) => {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    console.log('node', name)
-                    resolve()
-                }, 1000)
+                    console.log('node', name);
+                    resolve();
+                }, 1000);
             })
         })
         this.hooks.arch.tapPromise('react', (name) => {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    console.log('react', name)
-                    resolve()
-                }, 1000)
+                    console.log('react', name);
+                    resolve();
+                }, 1000);
             })
         })
     }
 }
 
-
-let l = new Lesson()
+let l = new Lesson();
 
 l.tap();  //注册两个函数
-l.start(); // 启动勾子
-
+l.start(); // 启动钩子
 ```
+>`AsyncSeriesHook`钩子实现：
 
-`6.theory.js`
-
-```
-class AsyncSeriesHook {  //
+```js
+class AsyncSeriesHook {
     constructor(args) {  // args => ['name']
-        this.tasks = []
+        this.tasks = [];
     }
 
     tapAsync(name, task) {
-        this.tasks.push(task)
+        this.tasks.push(task);
     }
 
     tapPromise(name, task) {
-        this.tasks.push(task)
+        this.tasks.push(task);
     }
 
     callAsync(...args) {
-        let finalCallback = args.pop()
+        let finalCallback = args.pop();
         let index = 0;
         let next = () => {
             if (this.tasks.length === index) return finalCallback();
@@ -2058,20 +2029,18 @@ class AsyncSeriesHook {  //
 
     promise(...args) {
         // 将promise串联起来
-        let [first, ...other] = this.tasks
-        return other.reduce((p, n) => {
+        let [first, ...other] = this.tasks;
+        return other.reduce((p, n) => { // 类似redux源码
              return p.then(() => n (...args))
-        }, first(...args))
+        }, first(...args));
     }
 }
 
 let hook = new AsyncSeriesHook(['name'])
-
-
 // hook.tapAsync('react', function (name, callback) {
 //     setTimeout(() => {
 //         console.log('react', name);
-//         callback()
+//         callback();
 //     }, 1000)
 // })
 //
@@ -2089,13 +2058,12 @@ let hook = new AsyncSeriesHook(['name'])
 //     }, 1000)
 // })
 
-
 hook.tapPromise('react', function (name, callback) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             console.log('react', name);
-            resolve()
-        }, 1000)
+            resolve();
+        }, 1000);
     })
 })
 
@@ -2103,49 +2071,39 @@ hook.tapPromise('node', function (name, callback) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             console.log('node', name);
-            resolve()
-        }, 1000)
+            resolve();
+        }, 1000);
     })
 })
 
-
-
-
-// hook.callAsync('jw', function () {
+// hook.callAsync('liujie', function () {
 //     console.log('end');
 // })
 
-
-hook.promise('jw').then(function () {
+hook.promise('liujie').then(function () {
     console.log('end');
 })
-
 ```
+[返回目录](#目录)
+### AsyncSeriesBailHook
 
-## 异步串行 —— AsyncSeriesWaterfallHook
+### AsyncSeriesWaterfallHook
+上一个监听函数的中的`callback(err, data)`的第二个参数,可以作为下一个监听函数的参数。
+>`demo7.js`：
 
-上一个监听函数的中的`callback(err, data)`的第二个参数,可以作为下一个监听函数的参数
-
-
-`7.use.js`
-
-```
-let {AsyncSeriesWaterfallHook} = require('tapable')   // 解构同步勾子
-
-
+```js
+let {AsyncSeriesWaterfallHook} = require('tapable'); // 解构异步钩子
 class Lesson {
     constructor() {
-        this.index = 0
+        this.index = 0;
         this.hooks = {
-            // 订阅勾子
-            arch: new AsyncSeriesWaterfallHook(['name']),
-
-        }
+            // 订阅钩子
+            arch: new AsyncSeriesWaterfallHook(['name'])
+        };
     }
-
     start() {
         // 发布
-        this.hooks.arch.callAsync('may', function () {
+        this.hooks.arch.callAsync('liujie', function () {
             console.log('end');
         })
         // 另一种发布
@@ -2155,21 +2113,20 @@ class Lesson {
         // )
     }
 
-    tap() {   //  注册监听函数,订阅
-        this.hooks.arch.tapAsync('node',  (name, callback) => {
+    tap() { //  注册监听函数,订阅
+        this.hooks.arch.tapAsync('node', (name, callback) => {
             setTimeout(() => {
-                console.log('node', name)
+                console.log('node', name);
                 // callback(null, 'result')
-                callback('error', 'result')   // 如果放error, 会跳过直接后面的勾子，直接走到最终的
-
-            }, 1000)
-        })
-        this.hooks.arch.tapAsync('react',  (name, callback) => {
+                callback('error', 'result'); // 如果放error, 会跳过直接后面的钩子，直接走到最终的
+            }, 1000);
+        });
+        this.hooks.arch.tapAsync('react', (name, callback) => {
             setTimeout(() => {
-                console.log('react', name)
-                callback()
-            }, 1000)
-        })
+                console.log('react', name);
+                callback();
+            }, 1000);
+        });
         // 另一种订阅
         // this.hooks.arch.tapPromise('node', (name) => {
         //     return new Promise((resolve, reject) => {
@@ -2190,57 +2147,54 @@ class Lesson {
     }
 }
 
-
-let l = new Lesson()
+let l = new Lesson();
 
 l.tap();  //注册两个函数
-l.start(); // 启动勾子
-
+l.start(); // 启动钩子
 ```
+>`AsyncSeriesWaterfallHook`钩子实现：
 
-`7.theory.js`
-
-```
+```js
 class AsyncSeriesWaterfallHook {  //
     constructor(args) {  // args => ['name']
-        this.tasks = []
+        this.tasks = [];
     }
 
     tapAsync(name, task) {
-        this.tasks.push(task)
+        this.tasks.push(task);
     }
 
     tapPromise(name, task) {
-        this.tasks.push(task)
+        this.tasks.push(task);
     }
     callAsync(...args) {
-        let finalCallback = args.pop()
+        let finalCallback = args.pop();
         let index = 0;
         let next = (err, data) => {
-            let task = this.tasks[index]
+            let task = this.tasks[index];
+            // 如果task没有取到，则执行最后一个
             if(!task) return finalCallback();
             if (index === 0) {
-                // 执行的第一个
-                task(...args, next)
+                // 执行第一个
+                task(...args, next);
             } else {
-                task(data, next)
+                task(data, next);
             }
-            index ++
+            index++;
         }
-        next();
+        next(); // 先调一次
     }
 
     promise(...args) {
         // 将promise串联起来
-        let [first, ...other] = this.tasks
+        let [first, ...other] = this.tasks;
         return other.reduce((p, n) => {
-             return p.then((data) => n(data))
-        }, first(...args))
+             return p.then((data) => n(data));
+        }, first(...args));
     }
 }
 
-let hook = new AsyncSeriesWaterfallHook(['name'])
-
+let hook = new AsyncSeriesWaterfallHook(['name']);
 
 // hook.tapAsync('react', function (name, callback) {
 //     setTimeout(() => {
@@ -2263,52 +2217,41 @@ let hook = new AsyncSeriesWaterfallHook(['name'])
 //     }, 1000)
 // })
 
-//
 hook.tapPromise('react', function (name, callback) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             console.log('react', name);
-            resolve('result')
-        }, 1000)
-    })
+            resolve('result');
+        }, 1000);
+    });
 })
 
 hook.tapPromise('node', function (name, callback) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             console.log('node', name);
-            resolve()
-        }, 1000)
-    })
-})
-
-
-//
-//
-// hook.callAsync('jw', function () {
+            resolve();
+        }, 1000);
+    });
+});
+// hook.callAsync('liujie', function () {
 //     console.log('end');
 // })
-
-
-hook.promise('jw').then(function () {
+hook.promise('liujie').then(function () {
     console.log('end');
 })
-
 ```
-
-
+[返回目录](#目录)
 ## 手写webpack
 
-[对应的may-pack项目](https://github.com/mayufo/webpack-training)
-
-
-`yarn add webpack webpack-cli -D`
-
-
-`webpack.config.js`
-
 ```
-let path = require('path')
+npm init -y
+npm i webpack webpack-cli -D
+```
+>`webpack.config.js`：
+
+```js
+let path = require('path');
 
 module.exports = {
     mode: 'development',
@@ -2319,12 +2262,9 @@ module.exports = {
     }
 }
 ```
+执行`npx webpack`，生成文件`bundle.js`：
 
-`npx webpack`
-
-生成文件`bundle.js`
-
-```
+```js
 (function (modules) {
     var installedModules = {};
 
@@ -2365,18 +2305,18 @@ module.exports = {
         })
 
 });
-
 ```
-
 新建项目用于自己的`webpack`,这里叫`may-pack`
 
-`yarn init`
+```
+npm init -y
+```
 
 如果在node里想执行命令，创建`bin`文件,再创建`may-pack.js`
 
 配置`package.json`
 
-```
+```js
 {
   "name": "may-pack",
   "version": "1.0.0",
@@ -2390,23 +2330,21 @@ module.exports = {
 
 `may-pack.js`
 
-```
+```js
 #!  /usr/bin/env node
-
 // node环境
-
 console.log('start');
-
 ```
 运行`npm link`将npm 模块链接到对应的运行项目中去，方便地对模块进行调试和测试
 
-在想运行`may-pack`的项目中运行，`npm link may-pack` 得到 `start`
+在想运行`may-pack`的项目中运行，`npm link may-pack` 得到`start`。
 
+[返回目录](#目录)
 ## webpack分析及处理
 
 `may-pack.js`
 
-```
+```js
 #!  /usr/bin/env node
 
 // node环境
@@ -2430,9 +2368,9 @@ compiler.run()
 
 创建`lib`文件`Compiler.js`
 
-```
-let path = require('path')
-let fs = require('fs')
+```js
+let path = require('path');
+let fs = require('fs');
 
 class Compiler {
     constructor(config) {
@@ -2464,66 +2402,62 @@ class Compiler {
         this.emitFile()
     }
 }
-
-module.exports = Compiler
-
+module.exports = Compiler;
 ```
 主要两个任务
 1. 拿到入口Id
 2. 解析模块，也就是实现`buildModule`方法
 
+[返回目录](#目录)
 ## 创建依赖关系
 
 `may-pack`中`Compiler.js`
 
-```
-
-let path = require('path')
-let fs = require('fs')
+```js
+let path = require('path');
+let fs = require('fs');
 // babylon  主要把源码转成ast Babylon 是 Babel 中使用的 JavaScript 解析器。
 // @babel/traverse 对ast解析遍历语法树 负责替换，删除和添加节点
 // @babel/types 用于AST节点的Lodash-esque实用程序库
 // @babel/generator 结果生成
 
-let babylon = require('babylon')
+let babylon = require('babylon');
 let traverse = require('@babel/traverse').default;
 let type = require('@babel/types');
-let generator = require('@babel/generator').default
+let generator = require('@babel/generator').default;
 class Compiler {
     constructor(config) {
         // entry  output
-        this.config = config
+        this.config = config;
         // 需要保存入口文件的路径
         this.entryId = '';   // './src/index.js'
         // 需要保存所有的模块依赖
         this.modules = {};
-        this.entry = config.entry  // 入口文件
+        this.entry = config.entry ; // 入口文件
         // 工作目录
         this.root = process.cwd(); // 当前运行npx的路径
-
-
     }
     // 拿到模块内容
     getSource (modulePath) {
-        let content = fs.readFileSync(modulePath, 'utf8')
-        return content
+        let content = fs.readFileSync(modulePath, 'utf8');
+        return content;
     }
     parse (source, parentPath) {
-        console.log(source, parentPath)
+        console.log(source, parentPath);
     }
     // 构建模块
     buildModule(modulePath, isEntry) {
         // 拿到模块内容
-        let source = this.getSource(modulePath)  // 得到入口文件的内容
+        let source = this.getSource(modulePath); // 得到入口文件的内容
         // 模块id modulePath(需要相对路径) = modulePath(模块路径) - this.root(项目工作路径)   src/index.js
-        let moduleName = './' + path.relative(this.root, modulePath)
+        let moduleName = './' + path.relative(this.root, modulePath);
         console.log(source, moduleName);  // 拿到代码 和相对路径 ./src/index.js
         if (isEntry) {
-            this.entryId = moduleName
+            this.entryId = moduleName;
         }
-        let {sourceCode, dependencies} = this.parse(source, path.dirname(moduleName))   // ./src
+        let {sourceCode, dependencies} = this.parse(source, path.dirname(moduleName));   // ./src
         // 把相对路径和模块中的内容对应起来
-        this.modules[moduleName] = sourceCode
+        this.modules[moduleName] = sourceCode;
     }
 
     // 发射文件
@@ -2533,21 +2467,17 @@ class Compiler {
 
     run() {
         // 执行 创建模块的依赖关系
-        this.buildModule(path.resolve(this.root, this.entry), true)  // path.resolve(this.root, this.entry) 得到入口文件的绝对路径
+        this.buildModule(path.resolve(this.root, this.entry), true);  // path.resolve(this.root, this.entry) 得到入口文件的绝对路径
         console.log(this.modules, this.entryId);
         // 发射打包后的文件
-        this.emitFile()
+        this.emitFile();
     }
-
-
 }
 
-module.exports = Compiler
-
-
+module.exports = Compiler;
 ```
-
-## ast递归解析
+[返回目录](#目录)
+## AST递归解析
 
 `parse`方法主要靠解析语法树来进行转义
 `babylon`  主要把源码转成ast Babylon 是 Babel 中使用的 JavaScript 解析器。
@@ -2556,11 +2486,13 @@ module.exports = Compiler
 `@babel/generator` 结果生成
 
 
-`yarn add babylon @babel/traverse @babel/types @babel/generator`
+```js
+npm i babylon @babel/traverse @babel/types @babel/generator
+```
 
 `may-pack`中`Compiler.js`
 
-```
+```js
 let path = require('path')
 let fs = require('fs')
 // babylon  主要把源码转成ast Babylon 是 Babel 中使用的 JavaScript 解析器。
@@ -2583,8 +2515,6 @@ class Compiler {
         this.entry = config.entry  // 入口文件
         // 工作目录
         this.root = process.cwd(); // 当前运行npx的路径
-
-
     }
     // 拿到模块内容
     getSource (modulePath) {
@@ -2651,13 +2581,13 @@ class Compiler {
 module.exports = Compiler
 
 ```
-
-## 生成打包工具
+[返回目录](#目录)
+## 生成打包结果
 
 使用ejs模板
 
 `may-pack`中`main.ejs`
-```
+```js
 (function (modules) {
 var installedModules = {};
 
@@ -2700,11 +2630,11 @@ eval(`<%-modules[key] %>`);
 
 `may-pack`中`Compiler.js`
 
-```
-let ejs = require('ejs')
+```js
+let ejs = require('ejs');
 ```
 
-```
+```js
 // 发射文件
     emitFile() {
         // 用数据 渲染想要的
@@ -2719,8 +2649,9 @@ let ejs = require('ejs')
     }
 ```
 
-在`webpack-training`项目中运行`npx may-pack`, 得到`bundle.js`,运行得到结果
+在`webpack-training`项目中运行`npx may-pack`, 得到`bundle.js`，运行得到结果。
 
+[返回目录](#目录)
 ## 增加loader
 
 创建`loader`文件夹，创建`less-loader.js`和`style-loader.js`
@@ -2731,7 +2662,7 @@ let ejs = require('ejs')
 
 `less-loader`
 
-```
+```js
 // 将less转为css
 let less = require('less')
 
@@ -2744,34 +2675,27 @@ function loader(source) {
     return css
 }
 
-module.exports = loader
-
+module.exports = loader;
 ```
+`style-loader`：
 
-`style-loader`
-
-```
+```js
 // 将css插入到html头部
 function loader(source) {
     console.log(111);
     let style = `
-    let style = document.createElement('style')
-    style.innerHTML = ${JSON.stringify(source)}
-    document.head.appendChild(style)
+    let style = document.createElement('style');
+    style.innerHTML = ${JSON.stringify(source)};
+    document.head.appendChild(style);
    `
-    return style
+    return style;
 }
-module.exports = loader
-
-
+module.exports = loader;
 // JSON.stringify(source) 可以将代码转为一行
-
 ```
-
-`webpack.config.js`
-
-```
-let path = require('path')
+`webpack.config.js`：
+```js
+let path = require('path');
 
 module.exports = {
     mode: 'development',
@@ -2792,31 +2716,22 @@ module.exports = {
         ]
     }
 }
-
 ```
+>创建`index.less`：
 
-创建`index.less`
-
-```
+```css
 body {
   background: red
 }
 ```
-
 `index.js`
-
-```
- let str = require('./a.js')
-
- require('./index.less')
-
+```js
+ let str = require('./a.js');
+ require('./index.less');
  console.log(str);
-
 ```
-
 `may-pack`中`Compiler.js`
-
-```
+```js
 // 拿到模块内容
     getSource (modulePath) {
         // 匹配各种文件的规则
@@ -2849,13 +2764,15 @@ body {
 
 运行`npx may-pack`
 
+[返回目录](#目录)
 ## 增加plugins
-
-`yarn add tapable`
+```
+npm i tapable
+```
 
 `may-pack`中`Compiler.js`
 
-```
+```js
 constructor(config) {
         // entry  output
         this.config = config
@@ -2889,7 +2806,7 @@ constructor(config) {
 
 在`webpack.config.js`中写插件方法
 
-```
+```js
 class P {
     apply(compiler) {   // 这里只是appLy方法不是改变this指向
         // 绑定
@@ -2907,8 +2824,6 @@ class P1 {
         })
     }
 }
-
-
 
 module.exports = {
     mode: 'development',
@@ -2934,13 +2849,9 @@ module.exports = {
     ]
 }
 ```
+然后在各个地方调用，`may-pack`中`may-pack.js`：
 
-然后在各个地方调用
-
-`may-pack`中`may-pack.js`
-
-
-```
+```js
 .....
 // 调用
 compiler.hooks.entryOption.call()
@@ -2949,7 +2860,7 @@ compiler.run()
 ```
 
 `may-pack`中`Compiler.js`
-```
+```js
 run() {
         this.hooks.run.call()
 
@@ -2967,16 +2878,15 @@ run() {
 
 运行`npx may-pack`
 
-
+[返回目录](#目录)
 ## loader
-
 
 [手写loader](https://juejin.im/post/59e6a5de518825469c7461da)
 
 `webapck.config.js`
 
-```
-let path = require('path')
+```js
+let path = require('path');
 
 module.exports = {
     mode: 'development',
@@ -2999,7 +2909,7 @@ module.exports = {
 
 创建`loader`文件`loader1.js`
 
-```
+```js
 console.log(22);
 
 function loader(source) {  // loader的参数就是源代码
@@ -3008,11 +2918,9 @@ function loader(source) {  // loader的参数就是源代码
 module.exports = loader
 
 ```
-
-
 `webpack.config.js`
 
-```
+```js
 let path = require('path')
 
 module.exports = {
@@ -3056,14 +2964,14 @@ module.exports = {
 
 `npx webpack`
 
-## 配置多个loader
+[返回目录](#目录)
+### loader配置
 
 1. 数组方式
 
 先分别在`loader`文件下创建，`loader2.js`和`loader3.js`
 
-```
-
+```js
 function loader(source) {  // loader的参数就是源代码
     console.log('loader2');  // loader3.js 类似
     return source
@@ -3071,10 +2979,9 @@ function loader(source) {  // loader的参数就是源代码
 module.exports = loader
 
 ```
+`webpack.config.js`：
 
-`webpack.config.js`
-
-```
+```js
 rules: [
     {
         test: /\.js$/,
@@ -3083,8 +2990,8 @@ rules: [
 ]
 ```
 
-运行`npx webpack`,分别打出
-```
+运行`npx webpack`，分别打出
+```js
 loader1
 loader2
 loader3
@@ -3092,7 +2999,7 @@ loader3
 
 2. 对象方式
 
-```
+```js
 rules: [
     {
         test: /\.js$/,
@@ -3109,22 +3016,19 @@ rules: [
 ]
 ```
 
-运行`npx webpack`,分别打出
+运行`npx webpack`，分别打出
 
-```
+```js
 loader1
 loader2
 loader3
 ```
 
-
 > `loader`的顺序: 从右到左, 从下到上
-
 
 也可以通过配置不同的参数改变`loader`的执行顺序，`pre` 前面的， `post`在后面的， `normal`正常
 
-
-```
+```js
 {
     test: /\.js$/,
     use: ['loader1'],
@@ -3140,51 +3044,46 @@ loader3
     enforce: "post"
 },
 ```
-
 `loader` 带参数执行的顺序: `pre  -> normal -> inline -> post`
 
 `inline`为行内`loader`
 
-在`loader`文件中新建`inlin-loader`
+在`loader`文件中新建`inline-loader`
 
-```
-
+```js
 function loader(source) {  // loader的参数就是源代码
     console.log('inline');
-    return source
+    return source;
 }
-module.exports = loader
-
+module.exports = loader;
 ```
 
 `src/a.js`
 
-```
+```js
 module.exports = 'may'
 ```
 
 `src/index`
 
-```
+```js
 console.log('hello')
 let srt = require('-!inline-loader!./a')
 ```
 
-1. `-!`禁用`pre-loader`和 `normal-loader`来处理了
+1. `-!`禁用`pre-loader`和`normal-loader`来处理了
 
-```
+```js
 loader1
 loader2
 loader3
 inline
 loader3
 ```
-
-
 
 2. `!`禁用`normal-loader`
 
-```
+```js
 loader1
 loader2
 loader3
@@ -3192,28 +3091,22 @@ loader1
 inline
 loader3
 ```
-
-
 
 3. `!!` 禁用`pre-loader`、`normal-loader`、`post-loader`,只能行内处理
 
-```
+```js
 loader1
 loader2
 loader3
 inline
 ```
-
 loader 默认由两部分组成`pitch`和`normal`
 
 `user: [loader3, loader2, loader1]`
 
-
 无返回值: 先执行pitch方法,从左到右，再获取资源
 
-
-```
-
+```js
     pitch loader - 无返回值
 
 pitch   loader3 → loader2 → loader1
@@ -3227,7 +3120,7 @@ normal   loader3 ← loader2 ← loader1
 
 [loader](https://webpack.docschina.org/api/loaders/)
 
-```
+```js
 user: [loader3, loader2, loader1]
 
     pitch loader - 有返回值
@@ -3241,8 +3134,7 @@ normal  loader3  loader2  loader1
 
 `loadeer2.js`
 
-```
-
+```js
 function loader(source) {  // loader的参数就是源代码
     console.log('loader2');
     return source
@@ -3254,20 +3146,20 @@ loader.pitch = function () {
 module.exports = loader
 
 ```
-
-结果
-
-```
+结果：
+```js
 loader3
 ```
-
-## `babel-loader`实现
-
-`yarn add @babel/core @babel/preset-env`
-
-`webpack.config.js`
+[返回目录](#目录)
+### babel-loader实现
 
 ```
+yarn add @babel/core @babel/preset-env
+```
+
+`webpack.config.js`：
+
+```js
 {
     test: '\.js$/',
     use: {
@@ -3285,17 +3177,14 @@ loader3
 
 拿到`babel`的参数
 
-`yarn add loader-utils`
-
-
 ```
+npm i loader-utils
+```
+```js
 // 需要在webpack.config.js拿到babel的预设, 通过预设转换模块, 先引入babel
-let babel = require('@babel/core')
-
+let babel = require('@babel/core');
 // 拿到babel的参数 需要工具 loaderUtils
-let loaderUtils =require('loader-utils')
-
-
+let loaderUtils =require('loader-utils');
 function loader(source) {  // loader的参数就是源代码  这里的this就是loader的上下文
     let options = loaderUtils.getOptions(this)
     console.log(this.resourcePath, 444);   // [./src/index.js]
@@ -3311,39 +3200,33 @@ function loader(source) {  // loader的参数就是源代码  这里的this就�
     // return source  失效
 }
 
-module.exports = loader
-
-
+module.exports = loader;
 ```
-
-
 `index.js`
-
-```
+```js
 class May {
     constructor () {
-        this.name = 'may'
+        this.name = 'may';
     }
     getName () {
-        return this.name
+        return this.name;
     }
 }
-
-
-let may = new May()
+let may = new May();
 
 console.log(may.getName());
 ```
 
 `npx webpack`
 
-## `banner-loader`实现(自创)
+[返回目录](#目录)
+### banner-loader实现
 
 给所有匹配的`js`加一个注释
 
 `webpack.config.js`
 
-```
+```js
 {    // 给所有匹配的`js`加一个注释
     test: /\.js$/,
     use: {
@@ -3355,29 +3238,26 @@ console.log(may.getName());
     }
 }
 ```
-
 `banner.js`
 
-```
+```js
 二次星球中毒
 ```
-
-
 在`loader`文件创建`banner-loader.js`
 
-`yarn add schema-utils` 校验自己写的`loader`格式是否正确
+`npm i schema-utils` 校验自己写的`loader`格式是否正确
 
 [schema-utils](https://github.com/webpack-contrib/schema-utils)
 
 `banner-loader.js`
 
-```
+```js
 // 拿到loader的配置
-let loaderUtils = require('loader-utils')
+let loaderUtils = require('loader-utils');
 // 校验loader
-let validateOptions = require('schema-utils')
+let validateOptions = require('schema-utils');
 // 读取文件
-let fs = require('fs')  // 异步
+let fs = require('fs');  // 异步
 
 function loader(source) {  // loader的参数就是源代码
     let options = loaderUtils.getOptions(this)
@@ -3402,15 +3282,30 @@ function loader(source) {  // loader的参数就是源代码
             callback(err, `/**${data}**/${source}`)
         })
     } else {
-        callback(null, `/**${options.text}**/${source}`)
+        callback(null, `/**${options.text}**/${source}`);
     }
-    return source
+    return source;
 }
-module.exports = loader
+module.exports = loader;
 
 ```
-
-优化:
+>优化:
 
 1. 修改`banner.js`的内容后, `webpack`进行监控，打包`webapck.config.js`配置`watch: true`
 2. `loader`缓存
+
+### file-loader和url-loader实现
+
+[返回目录](#目录)
+## webpack中的插件
+
+[返回目录](#目录)
+### 文件列表插件
+
+[返回目录](#目录)
+### 内联webpack插件
+
+[返回目录](#目录)
+## 打包后自动发布
+
+[返回目录](#目录)
